@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clirec"
+version = "0.1.0"
+description = "Human-readable GUI demonstration recordings for CLI and agent workflows."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    {name = "The clirec authors"},
+]
+keywords = [
+    "gui-automation", "recording", "replay", "cli", "agent-workflow",
+    "computer-use", "demonstration", "local-first",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.optional-dependencies]
+record = ["pynput>=1.7"]
+dev = ["pytest>=7.0"]
+all = ["pynput>=1.7"]
+
+[project.scripts]
+clirec = "clirec.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ellmos-ai/clirec"
+Repository = "https://github.com/ellmos-ai/clirec"
+Changelog = "https://github.com/ellmos-ai/clirec/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+include = ["clirec*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
