@@ -1,5 +1,7 @@
 # clirec
 
+[![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
+
 `clirec` records mouse and keyboard demonstrations as human-readable `.clirec`
 files and replays them through an injected executor. It is built for agent and
 CLI workflows where a short demonstration is more reliable than a long verbal
@@ -48,3 +50,10 @@ report = replay(recording, executor)
 ```
 
 `executor` must expose `width`, `height`, and `execute(action)`.
+
+## Tests
+
+```bash
+python -m pytest -q
+python -m compileall -q clirec tests
+```

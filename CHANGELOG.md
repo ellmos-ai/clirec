@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added a GitHub Actions test workflow for the standalone package.
+- Added `llms.txt` and documented the local test commands in both READMEs.
+
 ## 0.1.0 - 2026-07-03
 
 - Extracted `clirec` from `ellmos-ai/open-compute` into a standalone package.

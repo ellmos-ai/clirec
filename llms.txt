@@ -1,0 +1,44 @@
+## Last-checked: 2026-07-05
+
+# clirec
+
+Canonical repository: https://github.com/ellmos-ai/clirec
+
+## Summary
+
+`clirec` is a local-first Python package for recording mouse and keyboard
+demonstrations as human-readable `.clirec` files. It is meant for CLI and agent
+workflows where a concrete UI demonstration is easier to replay than a long
+verbal instruction.
+
+## Audience
+
+- Developers building CLI or agent workflow tools.
+- Agent-framework maintainers who need replayable GUI demonstrations.
+- Local-first automation projects that want inspectable recording files.
+- `open-compute` users who replay recordings through `oc rec`.
+
+## Important Files
+
+- `README.md` - English overview, installation and usage.
+- `README_de.md` - German overview with real umlauts.
+- `SKILL.md` - Skill instructions for using clirec as a demonstration channel.
+- `clirec/` - Core package.
+- `tests/` - Regression and smoke tests.
+- `.github/workflows/tests.yml` - Python test workflow.
+
+## Search Phrases
+
+```text
+clirec GUI recording CLI agent workflow
+human readable .clirec demonstration recording
+ellmos clirec local-first computer-use replay
+record mouse keyboard demonstration for agents
+open-compute clirec replay recordings
+```
+
+## Boundaries
+
+`clirec` is not a hosted telemetry service, a video recorder, or a full GUI
+automation platform. Replay stays backend-neutral and needs an executor
+integration.
