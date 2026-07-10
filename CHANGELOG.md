@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added release-hygiene documentation with `TODO.md`, `SECURITY.md`, and stricter
+  local ignore rules for env files, IDE folders, local data, and SQLite files.
 - Added a GitHub Actions test workflow for the standalone package.
 - Added `llms.txt` and documented the local test commands in both READMEs.
 
