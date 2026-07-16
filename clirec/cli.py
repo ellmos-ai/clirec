@@ -60,6 +60,8 @@ def cmd_rec(args: list[str], *, executor_factory=None) -> None:
         with open(rest[0], "r", encoding="utf-8") as fh:
             problems = validate(fh.read())
         print("OK" if not problems else "\n".join(problems))
+        if problems:
+            raise SystemExit(1)
         return
 
     if sub == "list":
@@ -95,6 +97,8 @@ def cmd_rec(args: list[str], *, executor_factory=None) -> None:
         )
         for failure in rep.failures:
             print("  FAIL", failure)
+        if rep.failures:
+            raise SystemExit(1)
         return
 
     if sub in ("start", "stop", "buffer"):
@@ -107,16 +111,51 @@ def cmd_rec(args: list[str], *, executor_factory=None) -> None:
 def _rec_live(sub: str, rest: list[str]) -> None:
     """Thin live-recording loop. Drives ``Recorder.pump()`` on a timer."""
 
-    from .capture.base import get_backend
+    from .capture.base import get_backend, get_desktop_geometry
     from .config import recorder_config_from_dict
-    from .recorder import Recorder
+    from .recorder import Recorder, validate_recording_name
     from .uia_probe import DefaultProbe
 
     rc = recorder_config_from_dict()
+    allow_unmasked = False
+    names: list[str] = []
+    for argument in rest:
+        if argument == "--allow-unmasked-input":
+            allow_unmasked = True
+        elif argument.startswith("-"):
+            _die(f"unknown recording option: {argument}")
+        else:
+            names.append(argument)
+    if len(names) > 1:
+        _die("clirec start accepts at most one recording name")
+    try:
+        name = validate_recording_name(names[0] if names else "recording")
+    except ValueError as exc:
+        _die(str(exc))
+
     backend = get_backend()
-    rec = Recorder(backend, config=rc, probe=DefaultProbe())
+    geometry = get_desktop_geometry()
+    if geometry is None:
+        _die("desktop geometry is unavailable; refusing to record unusable coordinates")
+    origin_x, origin_y, width, height = geometry
+
+    probe = DefaultProbe()
+    if allow_unmasked:
+        rc.mask_password_fields = False
+        print(
+            "WARNING: keyboard-input masking is disabled; review the recording before sharing.",
+            file=sys.stderr,
+        )
+
+    rec = Recorder(
+        backend,
+        config=rc,
+        probe=probe,
+        resolution=f"{width}x{height}",
+        origin_x=origin_x,
+        origin_y=origin_y,
+    )
     if sub == "start":
-        name = rest[0] if rest else "recording"
         print(f"recording '{name}' - press Ctrl+C to stop")
         rec.start(name)
         try:
@@ -128,8 +167,8 @@ def _rec_live(sub: str, rest: list[str]) -> None:
             path = rec.save(out, name)
             print(f"\nsaved: {path} ({len(out.steps)} steps)")
         return
-    print(
-        "note: 'stop'/'buffer' require a running daemon session; "
+    _die(
+        "'stop'/'buffer' require a running daemon session; "
         "use 'clirec start <name>' (Ctrl+C to stop) for the MVP."
     )
 
@@ -142,7 +181,8 @@ def _print_help() -> None:
               clirec validate <file.clirec>
               clirec list [--dir DIR]
               clirec replay <file.clirec> [--param k=v ...]
-              clirec start <name>   (Ctrl+C to stop & save)
+              clirec start <name> [--allow-unmasked-input]
+                                      (Ctrl+C to stop & save)
             """
         )
     )

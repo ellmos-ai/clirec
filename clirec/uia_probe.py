@@ -65,11 +65,23 @@ class DefaultProbe:
         except Exception:
             return None
 
-    def is_password_focused(self) -> bool:
+    def password_focus_state(self) -> bool | None:
+        """Return True/False when UIA knows, otherwise None.
+
+        Unknown must remain distinct from a confirmed non-password field so the
+        recorder can fail closed instead of persisting potentially sensitive
+        keyboard input.
+        """
+
         be = self._backend_or_none()
         if be is None:
-            return False
+            return None
         try:
             return bool(be.focused_is_password())
         except Exception:
-            return False
+            return None
+
+    def is_password_focused(self) -> bool:
+        """Compatibility wrapper for callers that only understand booleans."""
+
+        return self.password_focus_state() is True

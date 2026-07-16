@@ -1,5 +1,4 @@
 # tests/test_clirec_format.py
-import pytest
 from clirec import format as fmt
 
 
@@ -33,6 +32,47 @@ def test_roundtrip_preserves_recording():
     assert back.steps[1].action == "type" and back.steps[1].text == "${post_text}"
 
 
+def test_roundtrip_preserves_virtual_desktop_origin_and_escaped_text():
+    rec = _sample()
+    rec.origin_x = -1920
+    rec.origin_y = -200
+    rec.steps[0].x = -740
+    rec.steps[1].text = 'Zeile mit "Quotes" und \\Pfad'
+    back = fmt.loads(fmt.dumps(rec))
+    assert (back.origin_x, back.origin_y) == (-1920, -200)
+    assert back.steps[1].text == rec.steps[1].text
+
+
+def test_roundtrip_preserves_steps_marker_inside_goal():
+    rec = _sample()
+    rec.goal = "# Heading\nfirst\n--- steps ---\nlast"
+    assert fmt.loads(fmt.dumps(rec)).goal == rec.goal
+
+
+def test_roundtrip_preserves_padded_headers_trailing_goal_newline_and_float_time():
+    rec = _sample()
+    rec.title = " padded "
+    rec.goal = "line\n"
+    rec.steps[0].t = 1234.5678912
+    rec.steps[1].t = 1235.0
+    back = fmt.loads(fmt.dumps(rec))
+    assert back.title == rec.title
+    assert back.goal == rec.goal
+    assert back.steps[0].t == rec.steps[0].t
+
+
+def test_parser_rejects_unknown_step_fields():
+    text = fmt.dumps(_sample()).replace("btn=left", "btn=left ignored=payload", 1)
+    problems = fmt.validate(text)
+    assert any("unknown step field" in problem for problem in problems)
+
+
+def test_frame_filename_with_spaces_roundtrips():
+    rec = _sample()
+    rec.steps[0].frame = "frame one.png"
+    assert fmt.loads(fmt.dumps(rec)).steps[0].frame == "frame one.png"
+
+
 def test_validate_flags_missing_steps_section():
     problems = fmt.validate("# clirec-version: 1\ntitle: x\n")
     assert any("steps" in p.lower() for p in problems)
@@ -49,3 +89,17 @@ def test_apply_params_substitutes_placeholder():
     original = _sample()
     fmt.apply_params(original, {"post_text": "Hallo Welt"})
     assert original.steps[1].text == "${post_text}"
+
+
+def test_apply_params_uses_declared_default_and_allows_override():
+    rec = _sample()
+    rec.params[0]["default"] = "Standard"
+    assert fmt.apply_params(rec, {}).steps[1].text == "Standard"
+    assert fmt.apply_params(rec, {"post_text": "Explizit"}).steps[1].text == "Explizit"
+
+
+def test_required_param_roundtrip_does_not_acquire_empty_default():
+    rec = _sample()
+    rec.params[0].pop("default")
+    back = fmt.loads(fmt.dumps(rec))
+    assert "default" not in back.params[0]

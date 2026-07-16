@@ -19,8 +19,11 @@ contact the maintainer without attaching sensitive recordings.
 - Review recordings before sharing or committing them.
 - Do not publish recordings that contain client data, credentials, private
   paths, account names, personal documents, browser sessions, or internal URLs.
-- Password fields are masked, but surrounding UI context can still identify
-  systems, people, or workflows.
+- The safe default parameterizes all typed text as `${input_N}` instead of
+  persisting plaintext. `--allow-unmasked-input` disables that protection for
+  the complete session and must only be used with deliberate review.
+- UI metadata and frame evidence can still identify systems, people, or
+  workflows even when keyboard text is parameterized.
 - Keep `recordings/`, `*.clirec.frames/`, `_session/`, local data, and secrets
   out of release artifacts.
 

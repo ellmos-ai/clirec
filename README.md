@@ -9,13 +9,14 @@ description.
 
 The core package has no runtime dependencies. Windows capture uses a ctypes
 backend by default; cross-platform capture is available with the optional
-`record` extra.
+`record` extra. Windows UI Automation metadata is an optional `uia` extra.
 
 ## Install
 
 ```bash
 pip install clirec
 pip install clirec[record]       # optional pynput backend
+pip install clirec[uia]          # optional Windows UI metadata
 ```
 
 Until a package release exists, install directly from GitHub:
@@ -31,6 +32,11 @@ clirec start login-flow
 clirec validate recordings/login-flow.clirec
 clirec list --dir recordings
 ```
+
+The safe recording default never persists typed text. Each text segment becomes
+a parameter such as `${input_1}` and can be supplied during replay with
+`--param input_1=value`. `--allow-unmasked-input` is an explicit unsafe opt-in
+for recordings whose plaintext has been reviewed before sharing.
 
 Replay is backend-neutral. Use it from Python with an executor object, or via an
 integration such as `open-compute`:

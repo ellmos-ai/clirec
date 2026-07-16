@@ -30,8 +30,9 @@ dependencies = []
 
 [project.optional-dependencies]
 record = ["pynput>=1.7"]
+uia = ["uiautomation>=2.0; sys_platform == 'win32'"]
 dev = ["pytest>=7.0"]
-all = ["pynput>=1.7"]
+all = ["pynput>=1.7", "uiautomation>=2.0; sys_platform == 'win32'"]
 
 [project.scripts]
 clirec = "clirec.cli:main"

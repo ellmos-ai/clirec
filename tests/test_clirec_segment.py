@@ -12,6 +12,11 @@ class FakeProbe:
         return self._pw
 
 
+class UnknownPasswordProbe(FakeProbe):
+    def password_focus_state(self):
+        return None
+
+
 def test_click_from_down_up_same_point():
     evts = [RawEvent("mouse_down", 0.0, x=100, y=50, button="left"),
             RawEvent("mouse_up", 0.05, x=101, y=50, button="left")]
@@ -42,10 +47,53 @@ def test_password_focus_masks_text():
     assert steps[0].text == "***"
 
 
+def test_unknown_password_state_masks_but_missing_probe_keeps_api_compatibility():
+    events = [RawEvent("char", 0.0, char="x")]
+    assert events_to_steps(events, probe=UnknownPasswordProbe())[0].text == "***"
+    assert events_to_steps(events)[0].text == "x"
+
+
 def test_named_key_becomes_key_step():
     evts = [RawEvent("key_down", 0.0, key="enter")]
     steps = events_to_steps(evts)
     assert steps[0].action == "key" and steps[0].keys == "enter"
+
+
+def test_modifier_state_survives_release_of_other_side():
+    events = [
+        RawEvent("key_down", 0.0, key="ctrl_l"),
+        RawEvent("key_down", 0.1, key="ctrl_r"),
+        RawEvent("key_up", 0.2, key="ctrl_l"),
+        RawEvent("key_down", 0.3, key="c"),
+        RawEvent("key_up", 0.4, key="c"),
+        RawEvent("key_up", 0.5, key="ctrl_r"),
+    ]
+    assert events_to_steps(events)[0].keys == "ctrl+c"
+
+
+def test_sensitive_modified_key_never_serializes_literal_combo():
+    events = [
+        RawEvent(
+            "key_down", 0.0, key="shift_l", sensitive=True,
+            sensitive_captured=True,
+        ),
+        RawEvent(
+            "key_down", 0.1, key="p", sensitive=True,
+            sensitive_captured=True,
+        ),
+        RawEvent(
+            "key_up", 0.2, key="p", sensitive=True,
+            sensitive_captured=True,
+        ),
+        RawEvent(
+            "key_up", 0.3, key="shift_l", sensitive=True,
+            sensitive_captured=True,
+        ),
+    ]
+    steps = events_to_steps(events)
+    assert [(step.action, step.text, step.keys) for step in steps] == [
+        ("type", "***", None)
+    ]
 
 
 def test_wheel_becomes_scroll():

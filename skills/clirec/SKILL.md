@@ -20,7 +20,8 @@ ein Ablauf schwer oder oft fehlschlug.
 2. Ringpuffer (immer-an, retroaktiver Schnitt): Engine vorhanden, aber der
    CLI-Trigger/Hintergrund-Daemon ist noch nicht gebaut (siehe ROADMAP.md). Aktuell
    bitte die manuelle Aufnahme nutzen.
-3. Ergebnis: `<recordings_dir>/<name>.clirec` (+ `<name>.clirec.frames/` als Beleg).
+3. Ergebnis: `<recordings_dir>/<name>.clirec`. Ein Host kann zusätzlich einen
+   Frame-Grabber injizieren; nur dann entsteht `<name>.clirec.frames/` als Beleg.
 
 ## Referenzieren (Verweis-Konvention)
 Im Ziel-Skill den **relativen Pfad** zur `.clirec` nennen und beschreiben, **wann** sie
@@ -44,8 +45,12 @@ und die passende `.clirec` referenzieren, **wenn sie funktioniert**. Kein automa
 Export nötig — die Verknüpfung lebt im Skript-Text.
 
 ## Datenschutz
-Systemweiter Mitschnitt ist sensibel. Passwortfelder werden im Mitschnitt maskiert
-(`***`). Ein globaler Pause-Hotkey ist GEPLANT (Config `pause_hotkey`, noch nicht
+Systemweiter Mitschnitt ist sensibel. Im sicheren Standard wird jede Texteingabe,
+einschließlich Passwort-Eingaben, als `${input_N}` parameterisiert und nicht im Klartext
+gespeichert. Beim Replay ist
+der Wert per `--param input_N=Wert` anzugeben. `--allow-unmasked-input` schaltet
+diesen Schutz ausdrücklich für die ganze Sitzung ab. Ein globaler Pause-Hotkey ist
+GEPLANT (Config `pause_hotkey`, noch nicht
 verdrahtet — siehe ROADMAP.md); aktuell kann der Mitschnitt nur programmatisch
 (`set_paused`) bzw. durch Beenden von `clirec start` (Strg+C) gestoppt werden. In der
 öffentlichen Version ist der Ringpuffer standardmäßig **aus**.

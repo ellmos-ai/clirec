@@ -6,7 +6,7 @@
 |---|---|---|
 | Paketkern | grün | Kernpaket ohne Laufzeitabhängigkeiten; Tests decken Format, Recorder, Replay, Capture und CLI ab. |
 | Release-Gate | grün | Final Gate Check ist nach Ergänzung der Mindest-Ignore-Regeln und dieses TODOs bestanden. |
-| Datenschutz | beobachtet | Aufnahmen können sensible UI-Inhalte enthalten; Passwortfelder werden maskiert, aber Review vor Veröffentlichung bleibt Pflicht. |
+| Datenschutz | grün/beobachtet | Tastatureingaben werden standardmäßig vollständig parameterisiert; UI-Metadaten und explizit unmaskierte Sitzungen erfordern weiterhin Review. |
 | Integration | beobachtet | `open-compute` lädt `clirec` lazy; echte Executor-Replay-Smokes bleiben integrationsseitig zu prüfen. |
 | Veröffentlichung | offen | Paketveröffentlichung und Plattform-Smokes noch nicht dokumentiert abgeschlossen. |
 

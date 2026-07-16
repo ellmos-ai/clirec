@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from .base import CaptureBackend, RawEvent
+from collections.abc import Callable
+
+from .base import RawEvent
 
 
 class MockCaptureBackend:
@@ -10,6 +12,13 @@ class MockCaptureBackend:
         self._events = list(events)
         self._paused = False
         self._started = False
+        self._sensitive_provider: Callable[[], bool | None] | None = None
+
+    def available(self) -> bool:
+        return True
+
+    def set_sensitive_provider(self, provider: Callable[[], bool | None] | None) -> None:
+        self._sensitive_provider = provider
 
     def start(self) -> None:
         self._started = True
