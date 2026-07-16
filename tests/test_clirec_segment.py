@@ -6,8 +6,10 @@ class FakeProbe:
     def __init__(self, pw=False, elem=None):
         self._pw = pw
         self._elem = elem or {"name": "Btn", "window": "Win", "role": "button"}
+
     def element_at(self, x, y):
         return self._elem
+
     def is_password_focused(self):
         return self._pw
 
@@ -18,8 +20,10 @@ class UnknownPasswordProbe(FakeProbe):
 
 
 def test_click_from_down_up_same_point():
-    evts = [RawEvent("mouse_down", 0.0, x=100, y=50, button="left"),
-            RawEvent("mouse_up", 0.05, x=101, y=50, button="left")]
+    evts = [
+        RawEvent("mouse_down", 0.0, x=100, y=50, button="left"),
+        RawEvent("mouse_up", 0.05, x=101, y=50, button="left"),
+    ]
     steps = events_to_steps(evts, probe=FakeProbe())
     assert len(steps) == 1
     assert steps[0].action == "click" and steps[0].x == 100 and steps[0].btn == "left"
@@ -27,8 +31,10 @@ def test_click_from_down_up_same_point():
 
 
 def test_drag_when_points_differ():
-    evts = [RawEvent("mouse_down", 0.0, x=10, y=10, button="left"),
-            RawEvent("mouse_up", 0.2, x=200, y=80, button="left")]
+    evts = [
+        RawEvent("mouse_down", 0.0, x=10, y=10, button="left"),
+        RawEvent("mouse_up", 0.2, x=200, y=80, button="left"),
+    ]
     steps = events_to_steps(evts)
     assert steps[0].action == "left_click_drag"
     assert (steps[0].end_x, steps[0].end_y) == (200, 80)
@@ -41,8 +47,11 @@ def test_chars_merge_into_type():
 
 
 def test_password_focus_masks_text():
-    evts = [RawEvent("char", 0.0, char="s"), RawEvent("char", 0.1, char="e"),
-            RawEvent("char", 0.2, char="c")]
+    evts = [
+        RawEvent("char", 0.0, char="s"),
+        RawEvent("char", 0.1, char="e"),
+        RawEvent("char", 0.2, char="c"),
+    ]
     steps = events_to_steps(evts, probe=FakeProbe(pw=True))
     assert steps[0].text == "***"
 
@@ -74,19 +83,31 @@ def test_modifier_state_survives_release_of_other_side():
 def test_sensitive_modified_key_never_serializes_literal_combo():
     events = [
         RawEvent(
-            "key_down", 0.0, key="shift_l", sensitive=True,
+            "key_down",
+            0.0,
+            key="shift_l",
+            sensitive=True,
             sensitive_captured=True,
         ),
         RawEvent(
-            "key_down", 0.1, key="p", sensitive=True,
+            "key_down",
+            0.1,
+            key="p",
+            sensitive=True,
             sensitive_captured=True,
         ),
         RawEvent(
-            "key_up", 0.2, key="p", sensitive=True,
+            "key_up",
+            0.2,
+            key="p",
+            sensitive=True,
             sensitive_captured=True,
         ),
         RawEvent(
-            "key_up", 0.3, key="shift_l", sensitive=True,
+            "key_up",
+            0.3,
+            key="shift_l",
+            sensitive=True,
             sensitive_captured=True,
         ),
     ]

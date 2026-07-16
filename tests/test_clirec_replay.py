@@ -7,9 +7,11 @@ from clirec.replay import ReplayAction, ReplayNotExecutedError, replay
 class FakeExec:
     width = 1000
     height = 500
+
     def __init__(self, fail_points=None):
         self.executed = []
         self._fail_points = fail_points or set()
+
     def execute(self, action: ReplayAction):
         # Fail if this normalized x is configured to fail
         if action.x is not None and round(action.x, 3) in self._fail_points:
@@ -19,11 +21,17 @@ class FakeExec:
 
 
 def test_dumb_replay_executes_all_steps():
-    rec = Recording("t", "now", "H", "1000x500", steps=[
-        Step(1, 0.0, "click", x=500, y=250, btn="left"),
-        Step(2, 0.1, "type", text="hi"),
-        Step(3, 0.2, "key", keys="enter"),
-    ])
+    rec = Recording(
+        "t",
+        "now",
+        "H",
+        "1000x500",
+        steps=[
+            Step(1, 0.0, "click", x=500, y=250, btn="left"),
+            Step(2, 0.1, "type", text="hi"),
+            Step(3, 0.2, "key", keys="enter"),
+        ],
+    )
     ex = FakeExec()
     rep = replay(rec, ex)
     assert rep.total == 3 and rep.ok == 3 and rep.failures == []
@@ -34,8 +42,9 @@ def test_dumb_replay_executes_all_steps():
 
 
 def test_param_substitution_in_replay():
-    rec = Recording("t", "now", "H", "1000x500", steps=[
-        Step(1, 0.0, "type", text="${msg}")])
+    rec = Recording(
+        "t", "now", "H", "1000x500", steps=[Step(1, 0.0, "type", text="${msg}")]
+    )
     ex = FakeExec()
     replay(rec, ex, params={"msg": "hello"})
     assert ex.executed[0].text == "hello"
@@ -56,8 +65,13 @@ def test_param_default_is_used_in_replay():
 
 
 def test_adaptive_fallback_used_when_dumb_fails():
-    rec = Recording("t", "now", "H", "1000x500", steps=[
-        Step(1, 0.0, "click", x=500, y=250, btn="left")])
+    rec = Recording(
+        "t",
+        "now",
+        "H",
+        "1000x500",
+        steps=[Step(1, 0.0, "click", x=500, y=250, btn="left")],
+    )
     ex = FakeExec(fail_points={0.5})  # dumb (0.5) fails
     rep = replay(rec, ex, locate=lambda step: (0.8, 0.8))  # relocated
     assert rep.ok == 1 and rep.fallbacks == 1 and rep.failures == []
@@ -66,7 +80,10 @@ def test_adaptive_fallback_used_when_dumb_fails():
 
 def test_locator_failure_is_reported_without_escaping():
     rec = Recording(
-        "t", "now", "H", "1000x500",
+        "t",
+        "now",
+        "H",
+        "1000x500",
         steps=[Step(1, 0.0, "click", x=500, y=250, btn="left")],
     )
     ex = FakeExec(fail_points={0.5})
@@ -80,8 +97,13 @@ def test_locator_failure_is_reported_without_escaping():
 
 
 def test_failure_recorded_when_both_paths_fail():
-    rec = Recording("t", "now", "H", "1000x500", steps=[
-        Step(1, 0.0, "click", x=500, y=250, btn="left")])
+    rec = Recording(
+        "t",
+        "now",
+        "H",
+        "1000x500",
+        steps=[Step(1, 0.0, "click", x=500, y=250, btn="left")],
+    )
     ex = FakeExec(fail_points={0.5, 0.8})
     rep = replay(rec, ex, locate=lambda step: (0.8, 0.8))
     assert rep.ok == 0 and len(rep.failures) == 1

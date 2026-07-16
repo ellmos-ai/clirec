@@ -40,15 +40,23 @@ _BTN_UP = {WM_LBUTTONUP: "left", WM_RBUTTONUP: "right", WM_MBUTTONUP: "middle"}
 
 
 class _MSLLHOOKSTRUCT(ctypes.Structure):
-    _fields_ = [("pt", wintypes.POINT), ("mouseData", wintypes.DWORD),
-                ("flags", wintypes.DWORD), ("time", wintypes.DWORD),
-                ("dwExtraInfo", wintypes.WPARAM)]
+    _fields_ = [
+        ("pt", wintypes.POINT),
+        ("mouseData", wintypes.DWORD),
+        ("flags", wintypes.DWORD),
+        ("time", wintypes.DWORD),
+        ("dwExtraInfo", wintypes.WPARAM),
+    ]
 
 
 class _KBDLLHOOKSTRUCT(ctypes.Structure):
-    _fields_ = [("vkCode", wintypes.DWORD), ("scanCode", wintypes.DWORD),
-                ("flags", wintypes.DWORD), ("time", wintypes.DWORD),
-                ("dwExtraInfo", wintypes.WPARAM)]
+    _fields_ = [
+        ("vkCode", wintypes.DWORD),
+        ("scanCode", wintypes.DWORD),
+        ("flags", wintypes.DWORD),
+        ("time", wintypes.DWORD),
+        ("dwExtraInfo", wintypes.WPARAM),
+    ]
 
 
 _CALLBACK = getattr(ctypes, "WINFUNCTYPE", ctypes.CFUNCTYPE)
@@ -74,11 +82,14 @@ class WinApiCaptureBackend:
     def available(self) -> bool:
         try:
             import platform
+
             return platform.system() == "Windows" and hasattr(ctypes, "windll")
         except Exception:
             return False
 
-    def set_sensitive_provider(self, provider: Callable[[], bool | None] | None) -> None:
+    def set_sensitive_provider(
+        self, provider: Callable[[], bool | None] | None
+    ) -> None:
         self._sensitive_provider = provider
 
     def _sensitive_state(self) -> bool | None:
@@ -165,7 +176,12 @@ class WinApiCaptureBackend:
 
         def kbd_proc(nCode, wParam, lParam):
             message = int(wParam)
-            if nCode >= 0 and message in (WM_KEYDOWN, WM_SYSKEYDOWN, WM_KEYUP, WM_SYSKEYUP):
+            if nCode >= 0 and message in (
+                WM_KEYDOWN,
+                WM_SYSKEYDOWN,
+                WM_KEYUP,
+                WM_SYSKEYUP,
+            ):
                 info = ctypes.cast(lParam, ctypes.POINTER(_KBDLLHOOKSTRUCT)).contents
                 t = time.monotonic() - self._t0
                 name = self._vk_name(info.vkCode)
@@ -174,7 +190,10 @@ class WinApiCaptureBackend:
                     self._held.discard(name)
                     self._emit(
                         RawEvent(
-                            "key_up", t, key=name, sensitive=sensitive,
+                            "key_up",
+                            t,
+                            key=name,
+                            sensitive=sensitive,
                             sensitive_captured=True,
                         )
                     )
@@ -183,7 +202,10 @@ class WinApiCaptureBackend:
                         self._held.add(name)
                         self._emit(
                             RawEvent(
-                                "key_down", t, key=name, sensitive=sensitive,
+                                "key_down",
+                                t,
+                                key=name,
+                                sensitive=sensitive,
                                 sensitive_captured=True,
                             )
                         )
@@ -204,7 +226,10 @@ class WinApiCaptureBackend:
                             key = ch.lower() if ch else name
                             self._emit(
                                 RawEvent(
-                                    "key_down", t, key=key, sensitive=sensitive,
+                                    "key_down",
+                                    t,
+                                    key=key,
+                                    sensitive=sensitive,
                                     sensitive_captured=True,
                                 )
                             )
@@ -246,12 +271,29 @@ class WinApiCaptureBackend:
 
     @staticmethod
     def _vk_name(vk: int) -> str:
-        names = {0x0D: "enter", 0x09: "tab", 0x1B: "esc", 0x08: "backspace",
-                 0x20: "space", 0x2E: "delete", 0x25: "left", 0x26: "up",
-                 0x27: "right", 0x28: "down", 0x10: "shift", 0x11: "ctrl",
-                 0x12: "alt", 0x5B: "win_l", 0x5C: "win_r", 0xA0: "shift_l",
-                 0xA1: "shift_r", 0xA2: "ctrl_l", 0xA3: "ctrl_r", 0xA4: "alt_l",
-                 0xA5: "alt_r"}
+        names = {
+            0x0D: "enter",
+            0x09: "tab",
+            0x1B: "esc",
+            0x08: "backspace",
+            0x20: "space",
+            0x2E: "delete",
+            0x25: "left",
+            0x26: "up",
+            0x27: "right",
+            0x28: "down",
+            0x10: "shift",
+            0x11: "ctrl",
+            0x12: "alt",
+            0x5B: "win_l",
+            0x5C: "win_r",
+            0xA0: "shift_l",
+            0xA1: "shift_r",
+            0xA2: "ctrl_l",
+            0xA3: "ctrl_r",
+            0xA4: "alt_l",
+            0xA5: "alt_r",
+        }
         if 0x30 <= vk <= 0x39 or 0x41 <= vk <= 0x5A:
             return chr(vk).lower()
         return names.get(vk, f"vk_{vk}")
@@ -265,13 +307,17 @@ class WinApiCaptureBackend:
         user32.GetKeyboardState(state)
         state[vk] |= 0x80
         held_vks = {
-            "shift": (0x10,), "shift_l": (0x10, 0xA0),
+            "shift": (0x10,),
+            "shift_l": (0x10, 0xA0),
             "shift_r": (0x10, 0xA1),
-            "ctrl": (0x11,), "ctrl_l": (0x11, 0xA2),
+            "ctrl": (0x11,),
+            "ctrl_l": (0x11, 0xA2),
             "ctrl_r": (0x11, 0xA3),
-            "alt": (0x12,), "alt_l": (0x12, 0xA4),
+            "alt": (0x12,),
+            "alt_l": (0x12, 0xA4),
             "alt_r": (0x12, 0xA5),
-            "win_l": (0x5B,), "win_r": (0x5C,),
+            "win_l": (0x5B,),
+            "win_r": (0x5C,),
         }
         for held in self._held:
             for held_vk in held_vks.get(held, ()):
@@ -285,9 +331,7 @@ class WinApiCaptureBackend:
         # Bit 2 keeps ToUnicodeEx from changing the kernel-mode keyboard
         # buffer (supported since Windows 10 1607). Dead keys return n < 0 and
         # are deliberately not serialized as literal shortcuts.
-        n = user32.ToUnicodeEx(
-            vk, scan, state, buf, len(buf), 0x4, layout
-        )
+        n = user32.ToUnicodeEx(vk, scan, state, buf, len(buf), 0x4, layout)
         if n > 0:
             text = "".join(buf[index] for index in range(min(n, len(buf))))
             if text and text.isprintable():
@@ -320,7 +364,9 @@ class WinApiCaptureBackend:
             raise RuntimeError("WinAPI capture hook initialization timed out")
         if self._error is not None:
             self._thread.join(timeout=2.0)
-            raise RuntimeError(f"WinAPI capture hook initialization failed: {self._error}") from self._error
+            raise RuntimeError(
+                f"WinAPI capture hook initialization failed: {self._error}"
+            ) from self._error
 
     def stop(self) -> None:
         self._stop.set()

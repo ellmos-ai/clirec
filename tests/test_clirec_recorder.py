@@ -9,16 +9,25 @@ import pytest
 
 
 class Clock:
-    def __init__(self): self.t = 0.0
-    def __call__(self): return self.t
+    def __init__(self):
+        self.t = 0.0
+
+    def __call__(self):
+        return self.t
 
 
 def test_start_pump_stop_produces_recording(tmp_path):
-    evts = [RawEvent("mouse_down", 0.0, x=5, y=6, button="left"),
-            RawEvent("mouse_up", 0.0, x=5, y=6, button="left")]
+    evts = [
+        RawEvent("mouse_down", 0.0, x=5, y=6, button="left"),
+        RawEvent("mouse_up", 0.0, x=5, y=6, button="left"),
+    ]
     be = MockCaptureBackend(evts)
-    rec = Recorder(be, config=RecorderConfig(recordings_dir=str(tmp_path)),
-                   host="LAPTOP", resolution="1920x1080")
+    rec = Recorder(
+        be,
+        config=RecorderConfig(recordings_dir=str(tmp_path)),
+        host="LAPTOP",
+        resolution="1920x1080",
+    )
     rec.start("demo")
     rec.pump()
     out = rec.stop()
@@ -35,15 +44,23 @@ def test_save_writes_file(tmp_path):
     path = rec.save(out, "myflow")
     assert path.endswith("myflow.clirec")
     import os
+
     assert os.path.exists(path)
 
 
 def test_ringbuffer_cut_last_keeps_recent(tmp_path):
     clk = Clock()
     be = MockCaptureBackend([])
-    rec = Recorder(be, config=RecorderConfig(ringbuffer_enabled=True, ringbuffer_minutes=1,
-                                             recordings_dir=str(tmp_path),
-                                             mask_password_fields=False), clock=clk)
+    rec = Recorder(
+        be,
+        config=RecorderConfig(
+            ringbuffer_enabled=True,
+            ringbuffer_minutes=1,
+            recordings_dir=str(tmp_path),
+            mask_password_fields=False,
+        ),
+        clock=clk,
+    )
     rec.start("buf")
     # inject an old char then a new char via two pumps with advancing clock
     be._events = [RawEvent("char", clk.t, char="old")]
@@ -109,7 +126,9 @@ def test_recorder_preserves_event_metadata_and_frame_evidence(tmp_path):
 
     path = rec.save(out, "evidence")
     frames_dir = path + ".frames"
-    assert (tmp_path / "evidence.clirec.frames" / "0001.png").read_bytes() == b"PNG-EVIDENCE"
+    assert (
+        tmp_path / "evidence.clirec.frames" / "0001.png"
+    ).read_bytes() == b"PNG-EVIDENCE"
     assert frames_dir.endswith("evidence.clirec.frames")
 
 
@@ -174,7 +193,10 @@ def test_safe_default_masks_text_without_calling_probe_from_backend():
     assert backend._sensitive_provider() is True
     backend._events = [
         RawEvent(
-            "char", 0.0, char="never-persist", sensitive=False,
+            "char",
+            0.0,
+            char="never-persist",
+            sensitive=False,
             sensitive_captured=True,
         )
     ]
@@ -219,7 +241,9 @@ def test_ui_metadata_is_bound_when_event_is_pumped():
             RawEvent("mouse_up", 0.1, x=1, y=1, button="left"),
         ]
     )
-    recorder = Recorder(backend, config=RecorderConfig(), probe=probe, resolution="10x10")
+    recorder = Recorder(
+        backend, config=RecorderConfig(), probe=probe, resolution="10x10"
+    )
     recorder.start("metadata")
     recorder.pump()
     probe.name = "different-control-at-stop"
@@ -269,14 +293,18 @@ def test_failed_backend_stop_remains_retryable():
     ["../escaped", "..\\escaped", "..", "a/b", "a:b", "CON", "LPT9.txt", "trail."],
 )
 def test_save_rejects_names_that_escape_recordings_dir(tmp_path, name):
-    rec = Recorder(MockCaptureBackend([]), config=RecorderConfig(recordings_dir=str(tmp_path)))
+    rec = Recorder(
+        MockCaptureBackend([]), config=RecorderConfig(recordings_dir=str(tmp_path))
+    )
     model = rec._build([])
     with pytest.raises(ValueError, match="local filename"):
         rec.save(model, name)
 
 
 def test_save_is_no_overwrite_and_leaves_no_orphan_frames_on_validation_error(tmp_path):
-    rec = Recorder(MockCaptureBackend([]), config=RecorderConfig(recordings_dir=str(tmp_path)))
+    rec = Recorder(
+        MockCaptureBackend([]), config=RecorderConfig(recordings_dir=str(tmp_path))
+    )
     rec._title = "valid"
     valid = rec._build([])
     rec.save(valid, "same")
@@ -300,9 +328,7 @@ def test_save_rejects_missing_and_orphan_frame_evidence(tmp_path):
     recorder._title = "frames"
 
     missing = recorder._build([])
-    missing.steps = [
-        Step(1, 0.0, "click", x=1, y=1, btn="left", frame="missing.png")
-    ]
+    missing.steps = [Step(1, 0.0, "click", x=1, y=1, btn="left", frame="missing.png")]
     with pytest.raises(ValueError, match="missing frame data"):
         recorder.save(missing, "missing")
 

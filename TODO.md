@@ -5,14 +5,13 @@
 | Category | Status | Hinweis |
 |---|---|---|
 | Paketkern | grün | Kernpaket ohne Laufzeitabhängigkeiten; Tests decken Format, Recorder, Replay, Capture und CLI ab. |
-| Release-Gate | grün | Final Gate Check ist nach Ergänzung der Mindest-Ignore-Regeln und dieses TODOs bestanden. |
+| Release-Gate | grün | Quell-, Paket-, Wheel-Installations- und CLI-Smokes sind in `RELEASE_GATE.md` dokumentiert. |
 | Datenschutz | grün/beobachtet | Tastatureingaben werden standardmäßig vollständig parameterisiert; UI-Metadaten und explizit unmaskierte Sitzungen erfordern weiterhin Review. |
 | Integration | beobachtet | `open-compute` lädt `clirec` lazy; echte Executor-Replay-Smokes bleiben integrationsseitig zu prüfen. |
 | Veröffentlichung | offen | Paketveröffentlichung und Plattform-Smokes noch nicht dokumentiert abgeschlossen. |
 
 ## Nächste sinnvolle Schritte
 
-- Vor der ersten Paketveröffentlichung `python -m pip wheel . --no-deps --wheel-dir <temp>` und einen installierten `clirec --help`-Smoke dokumentieren.
 - Optionalen `pynput`-Record-Pfad auf einer Nicht-Windows-Plattform prüfen.
 - `open-compute`-Replay mit einem realen Executor als Integrations-Smoke nachziehen.
 - Entscheiden, ob ein globaler Pause-Hotkey oder Daemon-Trigger vor dem nächsten Alpha-Tag umgesetzt wird.

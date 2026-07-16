@@ -20,7 +20,10 @@ from .format import Recording, write
 from .segment import events_to_steps
 
 _WINDOWS_RESERVED_NAMES = {
-    "CON", "PRN", "AUX", "NUL",
+    "CON",
+    "PRN",
+    "AUX",
+    "NUL",
     *(f"COM{index}" for index in range(1, 10)),
     *(f"LPT{index}" for index in range(1, 10)),
 }
@@ -64,14 +67,24 @@ class RecorderConfig:
 def _now_iso() -> str:
     # local time without importing datetime.now at module import; cheap + ok here
     import datetime
+
     return datetime.datetime.now().replace(microsecond=0).isoformat()
 
 
 class Recorder:
-    def __init__(self, backend, *, config: RecorderConfig, probe=None,
-                 frame_grabber=None, host: str = "HOST", resolution: str = "0x0",
-                 origin_x: int = 0, origin_y: int = 0,
-                 clock=time.monotonic):
+    def __init__(
+        self,
+        backend,
+        *,
+        config: RecorderConfig,
+        probe=None,
+        frame_grabber=None,
+        host: str = "HOST",
+        resolution: str = "0x0",
+        origin_x: int = 0,
+        origin_y: int = 0,
+        clock=time.monotonic,
+    ):
         self.backend = backend
         self.config = config
         self.probe = probe
@@ -148,7 +161,10 @@ class Recorder:
         for event in events:
             if event.kind not in {"mouse_down", "wheel"} or event.ui_captured:
                 continue
-            if any(value is not None for value in (event.ui_name, event.ui_window, event.ui_role)):
+            if any(
+                value is not None
+                for value in (event.ui_name, event.ui_window, event.ui_role)
+            ):
                 event.ui_captured = True
                 continue
             element = None
@@ -180,8 +196,9 @@ class Recorder:
         base = events[0].t if events else 0.0
         for e in events:
             rel.append(replace(e, t=e.t - base))
-        steps = events_to_steps(rel, probe=self.probe,
-                                mask_passwords=self.config.mask_password_fields)
+        steps = events_to_steps(
+            rel, probe=self.probe, mask_passwords=self.config.mask_password_fields
+        )
         params = []
         if self.config.mask_password_fields:
             for step in steps:
@@ -199,10 +216,17 @@ class Recorder:
             for step in steps
             if step.frame is not None and step.frame in self._frames
         }
-        return Recording(title=self._title, created=_now_iso(), host=self.host,
-                         resolution=self.resolution, params=params, steps=steps,
-                         origin_x=self.origin_x, origin_y=self.origin_y,
-                         _frame_data=referenced_frames)
+        return Recording(
+            title=self._title,
+            created=_now_iso(),
+            host=self.host,
+            resolution=self.resolution,
+            params=params,
+            steps=steps,
+            origin_x=self.origin_x,
+            origin_y=self.origin_y,
+            _frame_data=referenced_frames,
+        )
 
     def stop(self) -> Recording:
         stopped = not self._running
@@ -251,7 +275,9 @@ class Recorder:
             raise ValueError("frame evidence is inconsistent: " + "; ".join(details))
 
         for frame_name, png in rec._frame_data.items():
-            if Path(frame_name).name != frame_name or not frame_name.lower().endswith(".png"):
+            if Path(frame_name).name != frame_name or not frame_name.lower().endswith(
+                ".png"
+            ):
                 raise ValueError(f"invalid frame filename: {frame_name!r}")
             if not isinstance(png, bytes):
                 raise TypeError(f"frame {frame_name!r} must contain bytes")

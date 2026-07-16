@@ -13,7 +13,14 @@ def test_skill_exists_and_has_frontmatter():
 
 def test_skill_documents_required_topics():
     text = open(SKILL, encoding="utf-8").read().lower()
-    for needle in ["clirec start", ".clirec", "selbst", "passwort", "ringpuffer", "referenz"]:
+    for needle in [
+        "clirec start",
+        ".clirec",
+        "selbst",
+        "passwort",
+        "ringpuffer",
+        "referenz",
+    ]:
         assert needle in text, f"missing topic: {needle}"
 
 

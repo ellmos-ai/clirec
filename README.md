@@ -1,6 +1,7 @@
 # clirec
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
+[![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 
 `clirec` records mouse and keyboard demonstrations as human-readable `.clirec`
 files and replays them through an injected executor. It is built for agent and
@@ -61,5 +62,10 @@ report = replay(recording, executor)
 
 ```bash
 python -m pytest -q
+python -m ruff check clirec tests
+python -m ruff format --check clirec tests
 python -m compileall -q clirec tests
 ```
+
+See [RELEASE_GATE.md](RELEASE_GATE.md) for the current package and platform
+verification boundary.

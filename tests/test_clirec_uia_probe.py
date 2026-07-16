@@ -1,4 +1,5 @@
 """Test: optional UIA probe (DefaultProbe) with graceful degradation."""
+
 from clirec.uia_probe import DefaultProbe
 
 
@@ -17,6 +18,7 @@ def test_probe_element_at_uses_loaded_backend(monkeypatch):
     class FakeUia:
         def element_from_point(self, x, y):
             return {"name": "OK", "window": "Dlg", "role": "button"}
+
         def focused_is_password(self):
             return True
 

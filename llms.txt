@@ -1,4 +1,4 @@
-## Last-checked: 2026-07-05
+## Last-checked: 2026-07-17
 
 # clirec
 
@@ -26,6 +26,7 @@ verbal instruction.
 - `clirec/` - Core package.
 - `tests/` - Regression and smoke tests.
 - `.github/workflows/tests.yml` - Python test workflow.
+- `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
 
 ## Search Phrases
 
@@ -41,4 +42,5 @@ open-compute clirec replay recordings
 
 `clirec` is not a hosted telemetry service, a video recorder, or a full GUI
 automation platform. Replay stays backend-neutral and needs an executor
-integration.
+integration. Safe recordings parameterize keyboard text; UI metadata and
+explicitly unmasked sessions still require review before sharing.

@@ -30,7 +30,9 @@ def merge_config(overrides: dict[str, Any] | None = None) -> dict[str, Any]:
     return {**DEFAULT_CONFIG, **overrides}
 
 
-def recorder_config_from_dict(overrides: dict[str, Any] | None = None) -> RecorderConfig:
+def recorder_config_from_dict(
+    overrides: dict[str, Any] | None = None,
+) -> RecorderConfig:
     """Map a plain config dictionary to ``RecorderConfig``."""
 
     c = merge_config(overrides)

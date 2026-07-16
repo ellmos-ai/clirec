@@ -5,4 +5,4 @@ them. Host projects can integrate replay by adapting ``ReplayAction`` to their
 own executor/action model.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

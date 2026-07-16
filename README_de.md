@@ -1,6 +1,7 @@
 # clirec
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
+[![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 
 `clirec` speichert Maus-/Tastatur-Demonstrationen als menschenlesbare
 `.clirec`-Dateien und spielt sie über einen injizierten Executor wieder ab.
@@ -35,5 +36,9 @@ unsichere Freigabe; solche Aufnahmen müssen vor dem Teilen geprüft werden.
 
 ```bash
 python -m pytest -q
+python -m ruff check clirec tests
+python -m ruff format --check clirec tests
 python -m compileall -q clirec tests
 ```
+
+Die aktuelle Paket- und Plattformgrenze steht in [RELEASE_GATE.md](RELEASE_GATE.md).

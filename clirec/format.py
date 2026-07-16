@@ -66,7 +66,9 @@ class Recording:
     steps: list[Step] = field(default_factory=list)
     origin_x: int = 0
     origin_y: int = 0
-    _frame_data: dict[str, bytes] = field(default_factory=dict, repr=False, compare=False)
+    _frame_data: dict[str, bytes] = field(
+        default_factory=dict, repr=False, compare=False
+    )
 
 
 def _q(value: str) -> str:
@@ -82,7 +84,9 @@ def _unq(value: str) -> str:
     return value
 
 
-def _single_line(value: object, label: str, problems: list[str], *, required: bool = False) -> None:
+def _single_line(
+    value: object, label: str, problems: list[str], *, required: bool = False
+) -> None:
     if not isinstance(value, str):
         problems.append(f"{label} must be a string")
     elif "\n" in value or "\r" in value:
@@ -99,7 +103,9 @@ def _resolution(value: str) -> tuple[int, int] | None:
     return (width, height) if width > 0 and height > 0 else None
 
 
-def recording_problems(rec: Recording, *, require_replayable: bool = False) -> list[str]:
+def recording_problems(
+    rec: Recording, *, require_replayable: bool = False
+) -> list[str]:
     """Return structural and semantic problems for an in-memory recording."""
 
     problems: list[str] = []
@@ -148,7 +154,11 @@ def recording_problems(rec: Recording, *, require_replayable: bool = False) -> l
             continue
         if step.index != position:
             problems.append(f"{prefix} index must be {position}, got {step.index!r}")
-        if not isinstance(step.t, (int, float)) or isinstance(step.t, bool) or not math.isfinite(step.t):
+        if (
+            not isinstance(step.t, (int, float))
+            or isinstance(step.t, bool)
+            or not math.isfinite(step.t)
+        ):
             problems.append(f"{prefix} time must be finite")
         elif step.t < 0 or step.t < previous_t:
             problems.append(f"{prefix} time must be non-negative and monotonic")
@@ -165,7 +175,9 @@ def recording_problems(rec: Recording, *, require_replayable: bool = False) -> l
         coordinate_names = ("x", "y", "end_x", "end_y")
         for field_name in coordinate_names:
             value = getattr(step, field_name)
-            if value is not None and (not isinstance(value, int) or isinstance(value, bool)):
+            if value is not None and (
+                not isinstance(value, int) or isinstance(value, bool)
+            ):
                 problems.append(f"{prefix} {field_name} must be an integer")
         if (step.x is None) != (step.y is None):
             problems.append(f"{prefix} x and y must appear together")
@@ -187,10 +199,14 @@ def recording_problems(rec: Recording, *, require_replayable: bool = False) -> l
                 problems.append(f"{prefix} type requires text")
             elif require_replayable:
                 if step.text == "***":
-                    problems.append(f"{prefix} contains masked text without a parameter")
+                    problems.append(
+                        f"{prefix} contains masked text without a parameter"
+                    )
                 unresolved = sorted(set(_PLACEHOLDER.findall(step.text)))
                 if unresolved:
-                    problems.append(f"{prefix} has unresolved parameters: {', '.join(unresolved)}")
+                    problems.append(
+                        f"{prefix} has unresolved parameters: {', '.join(unresolved)}"
+                    )
         elif step.action == "key":
             _single_line(step.keys, f"{prefix} keys", problems, required=True)
         elif step.action == "scroll":
@@ -205,7 +221,9 @@ def recording_problems(rec: Recording, *, require_replayable: bool = False) -> l
 
         if step.frame is not None:
             _single_line(step.frame, f"{prefix} frame", problems, required=True)
-            if Path(step.frame).name != step.frame or not step.frame.lower().endswith(".png"):
+            if Path(step.frame).name != step.frame or not step.frame.lower().endswith(
+                ".png"
+            ):
                 problems.append(f"{prefix} frame must be a local PNG filename")
 
         if geometry is not None:
@@ -214,9 +232,13 @@ def recording_problems(rec: Recording, *, require_replayable: bool = False) -> l
                 x_value, y_value = getattr(step, x_name), getattr(step, y_name)
                 if isinstance(x_value, int) and isinstance(y_value, int):
                     if not rec.origin_x <= x_value < rec.origin_x + width:
-                        problems.append(f"{prefix} {x_name} lies outside the recorded desktop")
+                        problems.append(
+                            f"{prefix} {x_name} lies outside the recorded desktop"
+                        )
                     if not rec.origin_y <= y_value < rec.origin_y + height:
-                        problems.append(f"{prefix} {y_name} lies outside the recorded desktop")
+                        problems.append(
+                            f"{prefix} {y_name} lies outside the recorded desktop"
+                        )
         elif any(getattr(step, name) is not None for name in coordinate_names):
             problems.append(f"{prefix} has coordinates but resolution is not positive")
 
@@ -323,7 +345,9 @@ def _parse_step(line: str, metadata: str | None) -> Step:
         text=values.get("text"),
         keys=values.get("keys"),
         scroll_dir=values.get("scroll_dir"),
-        scroll_amount=int(values["scroll_amount"]) if "scroll_amount" in values else None,
+        scroll_amount=int(values["scroll_amount"])
+        if "scroll_amount" in values
+        else None,
         ui_name=values.get("ui"),
         ui_window=values.get("window"),
         ui_role=values.get("role"),
@@ -416,7 +440,9 @@ def loads(text: str) -> Recording:
         index += 1
 
     try:
-        origin_x, origin_y = (int(value) for value in header.get("origin", "0,0").split(",", 1))
+        origin_x, origin_y = (
+            int(value) for value in header.get("origin", "0,0").split(",", 1)
+        )
     except (TypeError, ValueError) as exc:
         raise ValueError("origin must be two comma-separated integers") from exc
     rec = Recording(

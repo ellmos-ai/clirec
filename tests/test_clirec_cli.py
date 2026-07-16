@@ -1,4 +1,5 @@
 """Tests for the clirec CLI."""
+
 import os
 import pytest
 
@@ -7,8 +8,9 @@ from clirec.format import Recording, Step, write
 
 
 def _mk(tmp_path):
-    rec = Recording("t", "now", "H", "1000x500", steps=[
-        Step(1, 0.0, "type", text="${msg}")])
+    rec = Recording(
+        "t", "now", "H", "1000x500", steps=[Step(1, 0.0, "type", text="${msg}")]
+    )
     p = os.path.join(tmp_path, "f.clirec")
     write(rec, p)
     return p

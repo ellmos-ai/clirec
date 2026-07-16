@@ -11,11 +11,27 @@ def _sample() -> fmt.Recording:
         goal="Einen Beitrag posten.",
         params=[{"name": "post_text", "desc": "Der Text", "default": ""}],
         steps=[
-            fmt.Step(index=1, t=0.0, action="click", x=1180, y=64, btn="left",
-                     ui_name="Beitrag starten", ui_window="LinkedIn", ui_role="button",
-                     frame="0001.png"),
-            fmt.Step(index=2, t=1.42, action="type", text="${post_text}",
-                     ui_name="Editor", ui_window="Beitrag", ui_role="edit"),
+            fmt.Step(
+                index=1,
+                t=0.0,
+                action="click",
+                x=1180,
+                y=64,
+                btn="left",
+                ui_name="Beitrag starten",
+                ui_window="LinkedIn",
+                ui_role="button",
+                frame="0001.png",
+            ),
+            fmt.Step(
+                index=2,
+                t=1.42,
+                action="type",
+                text="${post_text}",
+                ui_name="Editor",
+                ui_window="Beitrag",
+                ui_role="edit",
+            ),
         ],
     )
 

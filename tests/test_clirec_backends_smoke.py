@@ -16,7 +16,9 @@ def test_backend_available_is_bool():
     assert isinstance(be.available(), bool)
 
 
-@pytest.mark.skipif(platform.system() != "Windows", reason="Windows keyboard layout API")
+@pytest.mark.skipif(
+    platform.system() != "Windows", reason="Windows keyboard layout API"
+)
 def test_winapi_side_specific_shift_translates_printable_keys():
     import ctypes
 

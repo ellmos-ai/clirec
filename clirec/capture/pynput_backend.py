@@ -22,11 +22,14 @@ class PynputCaptureBackend:
     def available(self) -> bool:
         try:
             import pynput  # noqa: F401
+
             return True
         except Exception:
             return False
 
-    def set_sensitive_provider(self, provider: Callable[[], bool | None] | None) -> None:
+    def set_sensitive_provider(
+        self, provider: Callable[[], bool | None] | None
+    ) -> None:
         self._sensitive_provider = provider
 
     def _sensitive_state(self) -> bool | None:
@@ -57,23 +60,49 @@ class PynputCaptureBackend:
             if self._paused:
                 return
             kind = "mouse_down" if pressed else "mouse_up"
-            self._q.put(RawEvent(kind, time.monotonic() - self._t0,
-                                 x=int(x), y=int(y), button=button.name))
+            self._q.put(
+                RawEvent(
+                    kind,
+                    time.monotonic() - self._t0,
+                    x=int(x),
+                    y=int(y),
+                    button=button.name,
+                )
+            )
 
         def on_scroll(x, y, dx, dy):
             if self._paused:
                 return
-            self._q.put(RawEvent("wheel", time.monotonic() - self._t0,
-                                 x=int(x), y=int(y), delta=int(dy)))
+            self._q.put(
+                RawEvent(
+                    "wheel",
+                    time.monotonic() - self._t0,
+                    x=int(x),
+                    y=int(y),
+                    delta=int(dy),
+                )
+            )
 
         def on_press(key):
             if self._paused:
                 return
             name = key_name(key)
             sensitive = self._sensitive_state()
-            if name in {"ctrl", "ctrl_l", "ctrl_r", "alt", "alt_l", "alt_r",
-                        "alt_gr", "shift", "shift_l", "shift_r", "cmd", "cmd_l",
-                        "cmd_r"}:
+            if name in {
+                "ctrl",
+                "ctrl_l",
+                "ctrl_r",
+                "alt",
+                "alt_l",
+                "alt_r",
+                "alt_gr",
+                "shift",
+                "shift_l",
+                "shift_r",
+                "cmd",
+                "cmd_l",
+                "cmd_r",
+            }:
                 self._held.add(name)
                 self._q.put(
                     RawEvent(

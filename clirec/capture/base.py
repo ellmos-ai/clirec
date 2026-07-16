@@ -28,7 +28,9 @@ class RawEvent:
 @runtime_checkable
 class CaptureBackend(Protocol):
     def available(self) -> bool: ...
-    def set_sensitive_provider(self, provider: Callable[[], bool | None] | None) -> None: ...
+    def set_sensitive_provider(
+        self, provider: Callable[[], bool | None] | None
+    ) -> None: ...
     def start(self) -> None: ...
     def stop(self) -> None: ...
     def poll(self) -> list[RawEvent]: ...
@@ -96,12 +98,15 @@ def get_backend(name: str | None = None) -> CaptureBackend:
     chosen = name or ("winapi" if platform.system() == "Windows" else "pynput")
     if chosen == "mock":
         from .mock import MockCaptureBackend
+
         return MockCaptureBackend([])
     if chosen == "winapi":
         from .winapi import WinApiCaptureBackend  # Task 9
+
         return WinApiCaptureBackend()
     if chosen == "pynput":
         from .pynput_backend import PynputCaptureBackend  # Task 9
+
         return PynputCaptureBackend()
     raise RuntimeError(f"unknown capture backend: {chosen!r}")
 

@@ -15,6 +15,7 @@ class _UiaAdapter:
 
     def __init__(self):
         import uiautomation as auto  # raises ImportError if extra missing
+
         self._auto = auto
 
     def element_from_point(self, x: int, y: int):

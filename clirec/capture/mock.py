@@ -17,7 +17,9 @@ class MockCaptureBackend:
     def available(self) -> bool:
         return True
 
-    def set_sensitive_provider(self, provider: Callable[[], bool | None] | None) -> None:
+    def set_sensitive_provider(
+        self, provider: Callable[[], bool | None] | None
+    ) -> None:
         self._sensitive_provider = provider
 
     def start(self) -> None:

@@ -12,12 +12,22 @@ from .format import Step
 
 _DRAG_THRESHOLD_PX = 5
 _MODIFIERS = {
-    "ctrl": "ctrl", "ctrl_l": "ctrl", "ctrl_r": "ctrl",
-    "alt": "alt", "alt_l": "alt", "alt_r": "alt",
+    "ctrl": "ctrl",
+    "ctrl_l": "ctrl",
+    "ctrl_r": "ctrl",
+    "alt": "alt",
+    "alt_l": "alt",
+    "alt_r": "alt",
     "alt_gr": "altgr",
-    "shift": "shift", "shift_l": "shift", "shift_r": "shift",
-    "cmd": "win", "cmd_l": "win", "cmd_r": "win", "win": "win",
-    "win_l": "win", "win_r": "win",
+    "shift": "shift",
+    "shift_l": "shift",
+    "shift_r": "shift",
+    "cmd": "win",
+    "cmd_l": "win",
+    "cmd_r": "win",
+    "win": "win",
+    "win_l": "win",
+    "win_r": "win",
 }
 _MODIFIER_ORDER = ("ctrl", "alt", "shift", "win")
 
@@ -115,9 +125,17 @@ def events_to_steps(events, *, probe=None, mask_passwords: bool = True) -> list[
             else:
                 if d.button != "left":
                     raise ValueError(f"unsupported drag button: {d.button!r}")
-                s = Step(index=0, t=d.t, action="left_click_drag",
-                         x=d.x, y=d.y, end_x=e.x, end_y=e.y, btn=d.button,
-                         frame=d.frame)
+                s = Step(
+                    index=0,
+                    t=d.t,
+                    action="left_click_drag",
+                    x=d.x,
+                    y=d.y,
+                    end_x=e.x,
+                    end_y=e.y,
+                    btn=d.button,
+                    frame=d.frame,
+                )
             add(_enrich(s, d, probe, d.x, d.y))
             i += 1
             continue
@@ -151,8 +169,23 @@ def events_to_steps(events, *, probe=None, mask_passwords: bool = True) -> list[
                 i += 1
                 continue
             direction = "up" if (e.delta or 0) > 0 else "down"
-            add(_enrich(Step(index=0, t=e.t, action="scroll", x=e.x, y=e.y,
-                             scroll_dir=direction, scroll_amount=amt), e, probe, e.x, e.y))
+            add(
+                _enrich(
+                    Step(
+                        index=0,
+                        t=e.t,
+                        action="scroll",
+                        x=e.x,
+                        y=e.y,
+                        scroll_dir=direction,
+                        scroll_amount=amt,
+                    ),
+                    e,
+                    probe,
+                    e.x,
+                    e.y,
+                )
+            )
             i += 1
             continue
         if e.kind == "key_down" and e.key:
@@ -163,12 +196,12 @@ def events_to_steps(events, *, probe=None, mask_passwords: bool = True) -> list[
                 i += 1
                 continue
             active_modifiers = set(held_modifiers.values())
-            is_altgr_text = "altgr" in active_modifiers or {
-                "ctrl", "alt"
-            } <= active_modifiers
-            is_shortcut = bool(
-                active_modifiers & {"ctrl", "alt", "win"}
-            ) and not is_altgr_text
+            is_altgr_text = (
+                "altgr" in active_modifiers or {"ctrl", "alt"} <= active_modifiers
+            )
+            is_shortcut = (
+                bool(active_modifiers & {"ctrl", "alt", "win"}) and not is_altgr_text
+            )
             if (
                 mask_passwords
                 and len(raw_key) == 1

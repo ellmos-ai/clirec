@@ -60,11 +60,17 @@ def _res(rec: Recording) -> tuple[int, int]:
         return (0, 0)
 
 
-def _to_action(step: Step, nx: float | None, ny: float | None,
-               end: tuple[float | None, float | None] = (None, None)) -> ReplayAction:
+def _to_action(
+    step: Step,
+    nx: float | None,
+    ny: float | None,
+    end: tuple[float | None, float | None] = (None, None),
+) -> ReplayAction:
     a = step.action
     if a == "click":
-        return ReplayAction(_CLICK_BTN.get(step.btn or "left", "left_click"), x=nx, y=ny)
+        return ReplayAction(
+            _CLICK_BTN.get(step.btn or "left", "left_click"), x=nx, y=ny
+        )
     if a == "left_click_drag":
         return ReplayAction("left_click_drag", x=nx, y=ny, end_x=end[0], end_y=end[1])
     if a == "type":

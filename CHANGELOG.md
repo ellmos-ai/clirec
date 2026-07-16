@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.2.0 - 2026-07-17
+
+- Parameterize all typed text by default so recordings never persist keyboard
+  plaintext unless `--allow-unmasked-input` is explicitly selected.
+- Hardened the `.clirec` parser, atomic/no-overwrite saving, frame-evidence
+  integrity, replay timing/failure handling, and virtual-desktop coordinates.
+- Reworked Windows capture lifecycle, DPI awareness, modifier/dead-key
+  translation, and hook message processing; expanded backend regression tests.
+- Added multi-platform test/package CI, CodeQL, dependency updates, and a
+  documented release gate for the standalone package.
 - Added release-hygiene documentation with `TODO.md`, `SECURITY.md`, and stricter
   local ignore rules for env files, IDE folders, local data, and SQLite files.
 - Added a GitHub Actions test workflow for the standalone package.
