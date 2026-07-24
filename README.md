@@ -32,6 +32,7 @@ pip install git+https://github.com/ellmos-ai/clirec.git
 clirec start login-flow
 clirec validate recordings/login-flow.clirec
 clirec list --dir recordings
+clirec replay recordings/login-flow.clirec --param input_1=value
 ```
 
 The safe recording default never persists typed text. Each text segment becomes

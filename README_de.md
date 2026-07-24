@@ -32,6 +32,22 @@ Textabschnitt wird zu einem Parameter wie `${input_1}` und beim Replay mit
 `--param input_1=Wert` befüllt. `--allow-unmasked-input` ist eine ausdrückliche
 unsichere Freigabe; solche Aufnahmen müssen vor dem Teilen geprüft werden.
 
+## CLI
+
+```bash
+clirec start login-flow
+clirec validate recordings/login-flow.clirec
+clirec list --dir recordings
+clirec replay recordings/login-flow.clirec --param input_1=Wert
+```
+
+Replay ist backend-neutral. Aus Python mit einem Executor-Objekt oder über eine
+Integration wie `open-compute`:
+
+```bash
+oc rec replay recordings/login-flow.clirec
+```
+
 ## Tests
 
 ```bash
