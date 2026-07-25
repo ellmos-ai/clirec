@@ -2,8 +2,14 @@
 
 ## Unreleased
 
-- Updated `llms.txt` index header timestamp to 2026-07-25.
-- Added language switcher links and explicit AI/LLM integration callout blocks in `README.md` and `README_de.md`.
+## 0.2.1 - 2026-07-26
+
+- Added Shields.io badges (CI, CodeQL, Python versions, License) to English and German READMEs.
+- Added GFM callout note highlighting LLM and agent-native design and default privacy parameterization.
+- Added Mermaid system architecture and replay flow diagram to both English and German READMEs.
+- Ensured full German translation parity for the Python API usage section in `README_de.md`.
+- Updated `llms.txt` verification timestamp to 2026-07-26.
+- Updated language switcher links and explicit AI/LLM integration callout blocks in `README.md` and `README_de.md`.
 
 ## 0.2.0 - 2026-07-17
 
