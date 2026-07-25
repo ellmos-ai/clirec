@@ -1,7 +1,12 @@
 # clirec
 
+[English](README.md) | [Deutsch](README_de.md)
+
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
+
+> [!NOTE]
+> **KI / LLM Integration**: Maschinenlesbare Kontexte, LLM-Suchbegriffe und Architektur-Hinweise finden sich in [`llms.txt`](./llms.txt).
 
 `clirec` speichert Maus-/Tastatur-Demonstrationen als menschenlesbare
 `.clirec`-Dateien und spielt sie über einen injizierten Executor wieder ab.

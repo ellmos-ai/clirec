@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Updated `llms.txt` index header timestamp to 2026-07-25.
+- Added language switcher links and explicit AI/LLM integration callout blocks in `README.md` and `README_de.md`.
+
 ## 0.2.0 - 2026-07-17
 
 - Parameterize all typed text by default so recordings never persist keyboard
