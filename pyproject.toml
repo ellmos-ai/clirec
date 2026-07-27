@@ -47,6 +47,7 @@ Changelog = "https://github.com/ellmos-ai/clirec/blob/main/CHANGELOG.md"
 include = ["clirec*"]
 
 [tool.pytest.ini_options]
+pythonpath = "."
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 

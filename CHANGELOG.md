@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Configured `pythonpath = "."` in `pyproject.toml` under `[tool.pytest.ini_options]` for seamless test collection without editable install.
+- Updated `llms.txt` verification timestamp to 2026-07-27.
+- Verified test suite status (87 passed tests in 1.05s).
+
 ## 0.2.1 - 2026-07-26
 
 - Added Shields.io badges (CI, CodeQL, Python versions, License) to English and German READMEs.
