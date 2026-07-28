@@ -46,6 +46,21 @@ def test_chars_merge_into_type():
     assert len(steps) == 1 and steps[0].action == "type" and steps[0].text == "hi"
 
 
+def test_dead_key_is_not_duplicated_before_composed_text():
+    events = [
+        RawEvent("dead_key", 0.0, key="vk_220"),
+        RawEvent("key_up", 0.01, key="vk_220"),
+        RawEvent("char", 0.1, char="ê"),
+        RawEvent("key_up", 0.11, key="e"),
+    ]
+
+    steps = events_to_steps(events, mask_passwords=False)
+
+    assert [(step.action, step.text, step.keys) for step in steps] == [
+        ("type", "ê", None)
+    ]
+
+
 def test_password_focus_masks_text():
     evts = [
         RawEvent("char", 0.0, char="s"),

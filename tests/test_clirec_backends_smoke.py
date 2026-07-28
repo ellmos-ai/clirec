@@ -1,4 +1,5 @@
 import platform
+from types import SimpleNamespace
 
 import pytest
 
@@ -14,6 +15,37 @@ def test_get_backend_auto_returns_capturebackend():
 def test_backend_available_is_bool():
     be = get_backend()
     assert isinstance(be.available(), bool)
+
+
+def test_winapi_translation_identifies_dead_key_without_mutating_buffer(monkeypatch):
+    from clirec.capture import winapi
+
+    class DeadKeyUser32:
+        @staticmethod
+        def GetKeyboardState(_state):
+            return 1
+
+        @staticmethod
+        def GetForegroundWindow():
+            return 0
+
+        @staticmethod
+        def GetKeyboardLayout(_thread_id):
+            return 0x04070407
+
+        @staticmethod
+        def ToUnicodeEx(_vk, _scan, _state, _buffer, _size, flags, _layout):
+            assert flags == 0x4
+            return -1
+
+    monkeypatch.setattr(
+        winapi.ctypes,
+        "windll",
+        SimpleNamespace(user32=DeadKeyUser32()),
+        raising=False,
+    )
+
+    assert winapi.WinApiCaptureBackend()._translate_vk(0xDC, 0x29) == (None, True)
 
 
 @pytest.mark.skipif(

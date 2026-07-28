@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+- Fixed Windows dead-key capture so the physical OEM dead key remains raw
+  evidence but is not duplicated as a replay action before Windows' composed
+  Unicode character.
+- Verified a real `oc rec replay` against Notepad with the production
+  `open-compute` local executor, including parameterized Unicode text, timing,
+  save, and clipboard readback.
+- Verified German `^` + `e` capture and replay as exactly `ê`; documented that
+  IME and mixed-DPI multi-monitor acceptance remain blocked by the current
+  single-monitor host configuration.
+- Expanded the regression suite to 89 passing tests; the sibling
+  `open-compute` suite passes all 452 tests against this checkout.
 - Configured `pythonpath = "."` in `pyproject.toml` under `[tool.pytest.ini_options]` for seamless test collection without editable install.
 - Updated `llms.txt` verification timestamp to 2026-07-27.
 - Verified test suite status (87 passed tests in 1.05s).

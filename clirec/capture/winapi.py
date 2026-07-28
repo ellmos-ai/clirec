@@ -210,9 +210,24 @@ class WinApiCaptureBackend:
                             )
                         )
                     else:
-                        ch = self._vk_to_char(info.vkCode, info.scanCode)
+                        ch, is_dead_key = self._translate_vk(info.vkCode, info.scanCode)
                         held_modifiers = {held.split("_", 1)[0] for held in self._held}
-                        if ch and held_modifiers <= {"shift"}:
+                        if is_dead_key:
+                            # A dead key has no visible standalone result yet.
+                            # Windows emits the composed character for the next
+                            # key (for example "^" + "e" -> "ê"). Keeping the
+                            # physical OEM key as a replay step as well would
+                            # duplicate or corrupt the composed text.
+                            self._emit(
+                                RawEvent(
+                                    "dead_key",
+                                    t,
+                                    key=name,
+                                    sensitive=sensitive,
+                                    sensitive_captured=True,
+                                )
+                            )
+                        elif ch and held_modifiers <= {"shift"}:
                             self._emit(
                                 RawEvent(
                                     "char",
@@ -298,8 +313,14 @@ class WinApiCaptureBackend:
             return chr(vk).lower()
         return names.get(vk, f"vk_{vk}")
 
-    def _vk_to_char(self, vk: int, scan: int) -> str | None:
-        """Translate without mutating the system dead-key keyboard buffer."""
+    def _translate_vk(self, vk: int, scan: int) -> tuple[str | None, bool]:
+        """Return printable text and whether *vk* is a dead key.
+
+        ``ToUnicodeEx`` returns a negative value for a dead key. That state
+        must be distinguished from an ordinary non-printable key so the
+        recorder can wait for Windows' later composed character instead of
+        serializing the physical OEM key as a replay action.
+        """
 
         user32 = ctypes.windll.user32
         buf = ctypes.create_unicode_buffer(8)
@@ -335,8 +356,13 @@ class WinApiCaptureBackend:
         if n > 0:
             text = "".join(buf[index] for index in range(min(n, len(buf))))
             if text and text.isprintable():
-                return text
-        return None
+                return text, False
+        return None, n < 0
+
+    def _vk_to_char(self, vk: int, scan: int) -> str | None:
+        """Compatibility helper returning only printable translated text."""
+
+        return self._translate_vk(vk, scan)[0]
 
     def start(self) -> None:
         if not self.available():

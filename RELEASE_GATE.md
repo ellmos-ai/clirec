@@ -18,7 +18,8 @@
 | Paketbau | grün | `python -m build` und `python -m twine check dist/*` |
 | Wheel-Installation | grün | frische virtuelle Umgebung, `pip install <wheel>`, `pip check` |
 | Installierte CLI | grün | `clirec --help`, `clirec validate`, `clirec list` |
-| Windows Capture | grün | Per-Monitor-DPI, Hook-Start/Stop und Shift-Layout-Smoke |
+| Windows Capture | grün/beobachtet | Per-Monitor-DPI, Hook-Start/Stop, Shift-Layout-Smoke und realer deutscher Dead-Key-Capture-/Replay-Smoke |
+| `open-compute`-Integration | grün | realer `oc rec replay` gegen Notepad mit produktivem `LocalExecutor`, Parameter- und Unicode-Rückleseprüfung |
 | Externer Review | grün | keine verbleibenden konkreten P0/P1/P2; 87 Tests im Review-Snapshot |
 
 ## Sicherheitsgrenze
@@ -33,9 +34,16 @@
 ## Noch nicht live verifiziert
 
 - physischer Capture-Smoke auf macOS/Linux mit dem optionalen `pynput`-Backend,
-- vollständiger Windows-End-to-End-Lauf mit IME/Dead-Key-Eingabe und echtem
-  Multi-Monitor-Mixed-DPI-Aufbau,
-- realer `open-compute`-Executor gegen eine produktive GUI.
+- Windows-IME-Capture mit einem tatsächlich installierten und aktivierten IME,
+- echter Multi-Monitor-Mixed-DPI-Aufbau.
 
 Diese Punkte blockieren den geprüften Alpha-Quellstand nicht, bleiben aber vor
 einer breiteren Plattform- oder Integrationsfreigabe offen.
+
+## Live-Nachweis 2026-07-28
+
+Der reale Windows-Lauf und die Umgebungsgrenzen sind unter
+[`docs/verification/2026-07-28-windows-e2e.md`](docs/verification/2026-07-28-windows-e2e.md)
+protokolliert. Der aktuelle RDP-Host stellt nur einen Monitor mit 1920×1080 bei
+96 DPI und ausschließlich das deutsche Tastaturlayout bereit. IME und
+Multi-Monitor-Mixed-DPI bleiben deshalb ausdrücklich offen.

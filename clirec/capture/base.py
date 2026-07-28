@@ -8,7 +8,7 @@ from typing import Protocol, runtime_checkable
 
 @dataclass
 class RawEvent:
-    kind: str  # mouse_down|mouse_up|mouse_move|wheel|key_down|key_up|char
+    kind: str  # mouse_down|mouse_up|mouse_move|wheel|key_down|key_up|dead_key|char
     t: float
     x: int | None = None
     y: int | None = None
