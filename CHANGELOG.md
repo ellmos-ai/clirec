@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Updated `llms.txt` verification timestamp to 2026-07-30.
+- Synchronized Pytest test badges (`89 passed`) and added Ecosystem (`ellmos-ai`) & Umbrella (`open-bricks`) Shields.io badges in `README.md` & `README_de.md`.
+
 - Fixed Windows dead-key capture so the physical OEM dead key remains raw
   evidence but is not duplicated as a replay action before Windows' composed
   Unicode character.
