@@ -1,6 +1,8 @@
 # clirec
 
-[English](README.md) | [Deutsch](README_de.md)
+<img src="assets/banner.png" width="100%" alt="Clirec Banner">
+
+
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![Pytest Status](https://img.shields.io/badge/pytest-89%20passed-brightgreen.svg)](https://github.com/ellmos-ai/clirec)

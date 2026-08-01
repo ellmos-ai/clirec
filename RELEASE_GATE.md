@@ -2,8 +2,8 @@
 
 ## Stand
 
-- Version: `0.2.0`
-- geprüft: 2026-07-17 auf Windows 11 / Python 3.12
+- Version: `0.2.1`
+- geprüft: 2026-08-01 auf Windows 11 / Python 3.12.10
 - Repository: `https://github.com/ellmos-ai/clirec`
 - Veröffentlichung: Quell- und Wheel-Artefakte sind vorbereitet; ein PyPI-Upload
   oder Git-Tag ist nicht Teil dieses Gates.

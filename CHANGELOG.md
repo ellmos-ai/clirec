@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Updated `llms.txt` and `RELEASE_GATE.md` verification timestamps to 2026-08-01.
+- Technical Hygiene Check (Pfad A): Verified test suite (89 passed), ruff checks 100% green, synchronized header & banner across English & German READMEs.
 - Updated `llms.txt` verification timestamp to 2026-07-30.
 - Synchronized Pytest test badges (`89 passed`) and added Ecosystem (`ellmos-ai`) & Umbrella (`open-bricks`) Shields.io badges in `README.md` & `README_de.md`.
 
