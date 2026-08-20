@@ -12,7 +12,8 @@ import tempfile
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 
-VERSION = 1
+VERSION = 2
+SUPPORTED_VERSIONS = {1, 2}
 STEPS_MARKER = "--- steps ---"
 SUPPORTED_ACTIONS = {"click", "left_click_drag", "type", "key", "scroll"}
 _PARAM_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_-]{0,63}\Z")
@@ -66,7 +67,15 @@ class Recording:
     steps: list[Step] = field(default_factory=list)
     origin_x: int = 0
     origin_y: int = 0
+    version: int = 1
+    manifest_path: str | None = None
+    manifest_sha256: str | None = None
+    media: list[dict] = field(default_factory=list)
+    episode: dict | None = None
     _frame_data: dict[str, bytes] = field(
+        default_factory=dict, repr=False, compare=False
+    )
+    _media_data: dict[str, bytes] = field(
         default_factory=dict, repr=False, compare=False
     )
 
@@ -109,6 +118,25 @@ def recording_problems(
     """Return structural and semantic problems for an in-memory recording."""
 
     problems: list[str] = []
+    if rec.version not in SUPPORTED_VERSIONS:
+        problems.append(f"unsupported recording version: {rec.version!r}")
+    if rec.version == 1 and (rec.manifest_path or rec.media or rec.episode):
+        problems.append("version 1 recordings cannot contain v2 media or episodes")
+    if rec.manifest_path is not None:
+        _single_line(rec.manifest_path, "manifest_path", problems, required=True)
+        path = Path(rec.manifest_path)
+        if path.is_absolute() or ".." in path.parts:
+            problems.append("manifest_path must be a safe relative path")
+    if rec.manifest_sha256 is not None and not re.fullmatch(
+        r"[0-9a-f]{64}", rec.manifest_sha256
+    ):
+        problems.append("manifest_sha256 must be a lowercase SHA-256")
+    if rec.version == 2 and bool(rec.manifest_path) != bool(rec.manifest_sha256):
+        problems.append("manifest path and hash must appear together")
+    if not isinstance(rec.media, list):
+        problems.append("media must be a list")
+    if rec.episode is not None and not isinstance(rec.episode, dict):
+        problems.append("episode must be an object")
     _single_line(rec.title, "title", problems, required=True)
     _single_line(rec.created, "created", problems, required=True)
     _single_line(rec.host, "host", problems, required=True)
@@ -282,13 +310,21 @@ def _fmt_step(step: Step) -> str:
 def dumps(rec: Recording) -> str:
     _raise_if_invalid(rec)
     output = [
-        f"# clirec-version: {VERSION}",
+        f"# clirec-version: {rec.version}",
         f"title: {_q(rec.title)}",
         f"created: {_q(rec.created)}",
         f"host: {_q(rec.host)}",
         f"resolution: {_q(rec.resolution)}",
         f"origin: {rec.origin_x},{rec.origin_y}",
     ]
+    if rec.manifest_path:
+        output.append(f"manifest: {_q(rec.manifest_path)}")
+        output.append(f"manifest-sha256: {_q(rec.manifest_sha256 or '')}")
+    if rec.episode is not None:
+        output.append(
+            "episode-json: "
+            + _q(json.dumps(rec.episode, ensure_ascii=False, sort_keys=True))
+        )
     if rec.goal:
         output.append("goal: |")
         output.extend(f"  {line}" for line in rec.goal.split("\n"))
@@ -363,8 +399,15 @@ def loads(text: str) -> Recording:
     if not isinstance(text, str):
         raise TypeError("clirec input must be text")
     lines = text.splitlines()
-    if not lines or lines[0].strip() != f"# clirec-version: {VERSION}":
-        raise ValueError(f"unsupported or missing clirec version; expected {VERSION}")
+    version_match = (
+        re.fullmatch(r"# clirec-version: (\d+)", lines[0].strip()) if lines else None
+    )
+    version = int(version_match.group(1)) if version_match else 0
+    if version not in SUPPORTED_VERSIONS:
+        raise ValueError(
+            "unsupported or missing clirec version; expected one of "
+            + ", ".join(str(item) for item in sorted(SUPPORTED_VERSIONS))
+        )
     # Only an unindented marker starts the step section.  An identical line in
     # a block-style goal is data and must survive a dumps/loads round trip.
     markers = [index for index, line in enumerate(lines) if line == STEPS_MARKER]
@@ -418,7 +461,16 @@ def loads(text: str) -> Recording:
             raise ValueError(f"bad header line: {line!r}")
         key, value = line.split(":", 1)
         key = key.strip()
-        if key not in {"title", "created", "host", "resolution", "origin"}:
+        if key not in {
+            "title",
+            "created",
+            "host",
+            "resolution",
+            "origin",
+            "manifest",
+            "manifest-sha256",
+            "episode-json",
+        }:
             raise ValueError(f"unknown header: {key}")
         if key in header:
             raise ValueError(f"duplicate header: {key}")
@@ -455,6 +507,12 @@ def loads(text: str) -> Recording:
         goal="\n".join(goal_lines),
         params=params,
         steps=steps,
+        version=version,
+        manifest_path=header.get("manifest"),
+        manifest_sha256=header.get("manifest-sha256"),
+        episode=(
+            json.loads(header["episode-json"]) if "episode-json" in header else None
+        ),
     )
     _raise_if_invalid(rec)
     return rec
@@ -490,8 +548,18 @@ def write(rec: Recording, path: str | os.PathLike) -> None:
 
 
 def read(path: str | os.PathLike) -> Recording:
-    with open(path, "r", encoding="utf-8") as handle:
-        return loads(handle.read())
+    target = Path(path)
+    with open(target, "r", encoding="utf-8") as handle:
+        recording = loads(handle.read())
+    if recording.manifest_path:
+        from .media import load_and_validate_manifest
+
+        recording.media = load_and_validate_manifest(
+            target,
+            recording.manifest_path,
+            recording.manifest_sha256 or "",
+        )
+    return recording
 
 
 def validate(text: str) -> list[str]:
@@ -529,5 +597,8 @@ def apply_params(rec: Recording, values: dict[str, str]) -> Recording:
         rec,
         steps=new_steps,
         params=copy.deepcopy(rec.params),
+        media=copy.deepcopy(rec.media),
+        episode=copy.deepcopy(rec.episode),
         _frame_data=dict(rec._frame_data),
+        _media_data=dict(rec._media_data),
     )

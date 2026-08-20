@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "clirec"
-version = "0.2.1"
+version = "0.3.0"
 description = "Human-readable GUI demonstration recordings for CLI and agent workflows."
 readme = "README.md"
 license = "MIT"
@@ -31,9 +31,10 @@ dependencies = []
 
 [project.optional-dependencies]
 record = ["pynput>=1.7"]
+audio = ["sounddevice>=0.5"]
 uia = ["uiautomation>=2.0; sys_platform == 'win32'"]
 dev = ["build>=1.2", "pytest>=7.0", "ruff>=0.12", "twine>=6.1"]
-all = ["pynput>=1.7", "uiautomation>=2.0; sys_platform == 'win32'"]
+all = ["pynput>=1.7", "sounddevice>=0.5", "uiautomation>=2.0; sys_platform == 'win32'"]
 
 [project.scripts]
 clirec = "clirec.cli:main"

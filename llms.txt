@@ -1,4 +1,4 @@
-## Last-checked: 2026-08-01
+## Last-checked: 2026-08-20
 
 # clirec
 
@@ -7,9 +7,9 @@ Canonical repository: https://github.com/ellmos-ai/clirec
 ## Summary
 
 `clirec` is a local-first Python package for recording mouse and keyboard
-demonstrations as human-readable `.clirec` files. It is meant for CLI and agent
-workflows where a concrete UI demonstration is easier to replay than a long
-verbal instruction.
+demonstrations and explicitly opted-in synchronous microphone commentary.
+Human-readable `.clirec` files remain the commit markers; format v2 stores
+media in relative SHA-256-verified sidecars and keeps v1 readable.
 
 ## Audience
 
@@ -27,6 +27,9 @@ verbal instruction.
 - `tests/` - Regression and smoke tests.
 - `.github/workflows/tests.yml` - Python test workflow.
 - `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
+- `docs/FORMAT_V2.md` - Sidecar, hash, validation, and atomic commit contract.
+- `docs/AUDIO_PRIVACY.md` - Consent, retention, purge, backend, and privacy boundary.
+- `docs/EPISODE_EXPORT.md` - Learning episode and extractor review contract.
 
 ## Search Phrases
 
@@ -36,6 +39,8 @@ human readable .clirec demonstration recording
 ellmos clirec local-first computer-use replay
 record mouse keyboard demonstration for agents
 open-compute clirec replay recordings
+opt-in synchronized audio commentary format v2 media sidecar
+learning episode skill-extractor workflow-extract review export
 ```
 
 ## Boundaries
@@ -43,4 +48,7 @@ open-compute clirec replay recordings
 `clirec` is not a hosted telemetry service, a video recorder, or a full GUI
 automation platform. Replay stays backend-neutral and needs an executor
 integration. Safe recordings parameterize keyboard text; UI metadata and
-explicitly unmasked sessions still require review before sharing.
+explicitly unmasked sessions still require review before sharing. Audio is off
+by default, is never replayed automatically, and is never auto-ingested into a
+memory, policy, workflow, cloud, or repository. CLIRec imports optional audio
+and canonical STT adapters; it does not implement a speech-to-text engine.

@@ -17,9 +17,9 @@ ein Ablauf schwer oder oft fehlschlug.
 
 ## Aufnehmen
 1. `clirec start <name>` — Tätigkeit ausführen — `Strg+C` beendet und speichert.
-2. Ringpuffer (immer-an, retroaktiver Schnitt): Engine vorhanden, aber der
-   CLI-Trigger/Hintergrund-Daemon ist noch nicht gebaut (siehe TODO.md). Aktuell
-   bitte die manuelle Aufnahme nutzen.
+2. Optional kommentiert aufnehmen: `clirec start <name> --audio
+   --audio-consent`. Audio ist standardmäßig aus; es läuft kein versteckter
+   Hintergrund-Daemon.
 3. Ergebnis: `<recordings_dir>/<name>.clirec`. Ein Host kann zusätzlich einen
    Frame-Grabber injizieren; nur dann entsteht `<name>.clirec.frames/` als Beleg.
 
@@ -49,8 +49,9 @@ Systemweiter Mitschnitt ist sensibel. Im sicheren Standard wird jede Texteingabe
 einschließlich Passwort-Eingaben, als `${input_N}` parameterisiert und nicht im Klartext
 gespeichert. Beim Replay ist
 der Wert per `--param input_N=Wert` anzugeben. `--allow-unmasked-input` schaltet
-diesen Schutz ausdrücklich für die ganze Sitzung ab. Ein globaler Pause-Hotkey ist
-GEPLANT (Config `pause_hotkey`, noch nicht
-verdrahtet — siehe TODO.md); aktuell kann der Mitschnitt nur programmatisch
-(`set_paused`) bzw. durch Beenden von `clirec start` (Strg+C) gestoppt werden. In der
-öffentlichen Version ist der Ringpuffer standardmäßig **aus**.
+diesen Schutz ausdrücklich für die ganze Sitzung ab. Audio kann gesprochene
+Geheimnisse und andere Personen erfassen und hat deshalb einen eigenen
+Consent-, Retention- und Purge-Vertrag. Optionale globale Pause-/Stop-Hotkeys
+laufen nur im sichtbaren Vordergrundprozess (`--global-hotkeys`) und werden mit
+ihm beendet. In der öffentlichen Version sind Ereignis- und Audio-Ringpuffer
+standardmäßig **aus**.

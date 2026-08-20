@@ -5,7 +5,7 @@
 
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
-[![Pytest Status](https://img.shields.io/badge/pytest-89%20passed-brightgreen.svg)](https://github.com/ellmos-ai/clirec)
+[![Pytest Status](https://img.shields.io/badge/pytest-113%20passed-brightgreen.svg)](https://github.com/ellmos-ai/clirec)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
@@ -37,9 +37,11 @@ graph TD
     Executor -->|Automatische Aktionen| TargetApp["Ziel-GUI / Terminal"]
 ```
 
-Der Kern hat keine Laufzeitabhängigkeiten. Unter Windows gibt es standardmäßig
+Der Kern hat keine zwingenden Laufzeitabhängigkeiten. Unter Windows gibt es standardmäßig
 ein ctypes-Capture-Backend; plattformübergreifend kann optional `pynput`
 installiert werden. Windows-UIA-Metadaten sind ein separates optionales Extra.
+Die Mikrofonaufnahme ist standardmäßig aus und über das optionale Extra
+`audio` verfügbar. Sie erfordert gemeinsam `--audio` und `--audio-consent`.
 
 ## Installation
 
@@ -47,6 +49,7 @@ installiert werden. Windows-UIA-Metadaten sind ein separates optionales Extra.
 pip install clirec
 pip install clirec[record]       # optionales pynput-Backend
 pip install clirec[uia]          # optionale Windows UI-Metadaten
+pip install clirec[audio]        # optionaler sounddevice-Mikrofonadapter
 ```
 
 Bis zur Paketveröffentlichung direkt aus GitHub installieren:
@@ -59,6 +62,7 @@ pip install git+https://github.com/ellmos-ai/clirec.git
 
 ```bash
 clirec start login-flow
+clirec start kommentierter-ablauf --audio --audio-consent
 clirec validate recordings/login-flow.clirec
 clirec list --dir recordings
 clirec replay recordings/login-flow.clirec --param input_1=Wert
@@ -68,6 +72,30 @@ Im sicheren Standard wird eingegebener Text nie im Klartext gespeichert. Jeder
 Textabschnitt wird zu einem Parameter wie `${input_1}` und beim Replay mit
 `--param input_1=Wert` befüllt. `--allow-unmasked-input` ist eine ausdrückliche
 unsichere Freigabe; solche Aufnahmen müssen vor dem Teilen geprüft werden.
+
+Audio ist eine getrennte, ausdrückliche Datenschutzgrenze. CLIRec zeichnet nie
+vor der Freigabe, während einer Pause, nach dem Audio-Stopp oder über einen
+versteckten Daemon auf. Format v2 speichert Audio und Transkripte als relative,
+SHA-256-geprüfte `.clirec.media/`-Sidecars; v1-Aufnahmen bleiben lesbar. Audio
+und Transkript lassen sich getrennt entfernen:
+
+```bash
+clirec audio-devices
+clirec purge-audio recordings/kommentierter-ablauf.clirec
+clirec purge-transcript recordings/kommentierter-ablauf.clirec
+clirec recover recordings
+```
+
+Die Transkription ist ein Opt-in-Adapter zu einem kanonischen externen
+STT-Modul mit `transcribe_file(..., persist=False)`. CLIRec enthält keine eigene
+STT-Engine und erzeugt nicht unbemerkt eine zweite Transkript-Datenbank.
+Geprüfte Episoden und Extraktor-Aufträge können als JSON für `skill-extractor`
+oder `workflow-extract` exportiert werden; dadurch wird weder ein Skill noch ein
+Zeitplan automatisch aktiviert.
+
+Details: [Format v2](docs/FORMAT_V2.md),
+[Audio-Datenschutz](docs/AUDIO_PRIVACY.md) und
+[Episoden-Reviewexport](docs/EPISODE_EXPORT.md).
 
 Replay ist backend-neutral. Aus Python mit einem Executor-Objekt oder über eine
 Integration wie `open-compute`:
@@ -98,4 +126,3 @@ python -m compileall -q clirec tests
 ```
 
 Die aktuelle Paket- und Plattformgrenze steht in [RELEASE_GATE.md](RELEASE_GATE.md).
-

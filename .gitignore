@@ -15,4 +15,10 @@ data/
 *.db
 recordings/
 *.clirec.frames/
+*.clirec.media/
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.ogg
 _session/

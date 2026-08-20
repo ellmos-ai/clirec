@@ -8,7 +8,9 @@
   "visibility": "public",
   "provides": [
     "tool.demonstration-record",
-    "tool.demonstration-replay"
+    "tool.demonstration-replay",
+    "tool.demonstration-audio-opt-in",
+    "data.learning-episode-export"
   ],
   "requires": [],
   "optional": [

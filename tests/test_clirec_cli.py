@@ -1,6 +1,7 @@
 """Tests for the clirec CLI."""
 
 import os
+import json
 import pytest
 
 from clirec import cli
@@ -145,3 +146,64 @@ def test_live_recording_rejects_bad_name_before_backend_start(monkeypatch):
         cli._rec_live("start", ["../escaped"])
     assert exc.value.code == 2
     assert backend_requested is False
+
+
+def test_live_audio_requires_separate_consent_before_backend_start(monkeypatch):
+    backend_requested = False
+
+    def get_audio_backend():
+        nonlocal backend_requested
+        backend_requested = True
+        return object()
+
+    monkeypatch.setattr("clirec.audio.get_audio_backend", get_audio_backend)
+    with pytest.raises(SystemExit) as exc:
+        cli._rec_live("start", ["demo", "--audio"])
+    assert exc.value.code == 2
+    assert backend_requested is False
+
+
+def test_audio_device_listing_uses_optional_backend(monkeypatch, capsys):
+    class Backend:
+        def list_devices(self):
+            return [{"id": "7", "label": "Local input"}]
+
+    monkeypatch.setattr("clirec.audio.get_audio_backend", lambda: Backend())
+    cli.cmd_rec(["audio-devices"])
+    assert "7\tLocal input" in capsys.readouterr().out
+
+
+def test_episode_and_review_export_cli_smoke(tmp_path):
+    recording = _mk(tmp_path)
+    episode = tmp_path / "episode.json"
+    review = tmp_path / "review.json"
+    cli.cmd_rec(
+        [
+            "episode-export",
+            recording,
+            "--out",
+            str(episode),
+            "--goal",
+            "Ablauf zeigen",
+            "--expected",
+            "Erfolg",
+            "--actual",
+            "Erfolg",
+            "--confirmed",
+            "--consent-export",
+        ]
+    )
+    cli.cmd_rec(
+        [
+            "review-export",
+            str(episode),
+            "--out",
+            str(review),
+            "--kind",
+            "workflow",
+            "--reviewed",
+        ]
+    )
+    payload = json.loads(review.read_text(encoding="utf-8"))
+    assert payload["extractor"] == "workflow-extract"
+    assert payload["status"] == "approved-for-extractor"

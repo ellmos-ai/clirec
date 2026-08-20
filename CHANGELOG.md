@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- Added opt-in streaming microphone capture through an injectable audio
+  contract and optional `sounddevice` adapter; audio remains off by default and
+  requires explicit consent.
+- Added monotonic event/audio timing, pause/resume, bounded buffers and limits,
+  `cut_last()` alignment, drift reporting, separate audio stop, and optional
+  foreground-owned global hotkeys.
+- Added backward-compatible format v2 with relative SHA-256 media sidecars,
+  atomic commit-marker publication, recovery, retention, and separate audio and
+  transcript purge.
+- Added a canonical external STT adapter that mandates `persist=False`, plus
+  reviewed episode and `skill-extractor`/`workflow-extract` job exports.
+- Expanded the regression suite to 113 passing tests; all audio fixtures are
+  synthetic and no real microphone data is stored.
+
 - Updated `llms.txt` and `RELEASE_GATE.md` verification timestamps to 2026-08-01.
 - Technical Hygiene Check (Pfad A): Verified test suite (89 passed), ruff checks 100% green, synchronized header & banner across English & German READMEs.
 - Updated `llms.txt` verification timestamp to 2026-07-30.
