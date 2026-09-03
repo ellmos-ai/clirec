@@ -124,17 +124,21 @@ def cmd_rec(args: list[str], *, executor_factory=None) -> None:
 
     if sub == "transcribe":
         if not rest:
-            _die("usage: clirec transcribe <file.clirec> [--module NAME] [--lang de]")
+            _die(
+                "usage: clirec transcribe <file.clirec> "
+                "[--module NAME] [--lang CODE] [--redacted]"
+            )
         from .media import attach_transcript
-        from .transcription import CanonicalTranscriptionAdapter
+        from .transcription import CanonicalTranscriptionAdapter, default_language
 
-        adapter = CanonicalTranscriptionAdapter(
-            _option(rest, "--module") or "ellmos_transkription"
-        )
+        try:
+            adapter = CanonicalTranscriptionAdapter(_option(rest, "--module"))
+        except RuntimeError as error:
+            _die(str(error))
         descriptor = attach_transcript(
             rest[0],
             adapter,
-            language=_option(rest, "--lang") or "de",
+            language=_option(rest, "--lang") or default_language(),
             redacted="--redacted" in rest,
         )
         print(f"transcript attached: {descriptor['path']}")
@@ -332,7 +336,9 @@ def _print_help() -> None:
                                       (Ctrl+C to stop & save)
               clirec purge-audio <file.clirec>
               clirec purge-transcript <file.clirec>
-              clirec transcribe <file.clirec> [--module NAME] [--lang de] [--redacted]
+              clirec transcribe <file.clirec> [--module NAME] [--lang CODE] [--redacted]
+                                  (--module or CLIREC_STT_MODULE is required;
+                                   language defaults to CLIREC_STT_LANGUAGE or en)
               clirec recover [recordings-dir]
               clirec episode-export <file.clirec> --out episode.json ...
               clirec review-export <episode.json> --out review.json --kind skill|workflow
