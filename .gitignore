@@ -22,3 +22,7 @@ recordings/
 *.m4a
 *.ogg
 _session/
+
+# Local coordination and maintenance files -- never part of the repository.
+LOCK*.txt
+_after-care/
