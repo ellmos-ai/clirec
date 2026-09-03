@@ -29,18 +29,35 @@ synthetic PCM only.
 
 Retention is recorded per track. `purge_expired()` applies it locally. Audio
 and transcripts remain separately removable with `purge-audio` and
-`purge-transcript`. Raw audio is never automatically copied to Gardener, USMC,
-BYUM, `.SYNC`, OneDrive, or an extractor bundle.
+`purge-transcript`. Raw audio is never automatically copied to a memory store,
+knowledge base, sync folder, cloud storage, or an extractor bundle.
+
+## Recording other people
+
+`--audio-consent` is the operator's own decision to open the microphone. It is
+not the consent of anyone else who can be heard. In Germany, recording the
+non-publicly spoken word of another person without authorisation is a criminal
+offence under § 201 (1) no. 1 StGB, and other jurisdictions have comparable or
+stricter rules. Obtain the agreement of everyone who may be recorded. See
+[`SECURITY.md`](../SECURITY.md).
 
 ## Backend provenance
 
-The current canonical public `voice` skill is a provider-neutral method core
-and intentionally exposes no Python audio implementation. CLIRec therefore
-imports the established optional `sounddevice` stream API through the narrow
-`AudioBackend` adapter; no code was copied from proprietary Klangpult modules.
+CLIRec ships no audio engine of its own. It imports the optional `sounddevice`
+stream API through the narrow `AudioBackend` adapter, so the microphone
+dependency stays optional and replaceable.
 
-STT is a separate opt-in `TranscriptionBackend`. The canonical adapter requires
-an external module with `transcribe_file(path, language=..., persist=False)`.
-The mandatory `persist=False` prevents the older transcription skill's default
-SQLite store from silently creating a second copy. CLIRec implements no Whisper,
+STT is a separate opt-in `TranscriptionBackend`. There is **no built-in default
+module**: name the external module with `--module` or `CLIREC_STT_MODULE`, and
+the transcription language with `--lang` or `CLIREC_STT_LANGUAGE` (`en` if
+neither is set). The module must expose
+`transcribe_file(path, language=..., persist=False)`; the mandatory
+`persist=False` keeps the backend from silently writing a second copy of the
+transcript beside CLIRec's reviewed sidecar. CLIRec implements no Whisper,
 Vosk, or cloud STT engine.
+
+For a local-first STT/TTS building block in the same ecosystem, see
+[`ellmos-voice-io`](https://github.com/ellmos-ai/ellmos-voice-io). It exposes
+`transcribe_file` as a method on `SpeechToText` rather than at module level and
+takes no `persist` argument, so a thin wrapper module is needed to satisfy the
+contract above.
