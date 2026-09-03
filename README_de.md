@@ -5,7 +5,7 @@
 
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
-[![Pytest Status](https://img.shields.io/badge/pytest-113%20passed-brightgreen.svg)](https://github.com/ellmos-ai/clirec)
+[![Pytest Status](https://img.shields.io/badge/pytest-119%20passed-brightgreen.svg)](https://github.com/ellmos-ai/clirec)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
@@ -45,18 +45,20 @@ Die Mikrofonaufnahme ist standardmäßig aus und über das optionale Extra
 
 ## Installation
 
-```bash
-pip install clirec
-pip install clirec[record]       # optionales pynput-Backend
-pip install clirec[uia]          # optionale Windows UI-Metadaten
-pip install clirec[audio]        # optionaler sounddevice-Mikrofonadapter
-```
-
-Bis zur Paketveröffentlichung direkt aus GitHub installieren:
+`clirec` liegt **noch nicht auf PyPI** — `pip install clirec` löst nicht auf.
+Installation direkt aus dem Repository:
 
 ```bash
 pip install git+https://github.com/ellmos-ai/clirec.git
+pip install "clirec[record] @ git+https://github.com/ellmos-ai/clirec.git"  # pynput-Backend
+pip install "clirec[uia] @ git+https://github.com/ellmos-ai/clirec.git"     # Windows-UI-Metadaten
+pip install "clirec[audio] @ git+https://github.com/ellmos-ai/clirec.git"   # sounddevice-Mikrofon
 ```
+
+Nach einer Veröffentlichung stehen die Extras als `pip install clirec[record]`
+usw. zur Verfügung. Die optionalen Extras ziehen Fremdabhängigkeiten mit eigenen
+Lizenzen nach — `pynput` steht unter LGPL-3.0; vor einer Weitergabe
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) lesen.
 
 ## CLI
 
@@ -86,9 +88,14 @@ clirec purge-transcript recordings/kommentierter-ablauf.clirec
 clirec recover recordings
 ```
 
-Die Transkription ist ein Opt-in-Adapter zu einem kanonischen externen
-STT-Modul mit `transcribe_file(..., persist=False)`. CLIRec enthält keine eigene
-STT-Engine und erzeugt nicht unbemerkt eine zweite Transkript-Datenbank.
+Die Transkription ist ein Opt-in-Adapter zu einem externen STT-Modul. CLIRec
+enthält keine eigene STT-Engine und liefert kein voreingestelltes Backend mit —
+das Modul wird selbst benannt, per `--module NAME` oder `CLIREC_STT_MODULE`. Es
+muss `transcribe_file(pfad, language=..., persist=False)` anbieten; das
+verpflichtende `persist=False` verhindert, dass unbemerkt eine zweite
+Transkript-Ablage entsteht. Die Sprache kommt aus `--lang` oder
+`CLIREC_STT_LANGUAGE`, ohne beides gilt `en`.
+
 Geprüfte Episoden und Extraktor-Aufträge können als JSON für `skill-extractor`
 oder `workflow-extract` exportiert werden; dadurch wird weder ein Skill noch ein
 Zeitplan automatisch aktiviert.
@@ -126,3 +133,22 @@ python -m compileall -q clirec tests
 ```
 
 Die aktuelle Paket- und Plattformgrenze steht in [RELEASE_GATE.md](RELEASE_GATE.md).
+
+## Verwandte Projekte
+
+`clirec` nimmt eine Demonstration nur auf und beschreibt sie. Das Ausführen, die
+Bereitstellung für Agenten und die Umwandlung von Audio in Text passieren in
+Nachbarprojekten:
+
+| Projekt | Wozu es für `clirec` gebraucht wird |
+|---|---|
+| [open-compute](https://github.com/ellmos-ai/open-compute) | Liefert den Executor, der tatsächlich Maus und Tastatur bewegt, und kapselt das Replay als `oc rec replay`. Ohne Executor lässt sich eine Aufnahme gar nicht abspielen. |
+| [open-compute-mcp](https://github.com/ellmos-ai/open-compute-mcp) | Stellt dieses Replay als MCP-Werkzeug `rec_replay` bereit, damit ein Agent eine Aufnahme ohne Shell starten kann. |
+| [ellmos-voice-io](https://github.com/ellmos-ai/ellmos-voice-io) | Lokale Bausteine für Spracherkennung und Sprachausgabe — der Kandidat, den man umhüllt, wenn `clirec transcribe` ein `--module`-Backend braucht. |
+| [ellmos](https://github.com/ellmos-ai/ellmos) | Der Ökosystem-Überblick: welches Modul welches Problem löst und wie sie zusammenspielen. |
+
+## Lizenz
+
+MIT, siehe [LICENSE](LICENSE). Optionale Extras haben eigene Lizenzen —
+`pynput` steht unter LGPL-3.0; siehe
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).

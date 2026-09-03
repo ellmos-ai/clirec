@@ -14,7 +14,8 @@
   ],
   "requires": [],
   "optional": [
-    "tool.computer-use"
+    "tool.computer-use",
+    "tool.speech-to-text"
   ],
   "conflicts": [],
   "surfaces": [
