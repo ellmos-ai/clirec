@@ -10,3 +10,12 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    groups:
+      # github/codeql-action/init and .../analyze are separate dependencies for
+      # Dependabot but one product at runtime: a pull request that bumps only
+      # one of them makes the CodeQL job fail with a configuration-version
+      # mismatch, so neither pull request can ever go green on its own.
+      # Grouping keeps both paths in a single, mergeable pull request.
+      codeql-action:
+        patterns:
+          - "github/codeql-action*"

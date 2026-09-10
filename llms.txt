@@ -1,4 +1,4 @@
-## Last-checked: 2026-08-20
+## Last-checked: 2026-09-03
 
 # clirec
 
@@ -10,6 +10,10 @@ Canonical repository: https://github.com/ellmos-ai/clirec
 demonstrations and explicitly opted-in synchronous microphone commentary.
 Human-readable `.clirec` files remain the commit markers; format v2 stores
 media in relative SHA-256-verified sidecars and keeps v1 readable.
+
+Source version `0.3.0`. Not released: the repository has no tags and the name
+`clirec` is unclaimed on PyPI, so `pip install clirec` does not resolve --
+install from the repository.
 
 ## Audience
 
@@ -23,13 +27,27 @@ media in relative SHA-256-verified sidecars and keeps v1 readable.
 - `README.md` - English overview, installation and usage.
 - `README_de.md` - German overview with real umlauts.
 - `SKILL.md` - Skill instructions for using clirec as a demonstration channel.
+  Written in German; `skills/clirec/SKILL.md` is a byte-identical shipped copy.
+- `CHANGELOG.md` - release history and current unreleased state.
+- `SECURITY.md` - reporting, local recording risks, and recording other people.
+- `THIRD_PARTY_LICENSES.md` - licences of the optional extras (`pynput` is LGPL-3.0).
 - `clirec/` - Core package.
-- `tests/` - Regression and smoke tests.
+- `tests/` - Regression and smoke tests (119 on Windows; one keyboard-layout test skips elsewhere).
 - `.github/workflows/tests.yml` - Python test workflow.
 - `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
 - `docs/FORMAT_V2.md` - Sidecar, hash, validation, and atomic commit contract.
 - `docs/AUDIO_PRIVACY.md` - Consent, retention, purge, backend, and privacy boundary.
 - `docs/EPISODE_EXPORT.md` - Learning episode and extractor review contract.
+
+## Related Projects
+
+- open-compute (https://github.com/ellmos-ai/open-compute) - supplies the
+  executor that replays a recording; exposes it as `oc rec replay`.
+- open-compute-mcp (https://github.com/ellmos-ai/open-compute-mcp) - exposes the
+  replay as the MCP tool `rec_replay`.
+- ellmos-voice-io (https://github.com/ellmos-ai/ellmos-voice-io) - local STT/TTS
+  primitives; candidate to wrap as a `--module` backend for `clirec transcribe`.
+- ellmos (https://github.com/ellmos-ai/ellmos) - ecosystem hub.
 
 ## Search Phrases
 
@@ -50,5 +68,8 @@ automation platform. Replay stays backend-neutral and needs an executor
 integration. Safe recordings parameterize keyboard text; UI metadata and
 explicitly unmasked sessions still require review before sharing. Audio is off
 by default, is never replayed automatically, and is never auto-ingested into a
-memory, policy, workflow, cloud, or repository. CLIRec imports optional audio
-and canonical STT adapters; it does not implement a speech-to-text engine.
+memory store, policy, workflow, cloud, or repository. `--audio-consent` is the
+operator's own consent and never a bystander's -- recording other people's
+speech is restricted by law in many jurisdictions (in Germany, § 201 StGB).
+CLIRec imports optional audio and STT adapters chosen by the caller; it ships
+no speech-to-text engine and no default STT module.

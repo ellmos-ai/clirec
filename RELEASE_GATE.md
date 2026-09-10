@@ -2,11 +2,14 @@
 
 ## Stand
 
-- Version: `0.3.0`
-- geprüft: 2026-08-20 auf Windows 11 / Python 3.12
+- Version: `0.3.0` (Quellstand — **nicht veröffentlicht**)
+- geprüft: 2026-08-20 auf Windows 11 / Python 3.12; Suite und Lint erneut
+  nachgezählt am 2026-09-03
 - Repository: `https://github.com/ellmos-ai/clirec`
 - Veröffentlichung: Quell- und Wheel-Artefakte sind vorbereitet; ein PyPI-Upload
-  oder Git-Tag ist nicht Teil dieses Gates.
+  oder Git-Tag ist nicht Teil dieses Gates. **Stand 2026-09-03 existiert im
+  Repository kein einziger Tag, und der Paketname `clirec` ist auf PyPI nicht
+  belegt** (HTTP 404) — er ist also weder reserviert noch vergeben.
 
 ## Verifizierte Gates
 
@@ -20,7 +23,7 @@
 | Installierte CLI | grün | `clirec --help`, `clirec validate`, `clirec list` |
 | Windows Capture | grün/beobachtet | Per-Monitor-DPI, Hook-Start/Stop, Shift-Layout-Smoke und realer deutscher Dead-Key-Capture-/Replay-Smoke |
 | `open-compute`-Integration | grün | realer `oc rec replay` gegen Notepad mit produktivem `LocalExecutor`, Parameter- und Unicode-Rückleseprüfung |
-| Audio-/Format-v2-Suite | grün/synthetisch | 113 Tests; deterministische PCM-Daten, kein echtes Audio |
+| Audio-/Format-v2-Suite | grün/synthetisch | 119 Tests unter Windows, 118 + 1 Skip sonst (2026-08-20: 113); deterministische PCM-Daten, kein echtes Audio |
 | Privacy/Sidecars | grün/synthetisch | Consent, Hash, Traversal, Orphans, Purge, Retention, Recovery |
 | Episoden-/Reviewexport | grün/synthetisch | Skill-/Workflow-Routing, Outcome-, Dedup- und Review-Gates |
 

@@ -32,8 +32,23 @@ frame evidence as sensitive by default:
   default. Use retention and the separate audio/transcript purge commands.
 - Keep `recordings/`, `*.clirec.frames/`, `*.clirec.media/`, audio files,
   `_session/`, local data, and secrets out of release artifacts.
-- Never auto-ingest raw audio into Gardener, USMC, BYUM, `.SYNC`, cloud storage,
-  extractor jobs, packages, CI artifacts, or public repositories.
+- Never auto-ingest raw audio into a memory store, knowledge base, sync folder,
+  cloud storage, extractor job, package, CI artifact, or public repository.
+
+## Recording other people
+
+Recording a person's speech is not only a privacy question. In Germany,
+§ 201 (1) no. 1 StGB makes it a criminal offence, punishable by up to three
+years' imprisonment or a fine, to record the non-publicly spoken word of
+another person without authorisation; the attempt is punishable as well
+(§ 201 (4) StGB). `--audio-consent` records *your* decision to start the
+microphone. It is not, and cannot be, the consent of anyone else in the room.
+Comparable rules exist in other jurisdictions, several of which require the
+agreement of every participant.
+
+Before recording audio in the presence of others, obtain their agreement, and
+prefer a controlled setting in which no uninvolved person is captured. This is
+a first orientation, not legal advice.
 
 Replay is backend-neutral and executes through an injected executor. Integrations
 must keep their own permission, confirmation, and safety gates.

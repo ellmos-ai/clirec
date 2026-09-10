@@ -183,7 +183,7 @@ def attach_transcript(
     recording_path: str | os.PathLike,
     backend,
     *,
-    language: str = "de",
+    language: str | None = None,
     redacted: bool = False,
 ) -> dict:
     """Transcribe a v2 audio sidecar and atomically attach reviewed local text.
@@ -194,6 +194,10 @@ def attach_transcript(
     """
 
     from .format import read, write
+    from .transcription import default_language
+
+    if language is None:
+        language = default_language()
 
     target = Path(recording_path).resolve()
     recording = read(target)

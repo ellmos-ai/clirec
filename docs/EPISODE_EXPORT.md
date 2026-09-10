@@ -27,6 +27,7 @@ exit, log hygiene, cadence/budget review, and activation approval. A single
 demonstration never becomes an active skill, policy, or scheduler job
 automatically.
 
-Gardener and USMC may receive approved metadata or a reviewed transcript;
-BYUM receives only authorized corrections/outcomes. Raw audio is referenced
-locally at most and is never ingested automatically.
+A downstream memory or knowledge store may receive approved metadata or a
+reviewed transcript, and a user-model store only authorized corrections and
+outcomes. Every one of those hand-overs is an explicit, reviewed step. Raw
+audio is referenced locally at most and is never ingested automatically.

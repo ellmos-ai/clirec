@@ -53,5 +53,13 @@ diesen Schutz ausdrücklich für die ganze Sitzung ab. Audio kann gesprochene
 Geheimnisse und andere Personen erfassen und hat deshalb einen eigenen
 Consent-, Retention- und Purge-Vertrag. Optionale globale Pause-/Stop-Hotkeys
 laufen nur im sichtbaren Vordergrundprozess (`--global-hotkeys`) und werden mit
-ihm beendet. In der öffentlichen Version sind Ereignis- und Audio-Ringpuffer
-standardmäßig **aus**.
+ihm beendet. Ereignis- und Audio-Ringpuffer sind standardmäßig **aus**
+(`ringbuffer_enabled`, `audio_ringbuffer_enabled`); die Engine ist vorhanden,
+einen CLI-Auslöser oder Hintergrund-Daemon dafür gibt es bewusst nicht.
+
+## Transkription
+`clirec transcribe` bringt keine eigene STT-Engine mit und hat auch kein
+voreingestelltes Modul. Das externe Modul wird über `--module NAME` oder
+`CLIREC_STT_MODULE` benannt und muss
+`transcribe_file(pfad, language=..., persist=False)` anbieten. Die Sprache kommt
+aus `--lang` oder `CLIREC_STT_LANGUAGE`; ohne beides gilt `en`.

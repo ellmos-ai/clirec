@@ -1,6 +1,45 @@
 # Changelog
 
+Version `0.3.0` is the current source version (`pyproject.toml`, `RELEASE_GATE.md`).
+It has **not** been released: the repository carries no tags, and `clirec` is not
+on PyPI. Everything below `0.3.0 - unreleased` is therefore still unpublished.
+
 ## Unreleased
+
+- Removed the built-in default STT module. `clirec transcribe` had a hard-coded
+  fallback to a module that is published nowhere, so the only documented
+  transcription path ended in `ModuleNotFoundError` for every installation that
+  was not the maintainer's. The module is now named explicitly with `--module`
+  or `CLIREC_STT_MODULE`, and the error says so.
+- Changed the default transcription language from `de` to `en`, overridable with
+  `--lang` or `CLIREC_STT_LANGUAGE`. An English-facing package silently
+  transcribing as German produced transcripts whose language depended on an
+  undocumented default.
+- Fixed the CodeQL workflow: `init` and `analyze` were pinned to one version but
+  Dependabot bumps them as two independent dependencies, so each bump produced
+  two pull requests that were individually unmergeable (`Loaded a configuration
+  file for version X, but running version Y`). Both are now on v4.37.9 and are
+  grouped in `dependabot.yml`.
+- Synchronised the shipped `skills/clirec/SKILL.md` with the canonical
+  `SKILL.md`. The shipped copy still announced the global pause hotkey as
+  planned and did not mention audio capture -- both shipped in 0.3.0 -- and the
+  only test covering it pinned that outdated wording in place. The test now
+  compares the two copies and rejects unbuilt-feature claims.
+- Replaced organisation-internal component and folder names in `SECURITY.md`,
+  `docs/AUDIO_PRIVACY.md`, `docs/EPISODE_EXPORT.md` and the Windows
+  verification note with wording that is resolvable for outside readers.
+- Corrected the install instructions: `pip install clirec` was listed first but
+  does not resolve, because the package is not on PyPI.
+- Added `THIRD_PARTY_LICENSES.md`. The optional `record` extra pulls in
+  `pynput` (LGPL-3.0), which was nowhere stated.
+- Added a note on § 201 StGB to `SECURITY.md` and `docs/AUDIO_PRIVACY.md`:
+  `--audio-consent` is the operator's consent, never a bystander's.
+- Added cross-references to `open-compute`, `open-compute-mcp`,
+  `ellmos-voice-io` and `ellmos`; all three of the first pointed at `clirec`
+  while `clirec` linked to none of them.
+- Regression suite 113 -> 119 tests (117 on non-Windows hosts, where one keyboard-layout test skips).
+
+## 0.3.0 - unreleased
 
 - Added opt-in streaming microphone capture through an injectable audio
   contract and optional `sounddevice` adapter; audio remains off by default and
