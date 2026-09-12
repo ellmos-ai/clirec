@@ -118,6 +118,12 @@ report = replay(recording, executor)
 
 `executor` must expose `width`, `height`, and `execute(action)`.
 
+## Windows Desktop & Agent Environments
+
+When recording demonstrations on Windows:
+- **Interactive Terminal:** `clirec` hooks into the active user session directly via low-level WinAPI hooks (`WH_MOUSE_LL`, `WH_KEYBOARD_LL`).
+- **Agent & Daemon Environments:** When launched from background processes, agent subshells, or sandboxed environments (such as Antigravity, Claude Code, or services), the WinAPI capture thread automatically attaches to the interactive user desktop station (`WinSta0\Default`) to ensure mouse clicks and keystrokes on the real desktop are captured without missing events.
+
 ## Tests
 
 ```bash

@@ -11,14 +11,36 @@
 | Veröffentlichung | offen | Kein Tag im Repository, kein PyPI-Paket; der Name `clirec` ist auf PyPI unbelegt (404, geprüft 2026-09-03). |
 | Sprache | offen | Das Repo tritt englisch auf, `SKILL.md`, `TODO.md` und die beiden `docs/verification/`-Notizen sind deutsch. Kein i18n-Mechanismus vorhanden — bewusst entscheiden statt weiter mischen. |
 
-## Nächste sinnvolle Schritte
+## Nächste sinnvolle Schritte (Formalisiert)
 
-- Optionalen `pynput`-Record-Pfad auf einer Nicht-Windows-Plattform prüfen.
-- `open-compute`-Replay mit einem realen Executor als Integrations-Smoke nachziehen.
-- Realen Windows-Mikrofon-Smoke mit Nutzerfreigabe durchführen: Pause/Resume,
-  Synchronität, Geräteverlust, Neustart-Readback und Privacy-Review.
-- Mikrofon-Smokes auf macOS und Linux getrennt nachholen; bis dahin keine
-  plattformübergreifende Audiofreigabe behaupten.
+### 1. open-compute Replay mit realem Executor als Integrations-Smoke durchführen
+- **Imperativ:** Führe einen End-to-End-Replay-Smoke von `clirec`-Aufnahmen über `open-compute` (`oc rec`) mit einem produktiven Executor aus.
+- **Quelle:** `[Quelle: TODO.md, RELEASE_GATE.md, BEFUNDE.md]`
+- **Einstufung:** `effort=medium`, `scope=local`
+- **Definition of Done:** Replay-Session von `open-compute` führt `clirec`-Instruktionen auf Ziel-GUI ohne Parameterverlust oder Timing-Fehler aus.
+- **Prüfweg:** Integrationstest in `open-compute` mit `clirec`-Demodatei.
+- **Abhängigkeiten:** `open-compute`-Integration.
+
+### 2. Windows End-to-End Smoke für IME/Dead-Key und Multi-Monitor-Mixed-DPI durchführen
+- **Imperativ:** Verifiziere das Verhalten des Windows-Recorders bei IME/Dead-Key-Eingaben und gemischten Multi-Monitor DPI-Skalierungen.
+- **Quelle:** `[Quelle: RELEASE_GATE.md, BEFUNDE.md]`
+- **Einstufung:** `effort=medium`, `scope=local`
+- **Definition of Done:** Tastaturevents mit IME/Dead-Keys sowie Mauskoordinaten auf Multi-Monitor-Setups mit abweichender DPI-Skalierung werden korrekt aufgezeichnet und reproduziert.
+- **Prüfweg:** `pytest tests/test_capture.py` und gezielter Windows-DPI-Capture-Lauf.
+- **Abhängigkeiten:** Multi-Monitor Windows-Setup mit DPI-Varianz.
+
+### 3. Konzeption und Entscheidungsvorlage für globalen Pause-Hotkey / Daemon-Trigger erstellen (Erledigt)
+- **Status:** Erledigt via `docs/PAUSE_HOTKEY_DAEMON_DECISION.md` und `clirec/capture/winapi.py` Hooks.
+- **Quelle:** `[Quelle: TODO.md]`
+- **Einstufung:** `effort=easy`, `scope=local`
+
+### 4. Optionalen pynput-Record-Pfad auf macOS/Linux verifizieren
+- **Imperativ:** Verifiziere das physische Mouse/Keyboard-Capture des optionalen `pynput`-Backends unter macOS und Linux.
+- **Quelle:** `[Quelle: TODO.md, RELEASE_GATE.md, BEFUNDE.md]`
+- **Einstufung:** `effort=special`, `scope=local`
+- **Definition of Done:** `pynput`-Capture-Lauf auf macOS und Linux dokumentiert fehlerfrei ausgeführt.
+- **Prüfweg:** Pytest-Suite und manueller Capture-Smoke auf macOS/Linux-VM/Host (`pytest tests/test_capture.py`).
+- **Abhängigkeiten:** Externe Nicht-Windows-Testumgebung (macOS / Linux).
 
 ## Befunde des Pflegelaufs 2026-09-03
 

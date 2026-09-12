@@ -35,6 +35,7 @@ install from the repository.
 - `tests/` - Regression and smoke tests (119 on Windows; one keyboard-layout test skips elsewhere).
 - `.github/workflows/tests.yml` - Python test workflow.
 - `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
+- `docs/PAUSE_HOTKEY_DAEMON_DECISION.md` - Pause hotkey & daemon architecture decision and trade-offs.
 - `docs/FORMAT_V2.md` - Sidecar, hash, validation, and atomic commit contract.
 - `docs/AUDIO_PRIVACY.md` - Consent, retention, purge, backend, and privacy boundary.
 - `docs/EPISODE_EXPORT.md` - Learning episode and extractor review contract.

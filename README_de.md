@@ -123,6 +123,12 @@ report = replay(recording, executor)
 
 `executor` muss `width`, `height` und `execute(action)` bereitstellen.
 
+## Windows-Desktop & Agenten-Umgebungen
+
+Bei Aufnahmen unter Windows:
+- **Interaktives Terminal:** `clirec` bindet sich über Low-Level-WinAPI-Hooks (`WH_MOUSE_LL`, `WH_KEYBOARD_LL`) direkt an die aktive Benutzersitzung.
+- **Agenten- & Daemon-Umgebungen:** Wenn `clirec` aus Hintergrundprozessen, Agenten-Subshells oder Sandbox-Umgebungen (z. B. Antigravity, Claude Code oder Diensten) gestartet wird, verbindet sich der Erfassungsthread automatisch mit der interaktiven Desktop-Station des Nutzers (`WinSta0\Default`), sodass Klicks und Eingaben auf dem echten Bildschirm verlässlich erfasst werden.
+
 ## Tests
 
 ```bash
