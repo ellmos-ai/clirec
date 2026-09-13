@@ -106,7 +106,8 @@ class WinApiCaptureBackend:
 
     def _run(self) -> None:
         user32 = ctypes.WinDLL("user32", use_last_error=True)
-        # Ensure capture thread attaches to interactive desktop if spawned in background/sandbox
+        # Ensure capture thread attaches to interactive desktop if spawned
+        # in background or sandbox environment
         try:
             hdesk = user32.OpenDesktopW("Default", 0, False, 0x01FF)
             if hdesk:

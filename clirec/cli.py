@@ -233,7 +233,8 @@ def _rec_live(sub: str, rest: list[str]) -> None:
     if allow_unmasked:
         rc.mask_password_fields = False
         print(
-            "WARNING: keyboard-input masking is disabled; review the recording before sharing.",
+            "WARNING: keyboard-input masking is disabled; "
+            "review the recording before sharing.",
             file=sys.stderr,
         )
 
@@ -341,7 +342,8 @@ def _print_help() -> None:
                                    language defaults to CLIREC_STT_LANGUAGE or en)
               clirec recover [recordings-dir]
               clirec episode-export <file.clirec> --out episode.json ...
-              clirec review-export <episode.json> --out review.json --kind skill|workflow
+              clirec review-export <episode.json> --out review.json
+                                   --kind skill|workflow
             """
         )
     )

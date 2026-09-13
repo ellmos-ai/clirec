@@ -6,6 +6,14 @@ on PyPI. Everything below `0.3.0 - unreleased` is therefore still unpublished.
 
 ## Unreleased
 
+- Technical Hygiene Check & CI Hardening (Pfad A, 2026-09-13):
+  - Hardened CI workflows (`tests.yml`, `codeql.yml`) with job-level `timeout-minutes` (15m tests/analyze, 10m package) and concurrency cancel-in-progress guards.
+  - Added automated stale issues and PRs lifecycle workflow (`.github/workflows/stale.yml`).
+  - Hardened `.gitignore` against multi-host conflict files (`* (kopie)*`, `* (copy)*`, `*-WORKSTATION*`, `*-ASUS*`), canonical lock files, and build/test caches.
+  - Conformed `pyproject.toml` to PEP 621 with `license-files = ["LICENSE"]`, added `Issues` and `LLM Context` project URLs, configured `addopts = "-ra -v"`, and expanded ruff lint rules to `["E", "F", "W", "B", "C4"]`.
+  - Added repository contract test suite `tests/test_metadata.py` covering CI timeouts, stale workflow, multi-host gitignore defense, PEP 621 metadata, version parity, and doc sync.
+  - Initialized `MARKETING-LOG.txt` tracking repository hygiene and discoverability status.
+  - Test suite expanded to 127 tests (100% green).
 - Removed the built-in default STT module. `clirec transcribe` had a hard-coded
   fallback to a module that is published nowhere, so the only documented
   transcription path ended in `ModuleNotFoundError` for every installation that

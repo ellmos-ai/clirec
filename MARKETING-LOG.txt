@@ -1,0 +1,32 @@
+# MARKETING-LOG.txt — clirec
+# Lokales Audit-, Discoverability- und Marketing-Logbuch
+
+## 2026-09-13 — Pfad A: Repository-Hygiene, CI-Timeout- & Stale-Härtung, Multi-Host Gitignore & Vertragstests
+
+### 1. Ausgangslage & Kriterien
+- Repository: ellmos-ai/clirec (C:\_Local_DEV\repos\clirec)
+- Version: 0.3.0 (unreleased)
+- Kategorie: Standalone Demonstration Recording/Replay Channel for CLI & Agent Workflows
+- Initialer Status: Rebase auf origin/main erfolgreich abgeschlossen, 0 aktive Locks, >24h Cooldown erfüllt (letzter Pfad-A-Lauf 2026-08-01).
+
+### 2. Umgesetzte Hygiene- & Härtungsmaßnahmen
+1. CI/CD Timeout- & Concurrency-Guardrails:
+   - Job `tests` in `.github/workflows/tests.yml` mit `timeout-minutes: 15` gehärtet.
+   - Job `package` in `.github/workflows/tests.yml` mit `timeout-minutes: 10` gehärtet.
+   - Concurrency `group: ${{ github.workflow }}-${{ github.ref }}`, `cancel-in-progress: true` in `tests.yml` ergänzt.
+   - Job `analyze` in `.github/workflows/codeql.yml` mit `timeout-minutes: 15` gehärtet.
+2. Automatisierter Stale-Workflow:
+   - `.github/workflows/stale.yml` (`actions/stale@v9`, `timeout-minutes: 10`, täglicher Cron `30 1 * * *`, least-privilege `issues: write`, `pull-requests: write`) eingerichtet.
+3. Multi-Host & OneDrive Gitignore-Schutz:
+   - `.gitignore` um Schutzmuster für OneDrive-Konfliktkopien (`* (kopie)*`, `* (copy)*`, `*conflicted copy*`, `*-WORKSTATION*`, `*-ASUS*`, `*-LAPTOP*`, `*-Mac Studio*`) erweitert.
+   - Schutz vor kanonischen Locks (`LOCK`, `LOCK.*`, `*.lock`, `LOCK*.txt`, `LOCK.permissions.json`, `uv.lock`, Ausnahme `!package-lock.json`) und Caches (`.tox/`, `.turbo/`, `.hypothesis/`, `.coverage*`, `htmlcov/`, `wheelhouse/`).
+4. PEP 621 Standard-Metadaten & Packaging:
+   - `license-files = ["LICENSE"]` in `pyproject.toml` ergänzt.
+   - Projekt-URLs um `Issues` und `LLM Context` erweitert.
+   - Pytest `addopts = "-ra -v"` und Ruff-Linter auf Regelsatz `["E", "F", "W", "B", "C4"]` erweitert.
+5. Vertragstest-Suite:
+   - `tests/test_metadata.py` mit 8 neuen Contract-Tests für CI-Timeouts, Stale-Workflow, Multi-Host-Gitignore, PEP 621 Metadaten, Versionsparität, llms.txt-Aktualität, MARKETING-LOG und Changelog hinzugefügt (127 passed | 100% grün).
+6. Dokumentation & Kontext-Parität:
+   - `llms.txt` Last-checked Datum auf `2026-09-13` aktualisiert, Teststand auf 127 nachgezogen und Referenz auf `MARKETING-LOG.txt` ergänzt.
+   - `CHANGELOG.md` um Pfad-A-Hygiene-Audit 2026-09-13 ergänzt.
+   - `README.md` & `README_de.md` Shields.io Badges synchronisiert.

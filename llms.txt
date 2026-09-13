@@ -1,4 +1,4 @@
-## Last-checked: 2026-09-03
+## Last-checked: 2026-09-13
 
 # clirec
 
@@ -31,9 +31,11 @@ install from the repository.
 - `CHANGELOG.md` - release history and current unreleased state.
 - `SECURITY.md` - reporting, local recording risks, and recording other people.
 - `THIRD_PARTY_LICENSES.md` - licences of the optional extras (`pynput` is LGPL-3.0).
+- `MARKETING-LOG.txt` - Audit, hygiene, and discoverability logbook.
 - `clirec/` - Core package.
-- `tests/` - Regression and smoke tests (119 on Windows; one keyboard-layout test skips elsewhere).
-- `.github/workflows/tests.yml` - Python test workflow.
+- `tests/` - Regression, smoke, and repository contract tests (127 on Windows; one keyboard-layout test skips elsewhere).
+- `.github/workflows/tests.yml` - Python test workflow with timeout guardrails.
+- `.github/workflows/stale.yml` - Stale issues and PRs automation.
 - `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
 - `docs/PAUSE_HOTKEY_DAEMON_DECISION.md` - Pause hotkey & daemon architecture decision and trade-offs.
 - `docs/FORMAT_V2.md` - Sidecar, hash, validation, and atomic commit contract.

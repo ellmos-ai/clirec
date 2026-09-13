@@ -3,7 +3,15 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+.ruff_cache/
 .mypy_cache/
+.tox/
+.turbo/
+.hypothesis/
+.coverage*
+htmlcov/
+wheelhouse/
+.wheel-smoke/
 .venv/
 .env
 .env.*
@@ -23,6 +31,35 @@ recordings/
 *.ogg
 _session/
 
-# Local coordination and maintenance files -- never part of the repository.
+# Patch and editor artifacts
+*.orig
+*.rej
+*.bak
+*.tmp
+*~
+*.swp
+
+# Multi-Host Cloud-Sync conflict copies (OneDrive / Dropbox / Synology)
+* (kopie)*
+* (Kopie)*
+* (copy)*
+* (Copy)*
+*conflicted copy*
+*-ASUS*
+*-ASUS-GEI*
+*-LAPTOP*
+*-WORKSTATION*
+*-WORKSTATION-LG*
+*-Mac Studio*
+
+# Canonical multi-agent lock system & package locks
+LOCK
+LOCK.*
+*.lock
 LOCK*.txt
+LOCK.permissions.json
+uv.lock
+!package-lock.json
+
+# Local coordination and maintenance files -- never part of the repository
 _after-care/
