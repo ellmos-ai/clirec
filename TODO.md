@@ -13,41 +13,59 @@
 
 ## Nächste sinnvolle Schritte
 
-- Optionalen `pynput`-Record-Pfad auf einer Nicht-Windows-Plattform prüfen.
-- `open-compute`-Replay mit einem realen Executor als Integrations-Smoke nachziehen.
-- Realen Windows-Mikrofon-Smoke mit Nutzerfreigabe durchführen: Pause/Resume,
+- [Task 158] Optionalen `pynput`-Record-Pfad auf einer Nicht-Windows-Plattform prüfen.
+- [Task 157] `open-compute`-Replay mit einem realen Executor als Integrations-Smoke nachziehen.
+- [Task 159] Realen Windows-Mikrofon-Smoke mit Nutzerfreigabe durchführen: Pause/Resume,
   Synchronität, Geräteverlust, Neustart-Readback und Privacy-Review.
-- Mikrofon-Smokes auf macOS und Linux getrennt nachholen; bis dahin keine
+- [Task 159] Mikrofon-Smokes auf macOS und Linux getrennt nachholen; bis dahin keine
   plattformübergreifende Audiofreigabe behaupten.
 
 ## Befunde des Pflegelaufs 2026-09-03
 
-- [ ] **Release-Tags fehlen vollständig.** `CHANGELOG.md` führt 0.1.0, 0.2.0 und
+- [ ] **Task 156 — Release-Tags fehlen vollständig.** `CHANGELOG.md` führt 0.1.0, 0.2.0 und
       0.2.1, das Repository trägt **keinen einzigen** Tag. Damit gibt es keinen
       benannten Stand zum Zurückkehren oder Pinnen. Entscheiden: rückwirkend
       taggen oder erst ab dem nächsten Release beginnen — und dann konsequent.
-- [ ] **PyPI-Name `clirec` sichern oder bewusst freigeben.** Am 2026-09-03
+- [ ] **Task 156 — PyPI-Name `clirec` sichern oder bewusst freigeben.** Am 2026-09-03
       unbelegt (HTTP 404). Solange er frei ist, kann ihn jeder besetzen; die
       README verwies bis zu diesem Lauf auf genau diesen Namen.
-- [ ] **DSGVO-Rollenklärung in die Dokumentation.** Wer außerhalb rein privater
+- [ ] **Task 160 — DSGVO-Rollenklärung in die Dokumentation.** Wer außerhalb rein privater
       Zwecke aufzeichnet, wird selbst Verantwortlicher (Haushaltsausnahme
       Art. 2 Abs. 2 lit. c DSGVO greift dann nicht). Der Nutzen der Klarstellung
       ist gegen die Gefahr abzuwägen, mit einer Aussage über die Rolle des
       Lesers in die Nähe einer Rechtsdienstleistung zu geraten. Bewusst
       entscheiden, nicht nebenbei formulieren.
-- [ ] **Sprachentscheidung für `SKILL.md`.** Die Datei ist agentengerichtet und
+- [ ] **Task 161 — Sprachentscheidung für `SKILL.md`.** Die Datei ist agentengerichtet und
       deutsch, das Produkt englisch. Entweder englisch übersetzen (dann fällt
       die Umlautprüfung im Test weg) oder die deutsche Fassung ausdrücklich als
       solche deklarieren. Aktuell ist beides halb.
-- [ ] **Eintrag im Organisationsprofil steht in der falschen Rubrik.**
+- [ ] **Task 162 — Eintrag im Organisationsprofil steht in der falschen Rubrik.**
       `ellmos-ai/.github` führt clirec unter „Evaluation, templates and
       maintenance"; sachlich gehört es neben `open-compute` unter „Agent modules
       and orchestration". Im Lauf vom 2026-09-03 nicht geändert: der dortige
       Klon hatte uncommittete Fremdänderungen **in genau dieser Datei**.
-- [ ] **StGB in der law-checker-Registry aktivieren.** Für den Rechtscheck
+- [ ] **Task 163 — StGB in der law-checker-Registry aktivieren.** Für den Rechtscheck
       dieses Repos musste das Strafgesetzbuch on demand beschafft werden, weil
       es dort deaktiviert ist. Für jedes Werkzeug, das aufzeichnet, ist es die
       einschlägigste Norm — der Schalter gehört umgelegt.
+
+- [ ] **Task 164 — After-care-PR #18 maintainerseitig entscheiden.** Der offene
+      Branch `after-care/full-2026-09-03` ist laut Live-Inventar mergeable und
+      die aktuellen CodeQL-, Matrix- und Package-Checks sind grün; Merge oder
+      Zurückstellung bleibt eine Maintainerentscheidung.
+
+## TASKWRITER-REVIEW-LOG 2026-09-05
+
+- Präsentation `2b2e96ec-2a39-4bdf-8f44-865ef90faafe` wurde unter dem aktiven
+  Lease verarbeitet. Der Checkout `after-care/full-2026-09-03` war sauber und
+  zu seinem Remote-Branch synchron; `origin/main` ist der Zielzweig des offenen
+  PR #18 und daher kein lokaler Divergenz-Blocker.
+- Read-only-Verifikation: `119 passed`, Ruff-Check und -Formatprüfung grün,
+  `compileall` grün, Paketbau für 0.3.0 erzeugt Wheel und sdist. `twine` fehlt
+  im aktuellen Interpreter; die CI-Package-Job installiert es über `.[dev]`.
+- Es wurden die Tasks 156–164 mit Quelle, Herleitung, Abnahme, Verifikation,
+  Abhängigkeiten, Aufwand und Scope angelegt. Veröffentlichungen, Merges,
+  Mikrofon-Smokes und zentrale Registry-Änderungen wurden nicht ausgeführt.
 
 ### Erledigt am 2026-09-03
 
