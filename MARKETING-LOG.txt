@@ -30,3 +30,78 @@
    - `llms.txt` Last-checked Datum auf `2026-09-13` aktualisiert, Teststand auf 127 nachgezogen und Referenz auf `MARKETING-LOG.txt` ergänzt.
    - `CHANGELOG.md` um Pfad-A-Hygiene-Audit 2026-09-13 ergänzt.
    - `README.md` & `README_de.md` Shields.io Badges synchronisiert.
+
+## 2026-09-16 — Pfad B: Discoverability, Visual Architecture, Target Personas & Comparative Matrix
+
+### 1. Ausgangslage & Kriterien
+- Repository: `ellmos-ai/clirec` (C:\_Local_DEV\repos\clirec)
+- Version: 0.3.0 (unreleased)
+- Kategorie: Local-First Demonstration Recording & Replay Channel for CLI & AI Agent Workflows
+- Status: Arbeitsbaum sauber, 0 aktive Locks im kanonischen Lock-System (lock_status.py: UNLOCKED), Cooldown >24h seit letztem Kontakt eingehalten (60.4h Ruhezeit; Pfad A am 2026-09-13, Pfad B zuletzt am 2026-07-30 vor 48 Tagen).
+
+### 2. Zielgruppen & Personas
+- `[PERSONA-01]` Autonomous AI Agent Engineers & Computer-Use Developers:
+  - Fokus: Deterministische, token-effiziente GUI-Demonstrationsspuren für Agenten-Training, Evaluation und Headless Replay ohne massive Vision-Token-Kosten für Video-Frames.
+  - Lösung: Menschenlesbares `.clirec`-Schrittformat, standardmäßige Parameter-Sanitization (`${input_1}`), injiziertes Replay-Protokoll und JSON-Episoden-Export für `skill-extractor`.
+- `[PERSONA-02]` CLI & Workflow Automation Builders (Sysadmins / DevOps):
+  - Fokus: Wiederkehrende interaktive Desktop-Abläufe aufzeichnen und als skriptbare CLI-Workflows mit Parameterinjektion automatisieren.
+  - Lösung: Zero-Dependency-CLI (`clirec start`, `clirec replay --param key=val`), Schema-Validierung (`clirec validate`) und nahtlose `open-compute`-Integration (`oc rec replay`).
+- `[PERSONA-03]` QA, Test Automation & E2E Validation Engineers:
+  - Fokus: Verifizierbare, reproduzierbare E2E-Testläufe, die ohne Binär-Blobs ins Git-Repository eingecheckt werden können und nicht unter fragiler Selektor-Brüchigkeit leiden.
+  - Lösung: Git-freundliche Text-Spezifikation, optionale UIA-Barrierefreiheits-Metadaten (`[uia]`), kryptografische SHA-256 Sidecar-Integrität und plattformübergreifendes Capture.
+- `[PERSONA-04]` Privacy-Conscious Teams & Enterprise Compliance Officers:
+  - Fokus: Arbeitsabläufe und Software-Demonstrationen aufzeichnen, ohne Passwörter, PII oder unbeteiligte Sprachdaten zu exponieren.
+  - Lösung: Strikte Standard-Textmaskierung, Zero-Cloud-Egress, explizite Dual-Opt-in Audio-Einwilligungsgrenze (`--audio` + `--audio-consent`, § 201 StGB), getrennte Audio-/Transkript-Löschung und unprivilegierte `RunAsInvoker`-Ausführung.
+
+### 3. High-Intent SEO Keywords (Bilingual EN/DE)
+- English:
+  - `human-readable GUI demonstration recording CLI agent workflow`
+  - `local-first computer-use replay without video vision tokens`
+  - `parameterized keystroke replay for AI agents open-compute`
+  - `privacy-preserving desktop interaction recorder with text sanitization`
+  - `reproducible mouse keyboard action trace .clirec format v2`
+  - `agent-native demonstration channel with SHA-256 media sidecars`
+  - `opt-in microphone commentary recording with explicit consent boundary`
+  - `zero-dependency Windows desktop capture ctypes WH_MOUSE_LL WH_KEYBOARD_LL`
+- Deutsch:
+  - `menschenlesbare GUI Demonstrationsaufzeichnung für CLI und Agenten`
+  - `lokale Desktop Interaktionsaufnahme ohne Cloud Telemetrie`
+  - `parametrisierte Tastatureingaben für KI-Agenten und Replay`
+  - `datenschutzkonforme Desktop-Aufnahme mit automatischer Textmaskierung`
+  - `reproduzierbare Maus und Tastatur Abläufe im .clirec Format`
+  - `Zero-Egress Demonstration Recorder mit SHA-256 Sidecars`
+  - `Mikrofonkommentar mit expliziter Einwilligung § 201 StGB`
+  - `reine Python Windows ctypes Hook Erfassung ohne externe Abhängigkeiten`
+
+### 4. 10-Dimensionen-Vergleichsmatrix vs. 4 Alternativen
+- Verglichene Alternativen:
+  1. Video Screen Recorders (OBS Studio, Loom, Camtasia)
+  2. Web E2E Recorders (Playwright Codegen, Cypress Studio)
+  3. Traditional Desktop Macro Recorders (AutoHotkey, TinyTask, Macro Recorder)
+  4. Heavy Enterprise RPA Platforms (UiPath, Automation Anywhere)
+- Technische Dimensionen gemapped auf Invarianten:
+  1. Offline-First & Zero Egress (`INV-LOCAL-01`)
+  2. Default Parameter Sanitization & Masking (`INV-PRIVACY-02`)
+  3. Human-Readable Plaintext Format (`INV-INSPECT-03`)
+  4. Headless Agent & CLI Replay (`INV-REPLAY-04`)
+  5. Explicit Audio Consent Boundary (`INV-AUDIO-05`)
+  6. Format v2 SHA-256 Media Sidecars (`INV-SIDECAR-06`)
+  7. Decoupled STT Adapter Architecture (`INV-ADAPTER-07`)
+  8. Unprivileged User-Mode Execution (`INV-UNPRIV-08`)
+  9. Zero Mandatory Runtime Dependencies (`INV-PORTABLE-09`)
+  10. Formal Security SLA & CI Matrix (`INV-SLA-10`)
+
+### 5. Zweisprachige README-Architektur & Schnellnavigation
+- 18-Punkte-Schnellnavigation in `README.md` und `README_de.md` mit 100% wechselseitiger Anker-Parität (#1 bis #18 inklusive Anker-Aliase).
+- Erweiterte Shields.io Badges: Version, Pytest-Status, Local-First Zero-Egress, Security RunAsInvoker, 48h SLA, Third-Party Audited, Marketing Log, LLM Ready, Ecosystem & Umbrella.
+
+### 6. Drittanbieter-Lizenzinventar & Governance
+- `THIRD_PARTY_LICENSES.md` mit vollständigem SPDX-Audit, 10 Governance-Invarianten, Bestätigung der Zero-Copyleft-Freiheit für Kern und Nutzdaten sowie LGPLv3 § 4 Transparenzerklärung für dynamisch verlinktes `pynput` aktualisiert.
+- `pyproject.toml` [project.urls] um `Third-Party Licenses` und `Marketing Log` erweitert.
+
+### 7. Ökosystem-Cross-Linking & Verzeichnisempfehlungen
+- Verknüpfung zu `open-compute`, `open-compute-mcp`, `ellmos-voice-io`, `ellmos` und dem `open-bricks` Dachökosystem.
+- Verzeichnis-Kandidaten: Glama, mcp.so, LobeHub, Smithery, awesome-mcp-servers, LLM Tooling Registries.
+
+### 8. Automatisierte Vertragstest-Suite
+- `tests/test_metadata.py` ausgebaut um Vertragstests für 18-Punkte-Navigation, Personas, 10-Dimensionen-Vergleichsmatrix, Lizenz-Audit, Invarianten, Pyproject URLs und Marketing-Log-Recency.

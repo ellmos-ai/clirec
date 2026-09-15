@@ -11,6 +11,12 @@ For private reports, use GitHub private vulnerability reporting if it is enabled
 on the repository. If that is unavailable, open a minimal private issue or
 contact the maintainer without attaching sensitive recordings.
 
+## Security SLA & Privilege Model
+
+- **Initial Response:** Within 48 hours of report submission (`INV-SLA-10`).
+- **Triage & Fix Delivery:** Within 5 business days for confirmed vulnerabilities.
+- **Execution Privilege:** Strictly unprivileged user-mode (`RunAsInvoker`, `INV-UNPRIV-08`). The software never requires or requests administrative elevation, UAC prompts, or root privileges.
+
 ## Local Recording Risks
 
 `clirec` records local mouse and keyboard demonstrations and, only after a

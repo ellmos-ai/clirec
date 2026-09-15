@@ -46,6 +46,8 @@ Repository = "https://github.com/ellmos-ai/clirec"
 Changelog = "https://github.com/ellmos-ai/clirec/blob/main/CHANGELOG.md"
 Issues = "https://github.com/ellmos-ai/clirec/issues"
 "LLM Context" = "https://github.com/ellmos-ai/clirec/blob/main/llms.txt"
+"Third-Party Licenses" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.md"
+"Marketing Log" = "https://github.com/ellmos-ai/clirec/blob/main/MARKETING-LOG.txt"
 
 [tool.setuptools.packages.find]
 include = ["clirec*"]

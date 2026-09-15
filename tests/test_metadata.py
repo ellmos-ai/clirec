@@ -75,6 +75,8 @@ def test_pep621_license_and_urls():
     assert "Changelog" in urls
     assert "Issues" in urls
     assert "LLM Context" in urls
+    assert "Third-Party Licenses" in urls
+    assert "Marketing Log" in urls
 
     pytest_cfg = data.get("tool", {}).get("pytest", {}).get("ini_options", {})
     assert "-ra" in pytest_cfg.get("addopts", "")
@@ -86,8 +88,7 @@ def test_pep621_license_and_urls():
 
 
 def test_version_parity():
-    """Package version must be consistent across pyproject.toml, clirec,
-    and manifests."""
+    """Package version must match across pyproject.toml, clirec, and manifests."""
     toml_path = REPO_ROOT / "pyproject.toml"
     with open(toml_path, "rb") as f:
         data = tomllib.load(f)
@@ -104,23 +105,27 @@ def test_version_parity():
 
 
 def test_llms_txt_recency_and_metadata():
-    """llms.txt must have 2026-09-13 verification date and accurate references."""
+    """llms.txt must have 2026-09-16 verification date and accurate references."""
     llms_path = REPO_ROOT / "llms.txt"
     assert llms_path.is_file()
     text = llms_path.read_text(encoding="utf-8")
-    assert "## Last-checked: 2026-09-13" in text
+    assert "## Last-checked: 2026-09-16" in text
     assert "tests/" in text
     assert "MARKETING-LOG.txt" in text
+    assert "THIRD_PARTY_LICENSES.md" in text
+    assert "[PERSONA-01]" in text
 
 
 def test_marketing_log_present_and_active():
-    """MARKETING-LOG.txt must be maintained in repo root with Pfad A entry."""
+    """MARKETING-LOG.txt must exist in repo root with Pfad A and Pfad B entries."""
     log_path = REPO_ROOT / "MARKETING-LOG.txt"
     assert log_path.is_file()
     text = log_path.read_text(encoding="utf-8")
     assert "2026-09-13" in text
     assert "Pfad A" in text
-    assert "CI-Timeout" in text
+    assert "2026-09-16" in text
+    assert "Pfad B" in text
+    assert "INV-LOCAL-01" in text
 
 
 def test_changelog_recent_entry():
@@ -129,3 +134,104 @@ def test_changelog_recent_entry():
     assert cl_path.is_file()
     text = cl_path.read_text(encoding="utf-8")
     assert "2026-09-13" in text
+    assert "2026-09-16" in text
+    assert "Pfad B" in text
+
+
+def test_quick_navigation_anchor_parity():
+    """README.md and README_de.md must have 18-point quick navigation with parity."""
+    en_path = REPO_ROOT / "README.md"
+    de_path = REPO_ROOT / "README_de.md"
+    assert en_path.is_file()
+    assert de_path.is_file()
+
+    en_text = en_path.read_text(encoding="utf-8")
+    de_text = de_path.read_text(encoding="utf-8")
+
+    # 18 numbered anchor sections
+    for i in range(1, 19):
+        assert f'<a id="{i}-' in en_text or f"## {i}." in en_text, (
+            f"Missing section {i} in README.md"
+        )
+        assert f'<a id="{i}-' in de_text or f"## {i}." in de_text, (
+            f"Missing section {i} in README_de.md"
+        )
+
+    # Semantic cross-language anchors
+    semantic_anchors = [
+        "target-personas--discoverability",
+        "comparative-matrix-vs-alternatives",
+        "governance--runtime-invariants",
+        "third-party-licenses--transparency",
+    ]
+    for anchor in semantic_anchors:
+        assert f'id="{anchor}"' in en_text, f"Missing anchor {anchor} in README.md"
+        assert f'id="{anchor}"' in de_text, f"Missing anchor {anchor} in README_de.md"
+
+
+def test_target_personas_definitions():
+    """Both READMEs and llms.txt must define all 4 target personas."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
+
+    personas = ["[PERSONA-01]", "[PERSONA-02]", "[PERSONA-03]", "[PERSONA-04]"]
+    for p in personas:
+        assert p in en_text, f"Missing {p} in README.md"
+        assert p in de_text, f"Missing {p} in README_de.md"
+        assert p in llms_text, f"Missing {p} in llms.txt"
+
+
+def test_comparative_matrix_alternatives():
+    """READMEs must compare clirec across alternatives and technical dimensions."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    assert "Video Recorders" in en_text
+    assert "Web E2E" in en_text
+    assert "Macro Recorders" in en_text
+    assert "Enterprise RPA" in en_text
+
+    assert "Video-Recorder" in de_text
+    assert "Web-E2E" in de_text
+    assert "Makro-Recorder" in de_text
+    assert "Enterprise RPA" in de_text
+
+
+def test_governance_invariants_across_docs():
+    """All 10 governance invariants must exist across READMEs and license doc."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    lic_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
+
+    invariants = [
+        "INV-LOCAL-01",
+        "INV-PRIVACY-02",
+        "INV-INSPECT-03",
+        "INV-REPLAY-04",
+        "INV-AUDIO-05",
+        "INV-SIDECAR-06",
+        "INV-ADAPTER-07",
+        "INV-UNPRIV-08",
+        "INV-PORTABLE-09",
+        "INV-SLA-10",
+    ]
+    for inv_tag in invariants:
+        assert inv_tag in en_text, f"Missing {inv_tag} in README.md"
+        assert inv_tag in de_text, f"Missing {inv_tag} in README_de.md"
+        assert inv_tag in lic_text, f"Missing {inv_tag} in THIRD_PARTY_LICENSES.md"
+
+
+def test_third_party_licenses_audit_content():
+    """License doc must confirm RunAsInvoker, SPDX, and LGPLv3 §4 compliance."""
+    lic_path = REPO_ROOT / "THIRD_PARTY_LICENSES.md"
+    assert lic_path.is_file()
+    text = lic_path.read_text(encoding="utf-8")
+
+    assert "RunAsInvoker" in text
+    assert "pynput" in text
+    assert "LGPL-3.0" in text
+    assert "LGPLv3 Section 4" in text
+    assert "sounddevice" in text
+    assert "uiautomation" in text
+    assert "Zero-Copyleft" in text

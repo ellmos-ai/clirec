@@ -6,6 +6,14 @@ on PyPI. Everything below `0.3.0 - unreleased` is therefore still unpublished.
 
 ## Unreleased
 
+- Discoverability, Visual Architecture, Target Personas & Comparative Matrix (Pfad B, 2026-09-16):
+  - Added 18-point bilingual quick navigation parity with reciprocal anchor support across `README.md` and `README_de.md`.
+  - Documented 4 target personas (`[PERSONA-01]` Autonomous AI Agent Engineers, `[PERSONA-02]` CLI Automation Builders, `[PERSONA-03]` QA & E2E Validation Engineers, `[PERSONA-04]` Privacy-Conscious Teams & Compliance Officers) and high-intent SEO queries.
+  - Added 10-dimension comparative matrix vs. 4 alternatives (Video Recorders, Web E2E, Macro Recorders, Enterprise RPA) mapped to governance invariants `INV-LOCAL-01` through `INV-SLA-10`.
+  - Upgraded `THIRD_PARTY_LICENSES.md` with complete SPDX audit, unprivileged `RunAsInvoker` confirmation, Zero-Copyleft assurance for demonstrations, and LGPLv3 § 4 dynamic linking transparency for `pynput`.
+  - Added `Third-Party Licenses` and `Marketing Log` URLs to `pyproject.toml` [project.urls].
+  - Synchronized `MARKETING-LOG.txt` and `llms.txt` (Last-checked 2026-09-16) with new discovery metadata.
+  - Expanded automated contract test suite in `tests/test_metadata.py` covering navigation parity, personas, comparative matrix, third-party license audit, and governance invariants.
 - Technical Hygiene Check & CI Hardening (Pfad A, 2026-09-13):
   - Hardened CI workflows (`tests.yml`, `codeql.yml`) with job-level `timeout-minutes` (15m tests/analyze, 10m package) and concurrency cancel-in-progress guards.
   - Added automated stale issues and PRs lifecycle workflow (`.github/workflows/stale.yml`).

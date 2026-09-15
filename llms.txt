@@ -1,4 +1,4 @@
-## Last-checked: 2026-09-13
+## Last-checked: 2026-09-16
 
 # clirec
 
@@ -15,25 +15,40 @@ Source version `0.3.0`. Not released: the repository has no tags and the name
 `clirec` is unclaimed on PyPI, so `pip install clirec` does not resolve --
 install from the repository.
 
-## Audience
+## Audience & Target Personas
 
-- Developers building CLI or agent workflow tools.
-- Agent-framework maintainers who need replayable GUI demonstrations.
-- Local-first automation projects that want inspectable recording files.
-- `open-compute` users who replay recordings through `oc rec`.
+- `[PERSONA-01]` Autonomous AI Agent Engineers & Computer-Use Developers: Deterministic GUI demonstration traces for training, evaluation, and headless replay without vision-token overhead.
+- `[PERSONA-02]` CLI & Workflow Automation Builders (Sysadmins / DevOps): Turn interactive desktop operations into scriptable CLI commands with parameterized inputs.
+- `[PERSONA-03]` QA, Test Automation & E2E Validation Engineers: Versionable, git-friendly test runs with optional UIA metadata probing and SHA-256 media integrity.
+- `[PERSONA-04]` Privacy-Conscious Teams & Enterprise Compliance Officers: Masked input defaults, zero-cloud egress, unprivileged `RunAsInvoker`, and strict audio consent boundaries (§ 201 StGB).
+
+## Comparative Matrix & Governance Invariants
+
+- 10-dimension comparison against Video Recorders (OBS/Loom), Web E2E (Playwright/Cypress), Macro Recorders (AutoHotkey), and Enterprise RPA (UiPath).
+- Core Governance Invariants:
+  - `INV-LOCAL-01` (100% Offline & Local-First Zero-Egress)
+  - `INV-PRIVACY-02` (Default Parameter Sanitization & Text Masking)
+  - `INV-INSPECT-03` (Human-Readable Plaintext Spec)
+  - `INV-REPLAY-04` (Agent & CLI Native Replay via Injected Executor)
+  - `INV-AUDIO-05` (Strict Dual-Opt-In Audio Consent Boundary)
+  - `INV-SIDECAR-06` (Format v2 Atomic Media Sidecars with SHA-256)
+  - `INV-ADAPTER-07` (Decoupled STT Adapter Architecture)
+  - `INV-UNPRIV-08` (Unprivileged User-Mode Operation — RunAsInvoker)
+  - `INV-PORTABLE-09` (Zero Mandatory Runtime Dependencies)
+  - `INV-SLA-10` (Transparent Open-Source Governance & 48h Security SLA)
 
 ## Important Files
 
-- `README.md` - English overview, installation and usage.
-- `README_de.md` - German overview with real umlauts.
+- `README.md` - English overview, 18-point quick navigation, personas, comparative matrix, installation and usage.
+- `README_de.md` - German overview with reciprocal navigation parity and real umlauts.
 - `SKILL.md` - Skill instructions for using clirec as a demonstration channel.
   Written in German; `skills/clirec/SKILL.md` is a byte-identical shipped copy.
 - `CHANGELOG.md` - release history and current unreleased state.
-- `SECURITY.md` - reporting, local recording risks, and recording other people.
-- `THIRD_PARTY_LICENSES.md` - licences of the optional extras (`pynput` is LGPL-3.0).
-- `MARKETING-LOG.txt` - Audit, hygiene, and discoverability logbook.
+- `SECURITY.md` - reporting, local recording risks, SLA, and recording other people.
+- `THIRD_PARTY_LICENSES.md` - SPDX audit of core and optional extras (`pynput` is LGPL-3.0), governance invariants.
+- `MARKETING-LOG.txt` - Audit, hygiene, personas, comparative matrix, and discoverability logbook.
 - `clirec/` - Core package.
-- `tests/` - Regression, smoke, and repository contract tests (127 on Windows; one keyboard-layout test skips elsewhere).
+- `tests/` - Regression, smoke, metadata, and repository contract tests.
 - `.github/workflows/tests.yml` - Python test workflow with timeout guardrails.
 - `.github/workflows/stale.yml` - Stale issues and PRs automation.
 - `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
