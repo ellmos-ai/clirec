@@ -1,0 +1,497 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 680" width="2400" height="680">
+  <defs>
+    <!-- Background Atmospheric Radial Gradients -->
+    <radialGradient id="bg-glow-brand" cx="18%" cy="35%" r="42%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#0284c7" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bg-glow-center" cx="56%" cy="50%" r="46%">
+      <stop offset="0%" stop-color="#4338ca" stop-opacity="0.14"/>
+      <stop offset="60%" stop-color="#0369a1" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#4338ca" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bg-glow-code" cx="85%" cy="48%" r="45%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.12"/>
+      <stop offset="70%" stop-color="#0284c7" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Linear Gradients -->
+    <linearGradient id="trace-line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="35%" stop-color="#60a5fa"/>
+      <stop offset="70%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+
+    <linearGradient id="aperture-beam-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.05"/>
+      <stop offset="20%" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#818cf8" stop-opacity="1"/>
+      <stop offset="80%" stop-color="#f43f5e" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <linearGradient id="card-border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
+      <stop offset="40%" stop-color="#1e293b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <linearGradient id="btn-blue-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <!-- Tech Grid Pattern -->
+    <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#172338" stroke-width="0.8"/>
+      <circle cx="40" cy="40" r="1.1" fill="#25354e"/>
+    </pattern>
+
+    <!-- Filters for Glow & Shadows -->
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="glow-strong" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="card-shadow" x="-5%" y="-5%" width="112%" height="115%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+
+  <style>
+    .sans {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .mono {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    }
+  </style>
+
+  <!-- ======================================================== -->
+  <!-- 1. BASE BACKGROUND & LIGHTING                            -->
+  <!-- ======================================================== -->
+  <rect width="2400" height="680" fill="#060911"/>
+  <rect width="2400" height="680" fill="url(#bg-glow-brand)"/>
+  <rect width="2400" height="680" fill="url(#bg-glow-center)"/>
+  <rect width="2400" height="680" fill="url(#bg-glow-code)"/>
+  <rect width="2400" height="680" fill="url(#grid-pattern)"/>
+
+  <!-- Outer Protective Border (Frame for GitHub light & dark mode) -->
+  <rect x="2" y="2" width="2396" height="676" rx="14" fill="none" stroke="#1e293b" stroke-width="2"/>
+
+
+  <!-- ======================================================== -->
+  <!-- 2. LEFT SECTION: BRAND IDENTITY & CORE ARCHITECTURE      -->
+  <!-- ======================================================== -->
+
+  <!-- Top Status Badge -->
+  <g transform="translate(100, 92)">
+    <circle cx="10" cy="10" r="10" fill="#f43f5e" fill-opacity="0.25"/>
+    <circle cx="10" cy="10" r="5" fill="#f43f5e"/>
+    <text x="32" y="15" class="mono" font-size="13" font-weight="700" fill="#38bdf8" letter-spacing="2.5">LOCAL-FIRST DEMONSTRATION RECORDING</text>
+    <circle cx="438" cy="11" r="2.5" fill="#64748b"/>
+    <text x="456" y="15" class="mono" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1.5">ZERO EGRESS · 100% OFFLINE</text>
+  </g>
+
+  <!-- Project Wordmark: clirec -->
+  <g transform="translate(100, 202)">
+    <text x="0" y="0" class="sans" font-size="94" font-weight="900" letter-spacing="-3">
+      <tspan fill="#ffffff">cli</tspan><tspan fill="#38bdf8">rec</tspan>
+    </text>
+    <!-- Version chip next to wordmark -->
+    <rect x="252" y="-52" width="62" height="26" rx="6" fill="#0e223d" stroke="#1d4ed8" stroke-width="1"/>
+    <text x="283" y="-35" class="mono" font-size="12" font-weight="700" fill="#38bdf8" text-anchor="middle">v0.3</text>
+  </g>
+
+  <!-- Tagline (verbatim from README) -->
+  <g transform="translate(102, 258)">
+    <text x="0" y="0" class="sans" font-size="24.5" font-weight="500" fill="#f8fafc" letter-spacing="-0.3">
+      Human-readable GUI demonstration recordings
+    </text>
+    <text x="0" y="36" class="sans" font-size="24.5" font-weight="400" fill="#94a3b8" letter-spacing="-0.3">
+      for CLI and autonomous AI agent workflows.
+    </text>
+  </g>
+
+  <!-- 3 Architectural Pillar Cards -->
+  <g transform="translate(100, 360)">
+    <!-- Card 1: Plaintext Format -->
+    <g transform="translate(0, 0)">
+      <rect width="810" height="66" rx="10" fill="#09101d" stroke="#1e293b" stroke-width="1.2"/>
+      <rect x="14" y="13" width="40" height="40" rx="8" fill="#131e36" stroke="#223354" stroke-width="1"/>
+      <path d="M 26 23 L 38 23 L 42 27 L 42 43 L 26 43 Z M 37 23 L 37 28 L 42 28" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linejoin="round"/>
+      <line x1="30" y1="33" x2="38" y2="33" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="30" y1="37" x2="36" y2="37" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="68" y="29" class="sans" font-size="16" font-weight="700" fill="#ffffff">Plaintext .clirec Format</text>
+      <text x="68" y="49" class="sans" font-size="13" font-weight="400" fill="#94a3b8">Diffable, git-friendly action logs replacing multi-gigabyte video files</text>
+      <rect x="715" y="20" width="78" height="26" rx="6" fill="#13233f" stroke="#1d4ed8" stroke-width="1"/>
+      <text x="754" y="37" class="mono" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">TEXT SPEC</text>
+    </g>
+
+    <!-- Card 2: Privacy / Parameter Sanitization -->
+    <g transform="translate(0, 80)">
+      <rect width="810" height="66" rx="10" fill="#09101d" stroke="#1e293b" stroke-width="1.2"/>
+      <rect x="14" y="13" width="40" height="40" rx="8" fill="#241427" stroke="#481c4e" stroke-width="1"/>
+      <path d="M 34 23 L 42 27 L 42 35 C 42 40 34 43 34 43 C 34 43 26 40 26 35 L 26 27 Z" fill="none" stroke="#f43f5e" stroke-width="1.8" stroke-linejoin="round"/>
+      <text x="68" y="29" class="sans" font-size="16" font-weight="700" fill="#ffffff">Default Input Sanitization</text>
+      <text x="68" y="49" class="sans" font-size="13" font-weight="400" fill="#94a3b8">Typed keystrokes auto-parameterized into secure placeholders like <tspan class="mono" fill="#f43f5e">${input_1}</tspan></text>
+      <rect x="702" y="20" width="91" height="26" rx="6" fill="#2d1222" stroke="#f43f5e" stroke-opacity="0.6" stroke-width="1"/>
+      <text x="747" y="37" class="mono" font-size="11" font-weight="700" fill="#f43f5e" text-anchor="middle">ZERO LEAKS</text>
+    </g>
+
+    <!-- Card 3: Deterministic Replay -->
+    <g transform="translate(0, 160)">
+      <rect width="810" height="66" rx="10" fill="#09101d" stroke="#1e293b" stroke-width="1.2"/>
+      <rect x="14" y="13" width="40" height="40" rx="8" fill="#0e2327" stroke="#134746" stroke-width="1"/>
+      <path d="M 27 28 A 8 8 0 1 1 26 35 M 23 28 L 27 28 L 27 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="68" y="29" class="sans" font-size="16" font-weight="700" fill="#ffffff">Deterministic Injected Replay</text>
+      <text x="68" y="49" class="sans" font-size="13" font-weight="400" fill="#94a3b8">Backend-neutral executor protocol for headless AI agents and CLI pipelines</text>
+      <rect x="696" y="20" width="97" height="26" rx="6" fill="#0b2923" stroke="#34d399" stroke-opacity="0.6" stroke-width="1"/>
+      <text x="744" y="37" class="mono" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">DETERMINISTIC</text>
+    </g>
+  </g>
+
+
+  <!-- ======================================================== -->
+  <!-- 3. CENTER PANEL: LIVE DEMONSTRATION CAPTURE              -->
+  <!-- ======================================================== -->
+  <g transform="translate(960, 75)" filter="url(#card-shadow)">
+    <!-- Container frame -->
+    <rect width="455" height="530" rx="12" fill="#080e1a" stroke="#1e293b" stroke-width="1.5"/>
+
+    <!-- Header bar -->
+    <rect width="455" height="42" rx="12" fill="#0d1628"/>
+    <rect y="30" width="455" height="12" fill="#0d1628"/>
+    <line x1="0" y1="42" x2="455" y2="42" stroke="#1e293b" stroke-width="1"/>
+    <!-- Window buttons -->
+    <circle cx="20" cy="21" r="5" fill="#ef4444" fill-opacity="0.8"/>
+    <circle cx="36" cy="21" r="5" fill="#f59e0b" fill-opacity="0.8"/>
+    <circle cx="52" cy="21" r="5" fill="#10b981" fill-opacity="0.8"/>
+    <text x="74" y="25" class="mono" font-size="11" font-weight="700" fill="#94a3b8" letter-spacing="1">LIVE CAPTURE: WinAPI / pynput</text>
+    <rect x="345" y="10" width="96" height="22" rx="5" fill="#14233c" stroke="#1e3a66" stroke-width="1"/>
+    <text x="393" y="25" class="mono" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">1920 × 1080</text>
+
+    <!-- App Window Mockup inside Capture Pane -->
+    <g transform="translate(24, 60)">
+      <rect width="407" height="440" rx="8" fill="#0d1527" stroke="#1a2744" stroke-width="1"/>
+
+      <!-- App Header -->
+      <rect width="407" height="34" rx="8" fill="#111c34"/>
+      <rect y="24" width="407" height="10" fill="#111c34"/>
+      <line x1="0" y1="34" x2="407" y2="34" stroke="#1a2744" stroke-width="1"/>
+      <text x="18" y="22" class="sans" font-size="11.5" font-weight="600" fill="#94a3b8">Portal Demonstration · Admin Setup</text>
+
+      <!-- Step 000 & 001 Target: Username Input -->
+      <g transform="translate(24, 55)">
+        <text x="0" y="0" class="sans" font-size="11" font-weight="600" fill="#94a3b8">Username or Email</text>
+        <rect y="10" width="359" height="42" rx="6" fill="#070c18" stroke="#1e3358" stroke-width="1.2"/>
+        <text x="14" y="36" class="mono" font-size="13" fill="#e2e8f0">admin@local</text>
+      </g>
+
+      <!-- Step 002 & 003 Target: Sensitive Password Input -->
+      <g transform="translate(24, 130)">
+        <text x="0" y="0" class="sans" font-size="11" font-weight="600" fill="#94a3b8">Service Secret / Key</text>
+        <rect y="10" width="359" height="42" rx="6" fill="#070c18" stroke="#4a152e" stroke-width="1.2"/>
+        <text x="14" y="37" class="sans" font-size="18" fill="#f43f5e" letter-spacing="3">••••••••••••</text>
+      </g>
+
+      <!-- Options / Checkboxes -->
+      <g transform="translate(24, 205)">
+        <rect y="0" width="16" height="16" rx="4" fill="#1e3a66" stroke="#38bdf8" stroke-width="1.2"/>
+        <path d="M 4 8 L 7 11 L 12 5" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="26" y="13" class="sans" font-size="11.5" fill="#94a3b8">Deterministic replay mode</text>
+      </g>
+
+      <!-- Action Button (Step 004 Target) -->
+      <g transform="translate(24, 240)">
+        <rect width="359" height="44" rx="7" fill="url(#btn-blue-grad)" stroke="#3b82f6" stroke-width="1"/>
+        <text x="179" y="27" class="sans" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Execute Authentication Flow</text>
+      </g>
+
+      <!-- Demonstration Diagnostics Box at bottom -->
+      <g transform="translate(24, 310)">
+        <rect width="359" height="105" rx="6" fill="#070b14" stroke="#162238" stroke-width="1"/>
+        <text x="12" y="22" class="mono" font-size="10.5" font-weight="700" fill="#38bdf8">EVENT STREAM BUFFER</text>
+        <text x="12" y="44" class="mono" font-size="10.5" fill="#94a3b8">[WH_MOUSE_LL]    x=420 y=260 WM_LBUTTONDOWN</text>
+        <text x="12" y="64" class="mono" font-size="10.5" fill="#94a3b8">[WH_KEYBOARD_LL] 11 keys masked -&gt; ${input_1}</text>
+        <text x="12" y="84" class="mono" font-size="10.5" fill="#34d399">[CAPTURE COMMIT]  Manifest v2 SHA-256 synced</text>
+      </g>
+
+      <!-- =============================================== -->
+      <!-- DYNAMIC MOTION CURVE & GESTURES                 -->
+      <!-- =============================================== -->
+
+      <!-- Motion Trail Bezier Curve -->
+      <path d="M 30 30 C 90 70, 140 85, 200 85 S 150 145, 180 155 S 160 255, 185 262"
+            fill="none" stroke="url(#trace-line-grad)" stroke-width="3.5" stroke-linecap="round"
+            filter="url(#glow-cyan)"/>
+      <path d="M 30 30 C 90 70, 140 85, 200 85 S 150 145, 180 155 S 160 255, 185 262"
+            fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="3,5"/>
+
+      <!-- Gesture Node 1: Click at (420, 260) -->
+      <g transform="translate(200, 85)">
+        <circle cx="0" cy="0" r="16" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.4"/>
+        <circle cx="0" cy="0" r="8" fill="none" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="0" cy="0" r="3" fill="#38bdf8"/>
+        <rect x="14" y="-22" width="102" height="18" rx="4" fill="#041226" stroke="#38bdf8" stroke-width="0.8"/>
+        <text x="65" y="-10" class="mono" font-size="9.5" font-weight="700" fill="#38bdf8" text-anchor="middle">click (420, 260)</text>
+      </g>
+
+      <!-- Gesture Node 2: Masked Keystrokes with Privacy Shield -->
+      <g transform="translate(180, 155)">
+        <circle cx="0" cy="0" r="14" fill="none" stroke="#f43f5e" stroke-width="1.5" stroke-opacity="0.5"/>
+        <circle cx="0" cy="0" r="4" fill="#f43f5e"/>
+        <!-- Privacy Masked Tag -->
+        <rect x="14" y="-16" width="136" height="22" rx="4" fill="#240714" stroke="#f43f5e" stroke-width="1"/>
+        <text x="82" y="-1" class="mono" font-size="10" font-weight="700" fill="#f43f5e" text-anchor="middle">🔒 MASKED: ${input_1}</text>
+      </g>
+
+      <!-- Gesture Node 3: Final Click with Vector Pointer Cursor -->
+      <g transform="translate(185, 262)">
+        <!-- Expanding click sonar wave rings -->
+        <circle cx="0" cy="0" r="28" fill="none" stroke="#34d399" stroke-width="1" stroke-opacity="0.2"/>
+        <circle cx="0" cy="0" r="18" fill="none" stroke="#34d399" stroke-width="1.5" stroke-opacity="0.6"/>
+        <circle cx="0" cy="0" r="6" fill="#34d399"/>
+
+        <!-- Callout below the button with pointer leader line -->
+        <path d="M 0 10 L 0 32 L 20 32" fill="none" stroke="#34d399" stroke-width="1" stroke-opacity="0.8"/>
+        <rect x="24" y="22" width="104" height="20" rx="4" fill="#041a14" stroke="#34d399" stroke-width="1"/>
+        <text x="76" y="36" class="mono" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">click (510, 370)</text>
+
+        <!-- Precision Vector OS Pointer Cursor -->
+        <g transform="translate(-1, -1) scale(1.3)" filter="url(#card-shadow)">
+          <path d="M 0 0 L 0 20 L 5.5 15 L 10.5 25 L 14 23.5 L 9.2 13.8 L 15.8 13.8 Z"
+                fill="#ffffff" stroke="#0b1322" stroke-width="1.5" stroke-linejoin="round"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+
+  <!-- ======================================================== -->
+  <!-- 4. CENTRAL BRIDGE: SYNTHESIS & APERTURE                  -->
+  <!-- ======================================================== -->
+  <g transform="translate(1415, 75)">
+    <!-- Vertical timeline laser aperture -->
+    <line x1="65" y1="45" x2="65" y2="490" stroke="url(#aperture-beam-grad)" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <line x1="65" y1="45" x2="65" y2="490" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.8"/>
+
+    <!-- Process Label Top -->
+    <rect x="18" y="12" width="94" height="24" rx="5" fill="#0b172d" stroke="#38bdf8" stroke-width="0.8"/>
+    <text x="65" y="28" class="mono" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">SYNTHESIS</text>
+
+    <!-- Seamless Crystallization Rays connecting Gestures to Code Lines -->
+    <!-- Ray 1: from Click (420, 260) [Y=145 in pane] into Step [000] [Y=238] -->
+    <path d="M 0 145 C 35 145, 45 238, 65 238 S 95 238, 130 238" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4,3"/>
+    <circle cx="65" cy="238" r="5" fill="#38bdf8" filter="url(#glow-cyan)"/>
+    <rect x="32" y="246" width="66" height="15" rx="3" fill="#041226"/>
+    <text x="65" y="257" class="mono" font-size="8.5" font-weight="600" fill="#38bdf8" text-anchor="middle">t=0.000s</text>
+
+    <!-- Ray 2: from Username Input [Y=195 in pane] into Step [001] [Y=260] -->
+    <path d="M 0 195 C 35 195, 45 260, 65 260 S 95 260, 130 260" fill="none" stroke="#60a5fa" stroke-width="1.4" stroke-dasharray="4,3"/>
+    <circle cx="65" cy="260" r="4" fill="#60a5fa"/>
+    <rect x="32" y="268" width="66" height="15" rx="3" fill="#071328"/>
+    <text x="65" y="279" class="mono" font-size="8.5" font-weight="600" fill="#60a5fa" text-anchor="middle">t=0.450s</text>
+
+    <!-- Ray 3: from Masked Password [Y=215 in pane] into Step [003] [Y=304] -->
+    <path d="M 0 215 C 35 215, 45 304, 65 304 S 95 304, 130 304" fill="none" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="4,3"/>
+    <circle cx="65" cy="304" r="5" fill="#f43f5e" filter="url(#glow-cyan)"/>
+    <rect x="32" y="312" width="66" height="15" rx="3" fill="#200613"/>
+    <text x="65" y="323" class="mono" font-size="8.5" font-weight="600" fill="#f43f5e" text-anchor="middle">t=1.150s</text>
+
+    <!-- Ray 4: from Button Click [Y=322 in pane] into Step [004] [Y=326] -->
+    <path d="M 0 322 C 35 322, 45 326, 65 326 S 95 326, 130 326" fill="none" stroke="#34d399" stroke-width="1.8" stroke-dasharray="4,3"/>
+    <circle cx="65" cy="326" r="5" fill="#34d399" filter="url(#glow-cyan)"/>
+    <rect x="32" y="334" width="66" height="15" rx="3" fill="#041a14"/>
+    <text x="65" y="345" class="mono" font-size="8.5" font-weight="600" fill="#34d399" text-anchor="middle">t=1.600s</text>
+
+    <!-- Flow Direction Icon Bottom -->
+    <g transform="translate(53, 440)">
+      <circle cx="12" cy="12" r="14" fill="#0b172d" stroke="#38bdf8" stroke-width="1"/>
+      <path d="M 8 12 L 14 12 M 11 8 L 15 12 L 11 16" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+
+  <!-- ======================================================== -->
+  <!-- 5. RIGHT PANEL: HUMAN-READABLE .clirec & AGENT REPLAY    -->
+  <!-- ======================================================== -->
+  <g transform="translate(1545, 75)" filter="url(#card-shadow)">
+    <!-- Main editor frame -->
+    <rect width="755" height="530" rx="12" fill="#070c16" stroke="url(#card-border-grad)" stroke-width="1.5"/>
+
+    <!-- Terminal Window Header -->
+    <rect width="755" height="42" rx="12" fill="#0b1222"/>
+    <rect y="30" width="755" height="12" fill="#0b1222"/>
+    <line x1="0" y1="42" x2="755" y2="42" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Window buttons -->
+    <circle cx="22" cy="21" r="5" fill="#ef4444" fill-opacity="0.8"/>
+    <circle cx="38" cy="21" r="5" fill="#f59e0b" fill-opacity="0.8"/>
+    <circle cx="54" cy="21" r="5" fill="#10b981" fill-opacity="0.8"/>
+
+    <!-- File Tab -->
+    <rect x="76" y="8" width="186" height="28" rx="6" fill="#131e36" stroke="#23355b" stroke-width="1"/>
+    <rect x="88" y="16" width="9" height="12" rx="1" fill="none" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="104" y="27" class="mono" font-size="12" font-weight="700" fill="#ffffff">login-flow<tspan fill="#38bdf8">.clirec</tspan></text>
+
+    <!-- Integrity verification badge on right -->
+    <rect x="525" y="9" width="215" height="24" rx="6" fill="#0b241e" stroke="#134e3f" stroke-width="1"/>
+    <circle cx="538" cy="21" r="4" fill="#34d399"/>
+    <text x="548" y="27" class="mono" font-size="11" font-weight="700" fill="#34d399">Format v2 · SHA-256 Verified</text>
+
+    <!-- Monospace Plain-Text Code Area (Authentic clirec file format) -->
+    <g transform="translate(28, 64)" class="mono" font-size="12.5">
+      <!-- Line 01 -->
+      <text y="0" fill="#64748b">01</text>
+      <text x="36" y="0" fill="#64748b" font-weight="600"># clirec-version: 2</text>
+
+      <!-- Line 02 -->
+      <text y="22" fill="#64748b">02</text>
+      <text x="36" y="22">
+        <tspan fill="#818cf8" font-weight="600">title:</tspan> <tspan fill="#38bdf8">"login-flow"</tspan>
+      </text>
+
+      <!-- Line 03 -->
+      <text y="44" fill="#64748b">03</text>
+      <text x="36" y="44">
+        <tspan fill="#818cf8" font-weight="600">host:</tspan> <tspan fill="#38bdf8">"desktop-win64"</tspan>
+      </text>
+
+      <!-- Line 04 -->
+      <text y="66" fill="#64748b">04</text>
+      <text x="36" y="66">
+        <tspan fill="#818cf8" font-weight="600">resolution:</tspan> <tspan fill="#38bdf8">"1920x1080"</tspan>
+        <tspan fill="#818cf8" font-weight="600" dx="30">origin:</tspan> <tspan fill="#e2e8f0">0,0</tspan>
+      </text>
+
+      <!-- Line 05 -->
+      <text y="88" fill="#64748b">05</text>
+      <text x="36" y="88" fill="#818cf8" font-weight="600">params:</text>
+
+      <!-- Line 06 -->
+      <text y="110" fill="#64748b">06</text>
+      <text x="36" y="110">
+        <tspan fill="#94a3b8">  - name:</tspan> <tspan fill="#f43f5e" font-weight="700">input_1</tspan>
+        <tspan fill="#94a3b8" dx="25">desc:</tspan> <tspan fill="#38bdf8">"admin_password"</tspan>
+      </text>
+
+      <!-- Line 07: Steps Marker -->
+      <text y="136" fill="#64748b">07</text>
+      <line x1="36" y1="130" x2="700" y2="130" stroke="#1e293b" stroke-width="1"/>
+      <text x="36" y="148" fill="#fbbf24" font-weight="700" letter-spacing="1">--- steps ---</text>
+
+      <!-- Step Lines with Highlight Bands -->
+
+      <!-- Step [000]: Click -->
+      <g transform="translate(0, 163)">
+        <rect x="30" y="-14" width="675" height="22" rx="4" fill="#0e1f38" fill-opacity="0.5"/>
+        <text y="2" fill="#64748b">08</text>
+        <text x="36" y="2">
+          <tspan fill="#38bdf8" font-weight="700">[000]</tspan>
+          <tspan fill="#94a3b8"> t=0.000  </tspan>
+          <tspan fill="#34d399" font-weight="700">click     </tspan>
+          <tspan fill="#fbbf24">x=420 y=260  </tspan>
+          <tspan fill="#818cf8">btn=left</tspan>
+        </text>
+      </g>
+
+      <!-- Step [001]: Type username -->
+      <g transform="translate(0, 185)">
+        <text y="2" fill="#64748b">09</text>
+        <text x="36" y="2">
+          <tspan fill="#38bdf8" font-weight="700">[001]</tspan>
+          <tspan fill="#94a3b8"> t=0.450  </tspan>
+          <tspan fill="#60a5fa" font-weight="700">type      </tspan>
+          <tspan fill="#e2e8f0">text=</tspan><tspan fill="#38bdf8">"admin@local"</tspan>
+        </text>
+      </g>
+
+      <!-- Step [002]: Click password input -->
+      <g transform="translate(0, 207)">
+        <text y="2" fill="#64748b">10</text>
+        <text x="36" y="2">
+          <tspan fill="#38bdf8" font-weight="700">[002]</tspan>
+          <tspan fill="#94a3b8"> t=0.820  </tspan>
+          <tspan fill="#34d399" font-weight="700">click     </tspan>
+          <tspan fill="#fbbf24">x=420 y=310  </tspan>
+          <tspan fill="#818cf8">btn=left</tspan>
+        </text>
+      </g>
+
+      <!-- Step [003]: Type Sanitized Input Placeholder -->
+      <g transform="translate(0, 229)">
+        <rect x="30" y="-14" width="675" height="22" rx="4" fill="#2d0b1a" fill-opacity="0.55" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1"/>
+        <text y="2" fill="#64748b">11</text>
+        <text x="36" y="2">
+          <tspan fill="#38bdf8" font-weight="700">[003]</tspan>
+          <tspan fill="#94a3b8"> t=1.150  </tspan>
+          <tspan fill="#60a5fa" font-weight="700">type      </tspan>
+          <tspan fill="#e2e8f0">text=</tspan><tspan fill="#f43f5e" font-weight="700">"${input_1}"</tspan>
+          <tspan fill="#f43f5e" font-size="11" dx="20">/* secret auto-sanitized */</tspan>
+        </text>
+      </g>
+
+      <!-- Step [004]: Click Submit Button -->
+      <g transform="translate(0, 251)">
+        <rect x="30" y="-14" width="675" height="22" rx="4" fill="#08241c" fill-opacity="0.5"/>
+        <text y="2" fill="#64748b">12</text>
+        <text x="36" y="2">
+          <tspan fill="#38bdf8" font-weight="700">[004]</tspan>
+          <tspan fill="#94a3b8"> t=1.600  </tspan>
+          <tspan fill="#34d399" font-weight="700">click     </tspan>
+          <tspan fill="#fbbf24">x=510 y=370  </tspan>
+          <tspan fill="#818cf8">btn=left</tspan>
+          <tspan fill="#94a3b8" dx="15">ui="Authenticate"</tspan>
+        </text>
+      </g>
+
+      <!-- Step [005]: Key Enter -->
+      <g transform="translate(0, 273)">
+        <text y="2" fill="#64748b">13</text>
+        <text x="36" y="2">
+          <tspan fill="#38bdf8" font-weight="700">[005]</tspan>
+          <tspan fill="#94a3b8"> t=2.040  </tspan>
+          <tspan fill="#818cf8" font-weight="700">key       </tspan>
+          <tspan fill="#e2e8f0">keys=</tspan><tspan fill="#38bdf8">"Enter"</tspan>
+          <tspan fill="#64748b" dx="30"># End of Demonstration</tspan>
+        </text>
+      </g>
+
+      <!-- Summary Diagnostic Line -->
+      <g transform="translate(0, 298)">
+        <text y="2" fill="#64748b">14</text>
+        <text x="36" y="2" fill="#64748b" font-style="italic"># Total runtime: 2.1s · 6 actions · 0 dropped events</text>
+      </g>
+    </g>
+
+    <!-- Replay Status Footer -->
+    <g transform="translate(0, 470)">
+      <rect width="755" height="60" rx="0 0 12 12" fill="#050a12"/>
+      <line x1="0" y1="0" x2="755" y2="0" stroke="#1e293b" stroke-width="1"/>
+
+      <!-- Replay Execution Tag -->
+      <g transform="translate(24, 18)">
+        <circle cx="10" cy="12" r="8" fill="#34d399" fill-opacity="0.2"/>
+        <circle cx="10" cy="12" r="4.5" fill="#34d399"/>
+        <text x="28" y="16" class="mono" font-size="12" font-weight="700" fill="#34d399" letter-spacing="1">DETERMINISTIC AGENT REPLAY</text>
+        <text x="248" y="16" class="sans" font-size="12" fill="#94a3b8">· Executor (<tspan class="mono" fill="#e2e8f0">open-compute / oc rec replay</tspan>)</text>
+      </g>
+
+      <!-- Metric badge on right -->
+      <g transform="translate(545, 17)">
+        <rect width="185" height="26" rx="6" fill="#0c1b33" stroke="#1d3557" stroke-width="1"/>
+        <text x="92" y="17" class="mono" font-size="10.5" font-weight="700" fill="#38bdf8" text-anchor="middle">0 VISION TOKENS · LOCAL-FIRST</text>
+      </g>
+    </g>
+  </g>
+
+</svg>

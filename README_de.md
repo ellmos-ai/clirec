@@ -1,6 +1,6 @@
 # clirec
 
-<img src="assets/banner.png" width="100%" alt="clirec Banner">
+<img src="assets/banner.svg" width="100%" alt="clirec Banner">
 
 [English](README.md) | [Deutsch](README_de.md)
 
