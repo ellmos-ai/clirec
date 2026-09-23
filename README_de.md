@@ -18,6 +18,7 @@
 [![Ökosystem](https://img.shields.io/badge/%C3%96kosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Dachverband](https://img.shields.io/badge/dachverband-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-yellow.svg)](LICENSE)
+[![Attribution](https://img.shields.io/badge/attribution-NOTICE-blue.svg)](NOTICE)
 
 > Menschenlesbare GUI-Demonstrationsaufzeichnungen für CLI- und autonome KI-Agenten-Workflows.
 
@@ -355,5 +356,7 @@ Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PA
 ## 18. Lizenz & Maintainer
 
 - **Lizenz:** MIT-Lizenz, siehe [LICENSE](LICENSE).
+- **Urheberrecht & Attribution:** Siehe [NOTICE](NOTICE) für kanonische Urheberrechts- und Attributionshinweise.
 - **Maintainer:** Autoren von `ellmos-ai` und Community-Mitwirkende.
 - **Dachorganisation:** Teil der modularen [open-bricks](https://github.com/open-bricks) Softwarefamilie.
+- **Gesetzlicher Hinweis (§ 521 BGB):** Diese Open-Source-Software und Dokumentation werden unentgeltlich bereitgestellt. Gemäß § 521 BGB ist die Haftung des Bereitstellers bei unentgeltlicher Überlassung auf Vorsatz und grobe Fahrlässigkeit beschränkt.

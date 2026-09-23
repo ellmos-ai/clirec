@@ -1,15 +1,15 @@
 # Third-Party Licenses & Transparency Notice
 
 > **Project:** `ellmos-ai/clirec` (CLIRec — Demonstration Recordings for CLI & Agent Workflows)<br>
-> **Audited:** 2026-09-16<br>
-> **Repository License:** [MIT License](LICENSE)<br>
+> **Audited:** 2026-09-23 (Pfad A Re-Audit)<br>
+> **Repository License:** [MIT License](LICENSE) | [Attribution Notice](NOTICE)<br>
 > **Architecture & Privacy:** 100% Local-First, Zero-Egress by default, Unprivileged User-Mode (`RunAsInvoker`)
 
 ---
 
 ## Executive Summary & Compliance Assurance
 
-`clirec` is a local-first Python library and CLI tool for recording mouse and keyboard demonstrations into human-readable `.clirec` files and replaying them via an injected executor. The core software is licensed under the permissive [MIT License](LICENSE).
+`clirec` is a local-first Python library and CLI tool for recording mouse and keyboard demonstrations into human-readable `.clirec` files and replaying them via an injected executor. The core software is licensed under the permissive [MIT License](LICENSE) and canonical attribution is provided in [NOTICE](NOTICE).
 
 The core runtime package has **no mandatory external runtime dependencies**; on Windows, keyboard and mouse hooks utilize Python standard library `ctypes` bindings directly against Windows subsystem APIs (`user32.dll`), operating entirely unprivileged in user space.
 

@@ -14,7 +14,7 @@ def test_ci_workflows_timeout_guardrails():
     workflows_dir = REPO_ROOT / ".github" / "workflows"
     assert workflows_dir.is_dir()
 
-    expected_workflows = ["tests.yml", "codeql.yml", "stale.yml"]
+    expected_workflows = ["tests.yml", "codeql.yml", "stale.yml", "welcome.yml"]
     for wf_name in expected_workflows:
         wf_path = workflows_dir / wf_name
         assert wf_path.is_file(), f"Missing workflow {wf_name}"
@@ -23,7 +23,7 @@ def test_ci_workflows_timeout_guardrails():
 
 
 def test_stale_workflow_present_and_valid():
-    """Stale workflow must exist, have least-privilege permissions and timeout."""
+    """Stale workflow must have least-privilege permissions and concurrency."""
     stale_path = REPO_ROOT / ".github" / "workflows" / "stale.yml"
     assert stale_path.is_file()
     text = stale_path.read_text(encoding="utf-8")
@@ -31,6 +31,19 @@ def test_stale_workflow_present_and_valid():
     assert "issues: write" in text
     assert "pull-requests: write" in text
     assert "timeout-minutes: 10" in text
+    assert "cancel-in-progress: true" in text
+
+
+def test_welcome_workflow_present_and_valid():
+    """Welcome workflow must have first-interaction action, concurrency, and timeout."""
+    welcome_path = REPO_ROOT / ".github" / "workflows" / "welcome.yml"
+    assert welcome_path.is_file()
+    text = welcome_path.read_text(encoding="utf-8")
+    assert "actions/first-interaction@v3" in text
+    assert "issues: write" in text
+    assert "pull-requests: write" in text
+    assert "timeout-minutes: 5" in text
+    assert "cancel-in-progress: true" in text
 
 
 def test_gitignore_multihost_and_lock_defense():
@@ -43,20 +56,40 @@ def test_gitignore_multihost_and_lock_defense():
         "* (kopie)*",
         "* (copy)*",
         "*conflicted copy*",
+        "*.sync-conflict-*",
+        "*.conflict",
         "*-WORKSTATION*",
+        "*-WORKSTATION-LG*",
         "*-ASUS*",
+        "*-MacBook*",
         "LOCK",
         "LOCK.*",
+        "LOCK.user.*",
+        "LOCK.until.*",
+        "LOCK.condition.*",
+        ".automation-lock",
         "LOCK.permissions.json",
         "uv.lock",
         "!package-lock.json",
         ".tox/",
         ".turbo/",
         ".hypothesis/",
+        ".nyc_output/",
         ".coverage*",
     ]
     for pattern in required_patterns:
         assert pattern in text, f"Missing pattern in .gitignore: {pattern}"
+
+
+def test_notice_attribution_file_present():
+    """Canonical NOTICE attribution file must exist with ecosystem references."""
+    notice_path = REPO_ROOT / "NOTICE"
+    assert notice_path.is_file()
+    text = notice_path.read_text(encoding="utf-8")
+    assert "Copyright (c) 2026 Lukas Geiger" in text
+    assert "ellmos-ai" in text
+    assert "open-bricks" in text
+    assert "THIRD_PARTY_LICENSES.md" in text
 
 
 def test_pep621_license_and_urls():
@@ -67,7 +100,8 @@ def test_pep621_license_and_urls():
         data = tomllib.load(f)
 
     project = data.get("project", {})
-    assert project.get("license-files") == ["LICENSE"]
+    expected_license_files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
+    assert project.get("license-files") == expected_license_files
 
     urls = project.get("urls", {})
     assert "Homepage" in urls
@@ -76,10 +110,13 @@ def test_pep621_license_and_urls():
     assert "Issues" in urls
     assert "LLM Context" in urls
     assert "Third-Party Licenses" in urls
+    assert "Notice" in urls
     assert "Marketing Log" in urls
 
     pytest_cfg = data.get("tool", {}).get("pytest", {}).get("ini_options", {})
     assert "-ra" in pytest_cfg.get("addopts", "")
+    assert pytest_cfg.get("minversion") == "7.0"
+    assert "build" in pytest_cfg.get("norecursedirs", [])
 
     ruff_lint = data.get("tool", {}).get("ruff", {}).get("lint", {})
     select = ruff_lint.get("select", [])
@@ -105,12 +142,14 @@ def test_version_parity():
 
 
 def test_llms_txt_recency_and_metadata():
-    """llms.txt must have 2026-09-16 verification date and accurate references."""
+    """llms.txt must have 2026-09-23 verification date and accurate references."""
     llms_path = REPO_ROOT / "llms.txt"
     assert llms_path.is_file()
     text = llms_path.read_text(encoding="utf-8")
-    assert "## Last-checked: 2026-09-16" in text
+    assert "## Last-checked: 2026-09-23" in text
     assert "tests/" in text
+    assert "NOTICE" in text
+    assert "welcome.yml" in text
     assert "MARKETING-LOG.txt" in text
     assert "THIRD_PARTY_LICENSES.md" in text
     assert "[PERSONA-01]" in text
@@ -125,6 +164,7 @@ def test_marketing_log_present_and_active():
     assert "Pfad A" in text
     assert "2026-09-16" in text
     assert "Pfad B" in text
+    assert "2026-09-23" in text
     assert "INV-LOCAL-01" in text
 
 
@@ -135,6 +175,7 @@ def test_changelog_recent_entry():
     text = cl_path.read_text(encoding="utf-8")
     assert "2026-09-13" in text
     assert "2026-09-16" in text
+    assert "2026-09-23" in text
     assert "Pfad B" in text
 
 

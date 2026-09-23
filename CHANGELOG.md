@@ -6,6 +6,17 @@ on PyPI. Everything below `0.3.0 - unreleased` is therefore still unpublished.
 
 ## Unreleased
 
+- Technical Hygiene, Lifecycle CI, NOTICE Attribution & PEP 621 Hardening (Pfad A, 2026-09-23):
+  - Created canonical open-source `NOTICE` attribution file designating copyright to Lukas Geiger under the ellmos-ai / open-bricks umbrella.
+  - Added new contributor welcome automation workflow (`.github/workflows/welcome.yml`) using `actions/first-interaction@v3` with concurrency cancel-in-progress and 5-minute timeout.
+  - Hardened `.github/workflows/stale.yml` with concurrency `cancel-in-progress: true` guard.
+  - Extended `.gitignore` against additional multi-host conflict files (`*-MacBook*`, `*.sync-conflict-*`, `*.conflict`), canonical locks (`LOCK.user.*`, `LOCK.until.*`, `LOCK.condition.*`), `.automation-lock`, and `.nyc_output/`.
+  - Standardized `pyproject.toml` per PEP 621 with `license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]`, added `Notice` URL to `[project.urls]`, and configured `minversion = "7.0"` and `norecursedirs` for pytest.
+  - Updated `THIRD_PARTY_LICENSES.md` to reference `NOTICE` and confirmed Level 1 SBOM recency with unprivileged `RunAsInvoker` Non-Elevation & Zero-Copyleft guarantee.
+  - Synchronized documentation in `README.md`, `README_de.md` (links to `NOTICE`, statutory note § 521 BGB), and `llms.txt` (Last-checked 2026-09-23).
+  - Recorded Pfad A Technical Hygiene Audit in `MARKETING-LOG.txt`.
+  - Extended automated contract tests in `tests/test_metadata.py` with assertions covering NOTICE presence, welcome workflow guardrails, stale concurrency, and extended gitignore patterns.
+
 - Discoverability, Visual Architecture, Target Personas & Comparative Matrix (Pfad B, 2026-09-16):
   - Added 18-point bilingual quick navigation parity with reciprocal anchor support across `README.md` and `README_de.md`.
   - Documented 4 target personas (`[PERSONA-01]` Autonomous AI Agent Engineers, `[PERSONA-02]` CLI Automation Builders, `[PERSONA-03]` QA & E2E Validation Engineers, `[PERSONA-04]` Privacy-Conscious Teams & Compliance Officers) and high-intent SEO queries.

@@ -8,7 +8,7 @@ version = "0.3.0"
 description = "Human-readable GUI demonstration recordings for CLI and agent workflows."
 readme = "README.md"
 license = "MIT"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
 requires-python = ">=3.10"
 authors = [
     {name = "The clirec authors"},
@@ -47,16 +47,19 @@ Changelog = "https://github.com/ellmos-ai/clirec/blob/main/CHANGELOG.md"
 Issues = "https://github.com/ellmos-ai/clirec/issues"
 "LLM Context" = "https://github.com/ellmos-ai/clirec/blob/main/llms.txt"
 "Third-Party Licenses" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.md"
+Notice = "https://github.com/ellmos-ai/clirec/blob/main/NOTICE"
 "Marketing Log" = "https://github.com/ellmos-ai/clirec/blob/main/MARKETING-LOG.txt"
 
 [tool.setuptools.packages.find]
 include = ["clirec*"]
 
 [tool.pytest.ini_options]
+minversion = "7.0"
 addopts = "-ra -v"
 pythonpath = "."
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv"]
 
 [tool.ruff]
 target-version = "py310"

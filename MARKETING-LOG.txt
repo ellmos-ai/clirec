@@ -105,3 +105,33 @@
 
 ### 8. Automatisierte Vertragstest-Suite
 - `tests/test_metadata.py` ausgebaut um Vertragstests für 18-Punkte-Navigation, Personas, 10-Dimensionen-Vergleichsmatrix, Lizenz-Audit, Invarianten, Pyproject URLs und Marketing-Log-Recency.
+
+## 2026-09-23 — Pfad A: Repository-Hygiene, Welcome & Lifecycle CI, NOTICE-Attribution & PEP 621 Härtung
+
+### 1. Ausgangslage & Kriterien
+- Repository: ellmos-ai/clirec (C:\_Local_DEV\repos\clirec)
+- Version: 0.3.0 (unreleased, eingefroren gemäß T-20260920-167562623)
+- Kategorie: Standalone Demonstration Recording & Replay Channel for CLI & Agent Workflows
+- Initialer Status: Arbeitsbaum sauber, 0 aktive Locks im kanonischen Lock-System (lock_status.py: UNLOCKED), Cooldown >24h seit letztem Kontakt eingehalten (180.4h Ruhezeit, letzte Pfad A Prüfung am 2026-09-13 vor 10 Tagen, letzter Kontakt Pfad B am 2026-09-16 vor 7 Tagen).
+
+### 2. Umgesetzte Hygiene- & Härtungsmaßnahmen
+1. CI/CD Lifecycle & Community Welcome Automation:
+   - Bereitstellung von `.github/workflows/welcome.yml` (`actions/first-interaction@v3`, `concurrency: cancel-in-progress: true`, `timeout-minutes: 5`, least-privilege `issues: write`, `pull-requests: write`).
+   - Härtung von `.github/workflows/stale.yml` um `concurrency: cancel-in-progress: true`.
+2. Kanonische Open-Source Attribution (`NOTICE`):
+   - Erstellung der Datei `NOTICE` im Repository-Root mit Urheberrechtsvermerk für Lukas Geiger (2026), Zuordnung zur ellmos-ai Organisation und dem open-bricks Dachverband.
+3. Multi-Host & Cloud-Sync Gitignore-Härtung:
+   - Erweiterung von `.gitignore` um Muster für macOS/Multi-Host (`*-MacBook*`, `*.sync-conflict-*`, `*.conflict`), kanonische Locks (`LOCK.user.*`, `LOCK.until.*`, `LOCK.condition.*`), `.automation-lock` und `.nyc_output/`.
+4. PEP 621 Metadaten- & Tooling-Härtung:
+   - Aktualisierung von `license-files` in `pyproject.toml` auf `["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]`.
+   - Ergänzung der URL `Notice` unter `[project.urls]`.
+   - Härtung von `[tool.pytest.ini_options]` mit `minversion = "7.0"` und `norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv"]`.
+   - Strikte Version-Freeze-Garantie: `version = "0.3.0"` unverändert beibehalten (T-20260920-167562623).
+5. Level 1 SBOM & Lizenzaudit:
+   - Aktualisierung von `THIRD_PARTY_LICENSES.md` mit Referenz auf `NOTICE` und Bestätigung der RunAsInvoker Non-Elevation & Zero-Copyleft Garantie zum Stand 2026-09-23.
+6. Dokumentation & Kontext-Parität:
+   - Synchronisation von `llms.txt` (Last-checked: 2026-09-23, Test-Zählung aktualisiert, Verweis auf `NOTICE`).
+   - Verlinkung von `NOTICE` und gesetzlicher Hinweis § 521 BGB in `README.md` und `README_de.md`.
+   - Dokumentation in `CHANGELOG.md` unter `## Unreleased`.
+7. Automatisierte Vertragstest-Suite:
+   - Erweiterung von `tests/test_metadata.py` um Contract-Tests für `NOTICE`-Attribution, Welcome-Workflow-Guardrails, Stale-Concurrency-Schutz, PEP 621 license-files und erweiterte Gitignore-Muster.

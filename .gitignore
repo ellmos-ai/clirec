@@ -8,6 +8,7 @@ __pycache__/
 .tox/
 .turbo/
 .hypothesis/
+.nyc_output/
 .coverage*
 htmlcov/
 wheelhouse/
@@ -45,12 +46,15 @@ _session/
 * (copy)*
 * (Copy)*
 *conflicted copy*
+*.sync-conflict-*
+*.conflict
 *-ASUS*
 *-ASUS-GEI*
 *-LAPTOP*
 *-WORKSTATION*
 *-WORKSTATION-LG*
 *-Mac Studio*
+*-MacBook*
 
 # Canonical multi-agent lock system & package locks
 LOCK
@@ -58,6 +62,10 @@ LOCK.*
 *.lock
 LOCK*.txt
 LOCK.permissions.json
+LOCK.user.*
+LOCK.until.*
+LOCK.condition.*
+.automation-lock
 uv.lock
 !package-lock.json
 

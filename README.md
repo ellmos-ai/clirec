@@ -18,6 +18,7 @@
 [![Ecosystem](https://img.shields.io/badge/ecosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Umbrella](https://img.shields.io/badge/umbrella-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Attribution](https://img.shields.io/badge/attribution-NOTICE-blue.svg)](NOTICE)
 
 > Human-readable GUI demonstration recordings for CLI and autonomous AI agent workflows.
 
@@ -351,5 +352,7 @@ For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THI
 ## 18. License & Maintainers
 
 - **License:** MIT License, see [LICENSE](LICENSE).
+- **Attribution & Notice:** See [NOTICE](NOTICE) for canonical copyright and attribution notices.
 - **Maintainers:** The `ellmos-ai` authors & community contributors.
 - **Umbrella:** Part of the [open-bricks](https://github.com/open-bricks) open-source software family.
+- **Statutory Disclaimer (§ 521 BGB):** This open-source software and documentation are provided free of charge. In accordance with Section 521 of the German Civil Code (BGB), the provider's liability for gratuitous provision is limited to intent and gross negligence.
