@@ -135,3 +135,44 @@
    - Dokumentation in `CHANGELOG.md` unter `## Unreleased`.
 7. Automatisierte Vertragstest-Suite:
    - Erweiterung von `tests/test_metadata.py` um Contract-Tests für `NOTICE`-Attribution, Welcome-Workflow-Guardrails, Stale-Concurrency-Schutz, PEP 621 license-files und erweiterte Gitignore-Muster.
+
+## 2026-09-26 — Pfad B: Discoverability, Visual Architecture, Bilingual Navigation Parity & SBOM Invariants
+
+### 1. Ausgangslage & Kriterien
+- Repository: `ellmos-ai/clirec` (`C:\_Local_DEV\repos\clirec`)
+- Version: `0.3.0` (unreleased, strikte Version-Freeze Disziplin gem. `T-20260920-167562623` eingehalten)
+- Kategorie: Standalone Demonstration Recording & Replay Channel for CLI & Agent Workflows
+- Initialer Status: Arbeitsbaum sauber, 0 aktive Locks im kanonischen Lock-System (lock_status.py: UNLOCKED), Cooldown >24h seit letztem Kontakt eingehalten (65.3h Ruhezeit; Pfad A am 2026-09-23 vor 3 Tagen, Pfad B zuletzt am 2026-09-16 vor 10 Tagen).
+
+### 2. Discoverability & Metadaten-Sättigung
+1. Remote Discoverability & GitHub Topics:
+   - GitHub Topics auf 20/20 gesättigt: `agent-workflow`, `audio-recording`, `automation`, `cli`, `clirec`, `computer-use`, `demonstration`, `developer-tools`, `ellmos-ai`, `gui-automation`, `keyboard`, `local-first`, `mouse`, `open-bricks`, `privacy`, `python`, `recording`, `replay`, `screen-recording`, `zero-egress`.
+   - Kanonische Homepage-URL verifiziert: `https://github.com/ellmos-ai/clirec#readme`.
+2. PEP 621 Standardisierung in `pyproject.toml`:
+   - 20/20 gesättigte Keywords synchronisiert mit GitHub-Topics.
+   - Pytest `addopts = "-ra -v --basetemp=.pytest_temp"` und `norecursedirs` mit `.pytest_temp` und `.hypothesis` gehärtet.
+   - Version `0.3.0` strikt unverändert beibehalten.
+
+### 3. Level 1 SBOM & Lizenzaudit
+1. `THIRD_PARTY_LICENSES.md` Re-Audit Stand 2026-09-26:
+   - Strukturierte Invariant Cross-Reference Matrix Tabelle mit 10/10 verifizierten Invarianten (`INV-LOCAL-01` bis `INV-SLA-10`).
+   - Zertifizierung der unprivilegierten `RunAsInvoker` Non-Elevation Ausführung (`INV-UNPRIV-08`).
+   - Bestätigung der Zero-Copyleft & Zero-Egress Garantien für Aufzeichnungen und Kerntooling.
+   - Formaler Querverweis auf `[NOTICE](NOTICE)` und dynamische Verlinkungstransparenz für `pynput` gemäß LGPLv3 § 4.
+
+### 4. Bilinguale Schnellnavigation & Visual Architecture
+1. 18-Punkte bilaterale Schnellnavigation in `README.md` und `README_de.md`:
+   - 100% reziproke duale HTML-Anker (`<a id="sec-01"></a>` bis `<a id="sec-18"></a>`) plus vollständige bilinguale Slug-Aliase in beiden Dokumenten.
+   - Quick Navigation Links standardisiert auf `#sec-01` bis `#sec-18`.
+2. Visual Architecture & Shields.io Badges:
+   - Shields.io Badges synchronisiert: `Verified: 2026-09-26`, `Last-Checked: 2026-09-26`, Pytest Status grün, `Attribution: NOTICE`.
+   - Verifikation beider Banner-Varianten (`assets/banner.svg` und `assets/banner-b.png`).
+
+### 5. LLM-Kontext & Release Notes
+1. `llms.txt`:
+   - `Last-checked: 2026-09-26` aktualisiert mit Level 1 SBOM Notizen und Test-Baseline.
+2. `CHANGELOG.md`:
+   - Release Notes unter `## Unreleased` Stand 2026-09-26 Pfad B dokumentiert.
+
+### 6. Automatisierte Vertragstest-Suite
+- `tests/test_metadata.py` erweitert um Assertions für 20 PEP 621 Keywords, reziproke duale HTML-Anker `sec-01`..`sec-18`, Level 1 SBOM Invarianten-Tabelle, und Stand 2026-09-26 Recency.

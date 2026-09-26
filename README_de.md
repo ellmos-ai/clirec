@@ -6,7 +6,7 @@
 [English](README.md) | [Deutsch](README_de.md)
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
-[![Pytest Status](https://img.shields.io/badge/pytest-132%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
+[![Pytest Status](https://img.shields.io/badge/pytest-134%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
 [![Datenschutz](https://img.shields.io/badge/datenschutz-100%25%20Local--First%20%7C%20Zero--Egress-success.svg)](#5-governance--laufzeit-invarianten)
@@ -19,6 +19,8 @@
 [![Dachverband](https://img.shields.io/badge/dachverband-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-yellow.svg)](LICENSE)
 [![Attribution](https://img.shields.io/badge/attribution-NOTICE-blue.svg)](NOTICE)
+[![Verifiziert](https://img.shields.io/badge/verifiziert-2026--09--26-blue.svg)](CHANGELOG.md)
+[![Zuletzt geprüft](https://img.shields.io/badge/zuletzt%20gepr%C3%BCft-2026--09--26-success.svg)](llms.txt)
 
 > Menschenlesbare GUI-Demonstrationsaufzeichnungen für CLI- und autonome KI-Agenten-Workflows.
 
@@ -32,28 +34,33 @@
 
 ## Schnellnavigation
 
-1. [Übersicht](#1-übersicht)
-2. [Kernfunktionen](#2-kernfunktionen)
-3. [Zielgruppen & Auffindbarkeit](#3-zielgruppen--auffindbarkeit)
-4. [Vergleichsmatrix gegenüber Alternativen](#4-vergleichsmatrix-gegenüber-alternativen)
-5. [Governance- & Laufzeit-Invarianten](#5-governance--laufzeit-invarianten)
-6. [Architektur & Replay-Ablauf](#6-architektur--replay-ablauf)
-7. [Format v2 & SHA-256 Medien-Sidecars](#7-format-v2--sha-256-medien-sidecars)
-8. [Audio-Datenschutz & Einwilligungsgrenze](#8-audio-datenschutz--einwilligungsgrenze)
-9. [CLI-Workflow & Schnellstart](#9-cli-workflow--schnellstart)
-10. [Python-API & Executor-Protokoll](#10-python-api--executor-protokoll)
-11. [Windows-Desktop & Agenten-Umgebungen](#11-windows-desktop--agent-umgebungen)
-12. [Installation & optionale Extras](#12-installation--optionale-extras)
-13. [Testsuite & Verifikations-Gates](#13-testsuite--verifikations-gates)
-14. [Ökosystem & verwandte Projekte](#14-ökosystem--verwandte-projekte)
-15. [Drittanbieter-Lizenzen & Transparenz](#15-drittanbieter-lizenzen--transparenz)
-16. [Sicherheit & Schwachstellen-Meldung](#16-sicherheit--schwachstellen-meldung)
-17. [Verzeichniseinträge & KI-Auffindbarkeit](#17-verzeichniseinträge--ki-auffindbarkeit)
-18. [Lizenz & Maintainer](#18-lizenz--maintainer)
+1. [Übersicht](#sec-01)
+2. [Kernfunktionen](#sec-02)
+3. [Zielgruppen & Auffindbarkeit](#sec-03)
+4. [Vergleichsmatrix gegenüber Alternativen](#sec-04)
+5. [Governance- & Laufzeit-Invarianten](#sec-05)
+6. [Architektur & Replay-Ablauf](#sec-06)
+7. [Format v2 & SHA-256 Medien-Sidecars](#sec-07)
+8. [Audio-Datenschutz & Einwilligungsgrenze](#sec-08)
+9. [CLI-Workflow & Schnellstart](#sec-09)
+10. [Python-API & Executor-Protokoll](#sec-10)
+11. [Windows-Desktop & Agenten-Umgebungen](#sec-11)
+12. [Installation & optionale Extras](#sec-12)
+13. [Testsuite & Verifikations-Gates](#sec-13)
+14. [Ökosystem & verwandte Projekte](#sec-14)
+15. [Drittanbieter-Lizenzen & Transparenz](#sec-15)
+16. [Sicherheit & Schwachstellen-Meldung](#sec-16)
+17. [Verzeichniseinträge & KI-Auffindbarkeit](#sec-17)
+18. [Lizenz & Maintainer](#sec-18)
 
 ---
 
+<a id="sec-01"></a>
+<a id="1-overview"></a>
+<a id="overview"></a>
+<a id="1-uebersicht"></a>
 <a id="1-übersicht"></a>
+<a id="uebersicht"></a>
 <a id="übersicht"></a>
 ## 1. Übersicht
 
@@ -63,6 +70,9 @@ Die Software folgt einem kompromisslosen Local-First-Architekturprinzip: Jeder A
 
 ---
 
+<a id="sec-02"></a>
+<a id="2-key-capabilities"></a>
+<a id="key-capabilities"></a>
 <a id="2-kernfunktionen"></a>
 <a id="kernfunktionen"></a>
 ## 2. Kernfunktionen
@@ -81,9 +91,11 @@ Die Software folgt einem kompromisslosen Local-First-Architekturprinzip: Jeder A
 
 ---
 
+<a id="sec-03"></a>
+<a id="3-target-personas--discoverability"></a>
+<a id="target-personas--discoverability"></a>
 <a id="3-zielgruppen--auffindbarkeit"></a>
 <a id="zielgruppen--auffindbarkeit"></a>
-<a id="target-personas--discoverability"></a>
 ## 3. Zielgruppen & Auffindbarkeit
 
 `clirec` adressiert die Demonstrations- und Automationsanforderungen von vier Kernzielgruppen im Entwickler- und KI-Umfeld:
@@ -109,9 +121,13 @@ Zur optimalen Auffindbarkeit in Paketmanagern, Entwicklerverzeichnissen und Such
 
 ---
 
-<a id="4-vergleichsmatrix-gegenüber-alternativen"></a>
-<a id="vergleichsmatrix-gegenüber-alternativen"></a>
+<a id="sec-04"></a>
+<a id="4-comparative-matrix-vs-alternatives"></a>
 <a id="comparative-matrix-vs-alternatives"></a>
+<a id="4-vergleichsmatrix-gegenueber-alternativen"></a>
+<a id="4-vergleichsmatrix-gegenüber-alternativen"></a>
+<a id="vergleichsmatrix-gegenueber-alternativen"></a>
+<a id="vergleichsmatrix-gegenüber-alternativen"></a>
 ## 4. Vergleichsmatrix gegenüber Alternativen
 
 Die folgende Matrix vergleicht `clirec` mit etablierten Aufzeichnungs- und Automationsansätzen anhand von 10 technischen Dimensionen, die direkt auf unsere Governance-Invarianten abgestimmt sind:
@@ -131,9 +147,11 @@ Die folgende Matrix vergleicht `clirec` mit etablierten Aufzeichnungs- und Autom
 
 ---
 
+<a id="sec-05"></a>
+<a id="5-governance--runtime-invariants"></a>
+<a id="governance--runtime-invariants"></a>
 <a id="5-governance--laufzeit-invarianten"></a>
 <a id="governance--laufzeit-invarianten"></a>
-<a id="governance--runtime-invariants"></a>
 ## 5. Governance- & Laufzeit-Invarianten
 
 `clirec` wird nach zehn unverhandelbaren Governance- und Laufzeit-Invarianten entwickelt und gepflegt:
@@ -151,6 +169,9 @@ Die folgende Matrix vergleicht `clirec` mit etablierten Aufzeichnungs- und Autom
 
 ---
 
+<a id="sec-06"></a>
+<a id="6-architecture--replay-flow"></a>
+<a id="architecture--replay-flow"></a>
 <a id="6-architektur--replay-ablauf"></a>
 <a id="architektur--replay-ablauf"></a>
 ## 6. Architektur & Replay-Ablauf
@@ -169,6 +190,9 @@ Das Kernpaket erfordert keine externen Laufzeitabhängigkeiten. Unter Windows wi
 
 ---
 
+<a id="sec-07"></a>
+<a id="7-format-v2--sha-256-media-sidecars"></a>
+<a id="format-v2--sha-256-media-sidecars"></a>
 <a id="7-format-v2--sha-256-medien-sidecars"></a>
 <a id="format-v2--sha-256-medien-sidecars"></a>
 ## 7. Format v2 & SHA-256 Medien-Sidecars
@@ -182,6 +206,9 @@ Format v2 führt robuste, atomare Medien-Sidecars ein:
 
 ---
 
+<a id="sec-08"></a>
+<a id="8-audio-privacy--consent-boundary"></a>
+<a id="audio-privacy--consent-boundary"></a>
 <a id="8-audio-datenschutz--einwilligungsgrenze"></a>
 <a id="audio-datenschutz--einwilligungsgrenze"></a>
 ## 8. Audio-Datenschutz & Einwilligungsgrenze
@@ -198,6 +225,9 @@ Audiodaten unterliegen strengen Schutzvorkehrungen:
 
 ---
 
+<a id="sec-09"></a>
+<a id="9-cli-workflow--quickstart"></a>
+<a id="cli-workflow--quickstart"></a>
 <a id="9-cli-workflow--schnellstart"></a>
 <a id="cli-workflow--schnellstart"></a>
 ## 9. CLI-Workflow & Schnellstart
@@ -227,6 +257,9 @@ clirec recover recordings
 
 ---
 
+<a id="sec-10"></a>
+<a id="10-python-api--executor-protocol"></a>
+<a id="python-api--executor-protocol"></a>
 <a id="10-python-api--executor-protokoll"></a>
 <a id="python-api--executor-protokoll"></a>
 ## 10. Python-API & Executor-Protokoll
@@ -249,6 +282,9 @@ Der `executor` muss `width`, `height` und `execute(action)` implementieren.
 
 ---
 
+<a id="sec-11"></a>
+<a id="11-windows-desktop--agent-environments"></a>
+<a id="windows-desktop--agent-environments"></a>
 <a id="11-windows-desktop--agent-umgebungen"></a>
 <a id="windows-desktop--agent-umgebungen"></a>
 ## 11. Windows-Desktop & Agenten-Umgebungen
@@ -259,6 +295,9 @@ Beim Aufzeichnen von Demonstrationen unter Windows:
 
 ---
 
+<a id="sec-12"></a>
+<a id="12-installation--optional-extras"></a>
+<a id="installation--optional-extras"></a>
 <a id="12-installation--optionale-extras"></a>
 <a id="installation--optionale-extras"></a>
 ## 12. Installation & optionale Extras
@@ -278,6 +317,9 @@ pip install "clirec[all] @ git+https://github.com/ellmos-ai/clirec.git"     # Al
 
 ---
 
+<a id="sec-13"></a>
+<a id="13-test-suite--verification-gates"></a>
+<a id="test-suite--verification-gates"></a>
 <a id="13-testsuite--verifikations-gates"></a>
 <a id="testsuite--verifikations-gates"></a>
 ## 13. Testsuite & Verifikations-Gates
@@ -297,7 +339,12 @@ Details zu Paketierungs- und Plattform-Verifikationsgrenzen finden sich in [RELE
 
 ---
 
+<a id="sec-14"></a>
+<a id="14-ecosystem--related-projects"></a>
+<a id="ecosystem--related-projects"></a>
+<a id="14-oekosystem--verwandte-projekte"></a>
 <a id="14-ökosystem--verwandte-projekte"></a>
+<a id="oekosystem--verwandte-projekte"></a>
 <a id="ökosystem--verwandte-projekte"></a>
 ## 14. Ökosystem & verwandte Projekte
 
@@ -313,9 +360,11 @@ Details zu Paketierungs- und Plattform-Verifikationsgrenzen finden sich in [RELE
 
 ---
 
+<a id="sec-15"></a>
+<a id="15-third-party-licenses--transparency"></a>
+<a id="third-party-licenses--transparency"></a>
 <a id="15-drittanbieter-lizenzen--transparenz"></a>
 <a id="drittanbieter-lizenzen--transparenz"></a>
-<a id="third-party-licenses--transparency"></a>
 ## 15. Drittanbieter-Lizenzen & Transparenz
 
 Das `clirec`-Kernpaket steht unter der freien [MIT-Lizenz](LICENSE) und hat **keine externen Pflicht-Laufzeitabhängigkeiten**.
@@ -329,6 +378,9 @@ Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PA
 
 ---
 
+<a id="sec-16"></a>
+<a id="16-security--vulnerability-reporting"></a>
+<a id="security--vulnerability-reporting"></a>
 <a id="16-sicherheit--schwachstellen-meldung"></a>
 <a id="sicherheit--schwachstellen-meldung"></a>
 ## 16. Sicherheit & Schwachstellen-Meldung
@@ -340,7 +392,12 @@ Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PA
 
 ---
 
+<a id="sec-17"></a>
+<a id="17-directory-listings--ai-discoverability"></a>
+<a id="directory-listings--ai-discoverability"></a>
+<a id="17-verzeichniseintraege--ki-auffindbarkeit"></a>
 <a id="17-verzeichniseinträge--ki-auffindbarkeit"></a>
+<a id="verzeichniseintraege--ki-auffindbarkeit"></a>
 <a id="verzeichniseinträge--ki-auffindbarkeit"></a>
 ## 17. Verzeichniseinträge & KI-Auffindbarkeit
 
@@ -351,6 +408,9 @@ Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PA
 
 ---
 
+<a id="sec-18"></a>
+<a id="18-license--maintainers"></a>
+<a id="license--maintainers"></a>
 <a id="18-lizenz--maintainer"></a>
 <a id="lizenz--maintainer"></a>
 ## 18. Lizenz & Maintainer

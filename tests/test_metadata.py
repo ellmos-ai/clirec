@@ -113,10 +113,26 @@ def test_pep621_license_and_urls():
     assert "Notice" in urls
     assert "Marketing Log" in urls
 
+    keywords = project.get("keywords", [])
+    assert len(keywords) == 20, f"Expected 20 keywords, got {len(keywords)}"
+    required_kws = [
+        "local-first",
+        "zero-egress",
+        "open-bricks",
+        "ellmos-ai",
+        "computer-use",
+        "clirec",
+    ]
+    for req_kw in required_kws:
+        assert req_kw in keywords, f"Missing required keyword: {req_kw}"
+
     pytest_cfg = data.get("tool", {}).get("pytest", {}).get("ini_options", {})
     assert "-ra" in pytest_cfg.get("addopts", "")
+    assert "--basetemp=.pytest_temp" in pytest_cfg.get("addopts", "")
     assert pytest_cfg.get("minversion") == "7.0"
     assert "build" in pytest_cfg.get("norecursedirs", [])
+    assert ".pytest_temp" in pytest_cfg.get("norecursedirs", [])
+    assert ".hypothesis" in pytest_cfg.get("norecursedirs", [])
 
     ruff_lint = data.get("tool", {}).get("ruff", {}).get("lint", {})
     select = ruff_lint.get("select", [])
@@ -142,11 +158,11 @@ def test_version_parity():
 
 
 def test_llms_txt_recency_and_metadata():
-    """llms.txt must have 2026-09-23 verification date and accurate references."""
+    """llms.txt must have 2026-09-26 verification date and accurate references."""
     llms_path = REPO_ROOT / "llms.txt"
     assert llms_path.is_file()
     text = llms_path.read_text(encoding="utf-8")
-    assert "## Last-checked: 2026-09-23" in text
+    assert "## Last-checked: 2026-09-26" in text
     assert "tests/" in text
     assert "NOTICE" in text
     assert "welcome.yml" in text
@@ -165,6 +181,7 @@ def test_marketing_log_present_and_active():
     assert "2026-09-16" in text
     assert "Pfad B" in text
     assert "2026-09-23" in text
+    assert "2026-09-26" in text
     assert "INV-LOCAL-01" in text
 
 
@@ -176,6 +193,7 @@ def test_changelog_recent_entry():
     assert "2026-09-13" in text
     assert "2026-09-16" in text
     assert "2026-09-23" in text
+    assert "2026-09-26" in text
     assert "Pfad B" in text
 
 
@@ -189,8 +207,11 @@ def test_quick_navigation_anchor_parity():
     en_text = en_path.read_text(encoding="utf-8")
     de_text = de_path.read_text(encoding="utf-8")
 
-    # 18 numbered anchor sections
+    # 18 numbered anchor sections with sec-01..sec-18 dual reciprocal anchors
     for i in range(1, 19):
+        sec_tag = f"sec-{i:02d}"
+        assert f'id="{sec_tag}"' in en_text, f"Missing {sec_tag} in README.md"
+        assert f'id="{sec_tag}"' in de_text, f"Missing {sec_tag} in README_de.md"
         assert f'<a id="{i}-' in en_text or f"## {i}." in en_text, (
             f"Missing section {i} in README.md"
         )
@@ -269,6 +290,8 @@ def test_third_party_licenses_audit_content():
     assert lic_path.is_file()
     text = lic_path.read_text(encoding="utf-8")
 
+    assert "Audited:** 2026-09-26" in text
+    assert "Level 1 SBOM" in text
     assert "RunAsInvoker" in text
     assert "pynput" in text
     assert "LGPL-3.0" in text
@@ -276,3 +299,6 @@ def test_third_party_licenses_audit_content():
     assert "sounddevice" in text
     assert "uiautomation" in text
     assert "Zero-Copyleft" in text
+    assert "INV-LOCAL-01" in text
+    assert "INV-SLA-10" in text
+    assert "VERIFIED" in text

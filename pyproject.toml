@@ -14,8 +14,26 @@ authors = [
     {name = "The clirec authors"},
 ]
 keywords = [
-    "gui-automation", "recording", "replay", "cli", "agent-workflow",
-    "computer-use", "demonstration", "local-first",
+    "agent-workflow",
+    "audio-recording",
+    "automation",
+    "cli",
+    "clirec",
+    "computer-use",
+    "demonstration",
+    "developer-tools",
+    "ellmos-ai",
+    "gui-automation",
+    "keyboard",
+    "local-first",
+    "mouse",
+    "open-bricks",
+    "privacy",
+    "python",
+    "recording",
+    "replay",
+    "screen-recording",
+    "zero-egress",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -55,11 +73,11 @@ include = ["clirec*"]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
-addopts = "-ra -v"
+addopts = "-ra -v --basetemp=.pytest_temp"
 pythonpath = "."
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv"]
+norecursedirs = [".git", ".pytest_cache", ".pytest_temp", ".hypothesis", "__pycache__", "build", "dist", ".venv"]
 
 [tool.ruff]
 target-version = "py310"

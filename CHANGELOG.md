@@ -6,6 +6,16 @@ on PyPI. Everything below `0.3.0 - unreleased` is therefore still unpublished.
 
 ## Unreleased
 
+- Discoverability, Visual Architecture, Bilingual Navigation Parity & SBOM Invariants (Pfad B, 2026-09-26):
+  - Standardized 18-point bilateral quick navigation parity with reciprocal dual HTML anchors (`<a id="sec-01"></a>` through `<a id="sec-18"></a>`) and reciprocal cross-language aliases across `README.md` and `README_de.md`.
+  - Saturated GitHub repository topics and PEP 621 keywords to 20/20 topics (`agent-workflow`, `audio-recording`, `automation`, `cli`, `clirec`, `computer-use`, `demonstration`, `developer-tools`, `ellmos-ai`, `gui-automation`, `keyboard`, `local-first`, `mouse`, `open-bricks`, `privacy`, `python`, `recording`, `replay`, `screen-recording`, `zero-egress`).
+  - Added Level 1 SBOM Invariant Cross-Reference Matrix table to `THIRD_PARTY_LICENSES.md` Stand 2026-09-26 mapping all 10 governance invariants `INV-LOCAL-01` through `INV-SLA-10` with verified status.
+  - Hardened `pyproject.toml` with `addopts = "-ra -v --basetemp=.pytest_temp"` and extended `norecursedirs` with `.pytest_temp` and `.hypothesis`.
+  - Harmonized Shields.io badges across `README.md` and `README_de.md` (`Verified: 2026-09-26`, `Last-Checked: 2026-09-26`, pytest green status).
+  - Updated `llms.txt` context index with Stand 2026-09-26 recency, 20/20 topics, and Level 1 SBOM notes.
+  - Documented Pfad B discoverability audit in `MARKETING-LOG.txt`.
+  - Extended automated contract tests in `tests/test_metadata.py` verifying 20 saturated keywords, reciprocal dual HTML anchors `sec-01`..`sec-18`, Level 1 SBOM invariant table, and Stand 2026-09-26 recency.
+
 - Technical Hygiene, Lifecycle CI, NOTICE Attribution & PEP 621 Hardening (Pfad A, 2026-09-23):
   - Created canonical open-source `NOTICE` attribution file designating copyright to Lukas Geiger under the ellmos-ai / open-bricks umbrella.
   - Added new contributor welcome automation workflow (`.github/workflows/welcome.yml`) using `actions/first-interaction@v3` with concurrency cancel-in-progress and 5-minute timeout.

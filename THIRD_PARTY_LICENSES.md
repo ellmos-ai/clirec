@@ -1,7 +1,7 @@
 # Third-Party Licenses & Transparency Notice
 
 > **Project:** `ellmos-ai/clirec` (CLIRec — Demonstration Recordings for CLI & Agent Workflows)<br>
-> **Audited:** 2026-09-23 (Pfad A Re-Audit)<br>
+> **Audited:** 2026-09-26 (Pfad B Re-Audit)<br>
 > **Repository License:** [MIT License](LICENSE) | [Attribution Notice](NOTICE)<br>
 > **Architecture & Privacy:** 100% Local-First, Zero-Egress by default, Unprivileged User-Mode (`RunAsInvoker`)
 
@@ -24,20 +24,22 @@ All optional extras and development dependencies are distributed under well-esta
 
 ---
 
-## Governance & Runtime Invariants
+## Level 1 SBOM & Governance Invariant Cross-Reference Matrix
 
-`clirec` affirms and implements ten core governance and runtime invariants:
+`clirec` affirms, implements, and certifies ten core governance and runtime invariants:
 
-1. **`INV-LOCAL-01` (100% Offline & Local-First Zero-Egress):** All recordings, media sidecars, logs, and transcripts reside solely on the local filesystem. Zero telemetry, zero analytics, zero external network requests.
-2. **`INV-PRIVACY-02` (Default Parameter Sanitization & Text Masking):** Typed keyboard text is parameterized by default into `${input_N}` placeholders to prevent credentials, secrets, or PII from persisting into demonstration files.
-3. **`INV-INSPECT-03` (Human-Readable Plaintext Spec):** Demonstrations are recorded into transparent, versionable, and git-diffable `.clirec` files inspectable by human operators and AI agents without binary parsers.
-4. **`INV-REPLAY-04` (Agent & CLI Native Replay via Injected Executor):** Replay execution is backend-neutral and requires an explicit injected executor (such as `open-compute`), cleanly decoupling recorded intent from actuation mechanics.
-5. **`INV-AUDIO-05` (Strict Dual-Opt-In Audio Consent Boundary):** Microphone capture is off by default and strictly requires simultaneous `--audio` and `--audio-consent` flags; audio capture halts during pause and never runs as a background service (§ 201 StGB compliance).
-6. **`INV-SIDECAR-06` (Format v2 Atomic Media Sidecars with SHA-256):** Media sidecars are stored with cryptographic SHA-256 hashes in relative `.clirec.media/` directories; atomic commit markers guarantee no corrupted recordings; audio and transcripts support independent purge.
-7. **`INV-ADAPTER-07` (Decoupled STT Adapter Architecture):** Speech-to-text integration uses an unbundled, caller-provided adapter with mandatory `persist=False` to prevent secondary secret transcript stores; no proprietary or unverified speech models are bundled.
-8. **`INV-UNPRIV-08` (Unprivileged User-Mode Operation — `RunAsInvoker`):** The application runs with standard user-level permissions, never requiring administrative elevation, UAC prompts, or root access.
-9. **`INV-PORTABLE-09` (Zero Mandatory Runtime Dependencies):** Core package executes on pure Python standard library and OS ctypes; all external features are isolated behind explicit optional extras (`record`, `audio`, `uia`).
-10. **`INV-SLA-10` (Transparent Open-Source Governance & 48h Security SLA):** Permissive MIT core license, transparent third-party disclosures, automated GitHub Actions CI matrices, and a committed 48-hour response SLA for reported security issues.
+| Invariant | Category | Description | Verification Method | Status |
+|---|---|---|---|---|
+| `INV-LOCAL-01` | Local-First & Zero-Egress | 100% offline-ready; recordings, sidecars, and logs reside strictly on local disk with zero external network egress. | `tests/test_metadata.py` & `clirec/format.py` | VERIFIED |
+| `INV-PRIVACY-02` | Default Input Sanitization | Keystrokes parameterized by default into `${input_N}` placeholders to protect credentials, secrets, and PII. | `tests/test_clirec_recorder.py` & `clirec/recorder.py` | VERIFIED |
+| `INV-INSPECT-03` | Human-Readable Spec | Plaintext `.clirec` specification transparently diffable and auditable by humans and AI agents without binary parsers. | `tests/test_clirec_format.py` & `clirec/format.py` | VERIFIED |
+| `INV-REPLAY-04` | Injected Agent Replay | Replay decoupled from capture; backend-neutral executor injection protocol (e.g. `open-compute`). | `tests/test_clirec_replay.py` & `clirec/replay.py` | VERIFIED |
+| `INV-AUDIO-05` | Audio Consent Boundary | Strict dual opt-in (`--audio` + `--audio-consent`) compliant with § 201 StGB; no background or unconsented recording. | `tests/test_clirec_format_v2.py` & `clirec/audio.py` | VERIFIED |
+| `INV-SIDECAR-06` | Atomic Media Sidecars | Format v2 relative `.clirec.media/` storage with SHA-256 verification and atomic commit markers; zero orphan files. | `tests/test_clirec_format_v2.py` & `clirec/format.py` | VERIFIED |
+| `INV-ADAPTER-07` | Decoupled STT Adapter | Caller-provided transcription adapter enforcing `persist=False` to prevent secondary secret transcript stores. | `tests/test_clirec_transcription.py` & `clirec/transcribe.py` | VERIFIED |
+| `INV-UNPRIV-08` | Unprivileged Execution | Strict `RunAsInvoker` user-mode execution; zero administrator, root elevation, or UAC prompts required. | `SECURITY.md` & `clirec/win_backend.py` | VERIFIED |
+| `INV-PORTABLE-09` | Zero Mandatory Dependencies | Pure Python standard library + Windows ctypes; all external packages isolated behind explicit optional extras. | `pyproject.toml` & `tests/test_metadata.py` | VERIFIED |
+| `INV-SLA-10` | Transparent SLA & CI Matrix | Permissive MIT license, formal `[NOTICE](NOTICE)` cross-reference, multi-OS CI matrix, and binding 48h Security SLA. | `SECURITY.md`, `README.md`, `.github/workflows/` | VERIFIED |
 
 ---
 
