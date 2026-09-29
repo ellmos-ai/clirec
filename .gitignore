@@ -41,6 +41,13 @@ _session/
 *.tmp
 *~
 *.swp
+*.swo
+
+# Windows & OS desktop metadata
+Desktop.ini
+desktop.ini
+Thumbs.db
+ehthumbs.db
 
 # Multi-Host Cloud-Sync conflict copies (OneDrive / Dropbox / Synology)
 * (kopie)*
@@ -52,24 +59,34 @@ _session/
 *.conflict
 *-ASUS*
 *-ASUS-GEI*
+*-IDEAPAD*
+*-IDEAPAD-GEI*
 *-LAPTOP*
 *-WORKSTATION*
 *-WORKSTATION-LG*
+*-WORKSTATION.*
+*-WORKSTATION-LG.*
 *-Mac Studio*
 *-MacBook*
 
 # Canonical multi-agent lock system & package locks
 LOCK
 LOCK.*
+LOCK.txt
 *.lock
 LOCK*.txt
 LOCK.permissions.json
 LOCK.user.*
 LOCK.until.*
 LOCK.condition.*
+LOCK.dev.*
+LOCK.antigravity.*
+LOCK.bugsearch.*
 .automation-lock
 uv.lock
 !package-lock.json
 
-# Local coordination and maintenance files -- never part of the repository
+# Local coordination, task plans and maintenance files -- never part of the repository
 _after-care/
+TASKPLAN_*.md
+

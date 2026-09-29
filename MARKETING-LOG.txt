@@ -176,3 +176,37 @@
 
 ### 6. Automatisierte Vertragstest-Suite
 - `tests/test_metadata.py` erweitert um Assertions für 20 PEP 621 Keywords, reziproke duale HTML-Anker `sec-01`..`sec-18`, Level 1 SBOM Invarianten-Tabelle, und Stand 2026-09-26 Recency.
+
+## 2026-09-29 — Pfad A: Repository-Hygiene, Level-1-SBOM-Begleitdatei, CI-Lifecycle-Workflows, Multi-Host-Schutz & Vertragstests
+
+### 1. Ausgangslage & Kriterien
+- Repository: `ellmos-ai/clirec` (`C:\_Local_DEV\repos\clirec`)
+- Version: `0.3.0` (unreleased, strikte Version-Freeze Disziplin gem. `T-20260920-167562623` eingehalten)
+- Kategorie: Standalone Demonstration Recording & Replay Channel for CLI & Agent Workflows
+- Initialer Status: Arbeitsbaum sauber, 0 aktive Locks im kanonischen Lock-System (lock_status.py: UNLOCKED), Cooldown >24h seit letztem Kontakt eingehalten (79.4h Ruhezeit; Pfad A am 2026-09-23 vor 6 Tagen, Pfad B am 2026-09-26 vor 3 Tagen).
+
+### 2. Umgesetzte Hygiene- & Härtungsmaßnahmen
+1. Level 1 SBOM Plain-Text-Begleitdatei (`THIRD_PARTY_LICENSES.txt`):
+   - Kanonische Begleitdatei im Repo-Root angelegt mit vollständigem SPDX- und Lizenzinventar (MIT für Kern, sounddevice, pytest, setuptools, build; LGPL-3.0 für pynput mit LGPLv3 § 4 Erklärung; Apache-2.0 für uiautomation, twine; PSF-2.0 für Python stdlib).
+   - Invarianten-Status für alle 10 Kern-Invarianten (`INV-LOCAL-01` bis `INV-SLA-10`) zertifiziert.
+   - Zertifizierung der unprivilegierten `RunAsInvoker` Non-Elevation Ausführung (`INV-UNPRIV-08`).
+   - Querverweise in `NOTICE`, `THIRD_PARTY_LICENSES.md`, `pyproject.toml`, `README.md`, `README_de.md`, `CONTRIBUTING.md` und `llms.txt` verankert.
+2. CI-Lifecycle-Workflows & Governance-Labels:
+   - Workflow `.github/workflows/auto-assign.yml` (`actions/github-script@v7`, `timeout-minutes: 5`, `concurrency: cancel-in-progress: true`, least-privilege `issues: write`, `pull-requests: write`) bereitgestellt.
+   - Workflow `.github/workflows/label-sync.yml` (`EndBug/label-sync@v2`, `timeout-minutes: 5`, `concurrency: cancel-in-progress: true`, least-privilege `issues: write`) bereitgestellt.
+   - Kanonische `.github/labels.yml` mit 11 Standard-Labels gemäß GOVERNANCE.md § 4.2 angelegt.
+3. Beitrags- und Entwicklungsrichtlinien (`CONTRIBUTING.md`):
+   - Neue `CONTRIBUTING.md` mit Prinzipien und Invarianten (`INV-LOCAL-01` bis `INV-SLA-10`, `RunAsInvoker`, Version-Freeze `T-20260920-167562623`), Setup-Anweisungen und PR-Richtlinien erstellt.
+4. Multi-Host- & Cloud-Sync Gitignore-Härtung:
+   - `.gitignore` gehärtet um OS-Desktop-Metadaten (`Desktop.ini`, `desktop.ini`, `Thumbs.db`, `ehthumbs.db`), Swap-Dateien (`*.swo`), Task-Pläne (`TASKPLAN_*.md`), Host-Tokens (`*-IDEAPAD*`, `*-IDEAPAD-GEI*`, `*-WORKSTATION.*`, `*-WORKSTATION-LG.*`) und kanonische Lock-Muster (`LOCK.dev.*`, `LOCK.antigravity.*`, `LOCK.bugsearch.*`, `LOCK.txt`).
+5. PEP 621 Standardisierung in `pyproject.toml`:
+   - `license-files` Whitelist um `THIRD_PARTY_LICENSES.txt` erweitert.
+   - `[project.urls]` ergänzt um `Contributing`, `Third-Party Licenses (Text)`, `Plain-Text License` und `Level 1 SBOM`.
+   - `norecursedirs` um `.pytest_tmp*`, `.turbo`, `.nyc_output`, `.tox` gehärtet.
+6. Dokumentation, Badges & Kontext-Parität:
+   - Shields.io Badges in `README.md` und `README_de.md` harmonisiert (`Verified: 2026-09-29`, `Last-Checked: 2026-09-29`, `Level 1 SBOM: Plain Text Audited`, Teststand).
+   - `llms.txt` auf Stand 2026-09-29 aktualisiert mit allen neu hinzugefügten Dateien.
+   - `CHANGELOG.md` unter `## Unreleased` aktualisiert.
+7. Automatisierte Vertragstest-Suite:
+   - `tests/test_metadata.py` um Contract-Tests für Auto-Assign Workflow, Label-Sync Workflow mit `labels.yml`, Plain-Text Level 1 SBOM Begleitdatei (`THIRD_PARTY_LICENSES.txt`) und `CONTRIBUTING.md` erweitert (100% grün).
+

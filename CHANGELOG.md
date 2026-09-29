@@ -6,6 +6,18 @@ on PyPI. Everything below `0.3.0 - unreleased` is therefore still unpublished.
 
 ## Unreleased
 
+- Technical Hygiene, Level 1 SBOM Plain-Text Companion, CI Lifecycle Workflows, Multi-Host Defense & Metadata Contracts (Pfad A, 2026-09-29):
+  - Created canonical Level 1 SBOM plain-text companion file `THIRD_PARTY_LICENSES.txt` with license texts, SPDX mapping, and certification of all 10 governance invariants `INV-LOCAL-01` through `INV-SLA-10`.
+  - Re-audited `THIRD_PARTY_LICENSES.md` to Stand 2026-09-29 and linked `THIRD_PARTY_LICENSES.txt`.
+  - Updated canonical `NOTICE` attribution file to cross-reference `THIRD_PARTY_LICENSES.txt`.
+  - Added new `CONTRIBUTING.md` guidelines detailing quality gates, core invariants, development setup, and strict version freeze rule `T-20260920-167562623`.
+  - Deployed standard CI lifecycle workflows: `.github/workflows/auto-assign.yml` (`actions/github-script@v7`, `timeout-minutes: 5`, `cancel-in-progress: true`) and `.github/workflows/label-sync.yml` (`EndBug/label-sync@v2`, `timeout-minutes: 5`, `cancel-in-progress: true`) with canonical `.github/labels.yml` (11 standard governance labels per GOVERNANCE.md § 4.2).
+  - Hardened `.gitignore` with Windows & OS desktop metadata (`Desktop.ini`, `desktop.ini`, `Thumbs.db`, `ehthumbs.db`), editor swap files (`*.swo`), task plans (`TASKPLAN_*.md`), host patterns (`*-IDEAPAD*`, `*-IDEAPAD-GEI*`, `*-WORKSTATION.*`, `*-WORKSTATION-LG.*`), and explicit lock patterns (`LOCK.dev.*`, `LOCK.antigravity.*`, `LOCK.bugsearch.*`, `LOCK.txt`).
+  - Standardized `pyproject.toml` with `license-files` whitelist including `THIRD_PARTY_LICENSES.txt`, project URLs for `Contributing`, `Third-Party Licenses (Text)`, `Plain-Text License`, and `Level 1 SBOM`, and hardened pytest `norecursedirs` (`.pytest_tmp*`, `.turbo`, `.nyc_output`, `.tox`).
+  - Synchronized documentation, badges (`Verified: 2026-09-29`, `Last-Checked: 2026-09-29`, `Level 1 SBOM: Plain Text Audited`), and `llms.txt` context index.
+  - Documented Pfad A audit in `MARKETING-LOG.txt`.
+  - Extended contract test suite in `tests/test_metadata.py` with new contract tests covering auto-assign, label-sync with labels.yml, plain-text Level 1 SBOM companion invariants, and contributing guidelines (all tests 100% green).
+
 - Discoverability, Visual Architecture, Bilingual Navigation Parity & SBOM Invariants (Pfad B, 2026-09-26):
   - Standardized 18-point bilateral quick navigation parity with reciprocal dual HTML anchors (`<a id="sec-01"></a>` through `<a id="sec-18"></a>`) and reciprocal cross-language aliases across `README.md` and `README_de.md`.
   - Saturated GitHub repository topics and PEP 621 keywords to 20/20 topics (`agent-workflow`, `audio-recording`, `automation`, `cli`, `clirec`, `computer-use`, `demonstration`, `developer-tools`, `ellmos-ai`, `gui-automation`, `keyboard`, `local-first`, `mouse`, `open-bricks`, `privacy`, `python`, `recording`, `replay`, `screen-recording`, `zero-egress`).

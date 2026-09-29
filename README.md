@@ -6,21 +6,21 @@
 [English](README.md) | [Deutsch](README_de.md)
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
-[![Pytest Status](https://img.shields.io/badge/pytest-134%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
+[![Pytest Status](https://img.shields.io/badge/pytest-138%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
 [![Privacy](https://img.shields.io/badge/privacy-100%25%20Local--First%20%7C%20Zero--Egress-success.svg)](#5-governance--runtime-invariants)
 [![Security](https://img.shields.io/badge/security-RunAsInvoker%20%7C%20Non--Elevation-informational.svg)](SECURITY.md)
 [![Security SLA](https://img.shields.io/badge/security%20SLA-48h%20%2F%205d-blue.svg)](SECURITY.md)
-[![Third-Party Audited](https://img.shields.io/badge/third--party-audited%20%7C%20MIT%20Core%20%7C%20LGPL--3.0%20Extra-success.svg)](THIRD_PARTY_LICENSES.md)
+[![Level 1 SBOM](https://img.shields.io/badge/Level%201%20SBOM-Plain%20Text%20Audited-success.svg)](THIRD_PARTY_LICENSES.txt)
 [![Marketing Log](https://img.shields.io/badge/marketing%20log-active-blueviolet.svg)](MARKETING-LOG.txt)
 [![LLM Ready](https://img.shields.io/badge/llms.txt-ready-purple.svg)](llms.txt)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Umbrella](https://img.shields.io/badge/umbrella-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Attribution](https://img.shields.io/badge/attribution-NOTICE-blue.svg)](NOTICE)
-[![Verified](https://img.shields.io/badge/verified-2026--09--26-blue.svg)](CHANGELOG.md)
-[![Last-Checked](https://img.shields.io/badge/last--checked-2026--09--26-success.svg)](llms.txt)
+[![Verified](https://img.shields.io/badge/verified-2026--09--29-blue.svg)](CHANGELOG.md)
+[![Last-Checked](https://img.shields.io/badge/last--checked-2026--09--29-success.svg)](llms.txt)
 
 > Human-readable GUI demonstration recordings for CLI and autonomous AI agent workflows.
 
@@ -374,7 +374,7 @@ Optional extras pull in external open-source packages:
 - `sounddevice` and PortAudio are licensed under **MIT**.
 - `uiautomation` is licensed under **Apache-2.0**.
 
-For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) and plain-text Level 1 SBOM [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt).
 
 ---
 
@@ -417,6 +417,9 @@ For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THI
 
 - **License:** MIT License, see [LICENSE](LICENSE).
 - **Attribution & Notice:** See [NOTICE](NOTICE) for canonical copyright and attribution notices.
+- **Level 1 SBOM:** Plain-text companion [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) and markdown audit [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+- **Contributing Guidelines:** See [CONTRIBUTING.md](CONTRIBUTING.md) for quality gates, invariant certification, and development setup.
 - **Maintainers:** The `ellmos-ai` authors & community contributors.
 - **Umbrella:** Part of the [open-bricks](https://github.com/open-bricks) open-source software family.
 - **Statutory Disclaimer (§ 521 BGB):** This open-source software and documentation are provided free of charge. In accordance with Section 521 of the German Civil Code (BGB), the provider's liability for gratuitous provision is limited to intent and gross negligence.
+

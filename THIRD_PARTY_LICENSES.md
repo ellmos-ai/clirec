@@ -1,8 +1,8 @@
 # Third-Party Licenses & Transparency Notice
 
 > **Project:** `ellmos-ai/clirec` (CLIRec — Demonstration Recordings for CLI & Agent Workflows)<br>
-> **Audited:** 2026-09-26 (Pfad B Re-Audit)<br>
-> **Repository License:** [MIT License](LICENSE) | [Attribution Notice](NOTICE)<br>
+> **Audited:** 2026-09-29 (Pfad A Re-Audit & Level 1 SBOM Certification)<br>
+> **Repository License:** [MIT License](LICENSE) | [Attribution Notice](NOTICE) | [Plain-Text SBOM](THIRD_PARTY_LICENSES.txt)<br>
 > **Architecture & Privacy:** 100% Local-First, Zero-Egress by default, Unprivileged User-Mode (`RunAsInvoker`)
 
 ---
