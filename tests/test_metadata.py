@@ -54,7 +54,10 @@ def test_welcome_workflow_present_and_valid():
 
 
 def test_auto_assign_workflow_present_and_valid():
-    """Auto-assign workflow must have github-script, concurrency, and least-privilege."""
+    (
+        """Auto-assign workflow must have github-script, """
+        """concurrency, and least-privilege."""
+    )
     aa_path = REPO_ROOT / ".github" / "workflows" / "auto-assign.yml"
     assert aa_path.is_file()
     text = aa_path.read_text(encoding="utf-8")
@@ -79,7 +82,19 @@ def test_label_sync_workflow_and_labels_present():
     assert "cancel-in-progress: true" in ls_text
 
     labels_text = labels_path.read_text(encoding="utf-8")
-    for lbl in ["bug", "enhancement", "good first issue", "help wanted", "documentation", "duplicate", "wontfix", "priority: high", "priority: low", "needs-triage", "stale"]:
+    for lbl in [
+        "bug",
+        "enhancement",
+        "good first issue",
+        "help wanted",
+        "documentation",
+        "duplicate",
+        "wontfix",
+        "priority: high",
+        "priority: low",
+        "needs-triage",
+        "stale",
+    ]:
         assert f"name: {lbl}" in labels_text or f"name: '{lbl}'" in labels_text
 
 
@@ -402,7 +417,9 @@ def test_third_party_licenses_plain_text_companion():
         "INV-SLA-10",
     ]
     for inv_tag in invariants:
-        assert f"{inv_tag}: PASS" in text, f"Missing {inv_tag} compliance certification in THIRD_PARTY_LICENSES.txt"
+        assert f"{inv_tag}: PASS" in text, (
+            f"Missing {inv_tag} compliance certification in THIRD_PARTY_LICENSES.txt"
+        )
 
 
 def test_contributing_guidelines_present():
@@ -417,4 +434,3 @@ def test_contributing_guidelines_present():
     assert "T-20260920-167562623" in text
     assert "0.3.0" in text
     assert "pytest" in text
-
