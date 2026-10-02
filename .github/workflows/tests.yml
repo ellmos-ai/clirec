@@ -34,19 +34,31 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
 
-      - name: Install package
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install -e ".[dev]"
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
 
-      - name: Run quality gates
+      - name: Install package
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run Ruff lint
         env:
           PYTHONIOENCODING: utf-8
-        run: |
-          python -m ruff check clirec tests
-          python -m ruff format --check clirec tests
-          python -m pytest -q
-          python -m compileall -q clirec tests
+        run: python -m ruff check clirec tests
+
+      - name: Check Ruff formatting
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python -m ruff format --check clirec tests
+
+      - name: Run pytest
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python -m pytest -q
+
+      - name: Compile Python files
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python -m compileall -q clirec tests
 
   package:
     runs-on: ubuntu-latest
