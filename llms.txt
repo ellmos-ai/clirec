@@ -1,4 +1,4 @@
-## Last-checked: 2026-09-16
+## Last-checked: 2026-09-29
 
 # clirec
 
@@ -41,16 +41,23 @@ install from the repository.
 
 - `README.md` - English overview, 18-point quick navigation, personas, comparative matrix, installation and usage.
 - `README_de.md` - German overview with reciprocal navigation parity and real umlauts.
+- `CONTRIBUTING.md` - Contribution guidelines, invariants adherence, and version freeze policy.
 - `SKILL.md` - Skill instructions for using clirec as a demonstration channel.
   Written in German; `skills/clirec/SKILL.md` is a byte-identical shipped copy.
 - `CHANGELOG.md` - release history and current unreleased state.
 - `SECURITY.md` - reporting, local recording risks, SLA, and recording other people.
-- `THIRD_PARTY_LICENSES.md` - SPDX audit of core and optional extras (`pynput` is LGPL-3.0), governance invariants.
+- `NOTICE` - Canonical open-source attribution file for Lukas Geiger, ellmos-ai and open-bricks.
+- `THIRD_PARTY_LICENSES.md` - Level 1 SBOM Invariant Cross-Reference Matrix (INV-LOCAL-01..INV-SLA-10), SPDX audit of core and optional extras (`pynput` is LGPL-3.0), unprivileged RunAsInvoker non-elevation certification.
+- `THIRD_PARTY_LICENSES.txt` - Plain-text companion Level 1 SBOM certification mapping all runtime and tooling dependencies.
 - `MARKETING-LOG.txt` - Audit, hygiene, personas, comparative matrix, and discoverability logbook.
 - `clirec/` - Core package.
 - `tests/` - Regression, smoke, metadata, and repository contract tests.
 - `.github/workflows/tests.yml` - Python test workflow with timeout guardrails.
 - `.github/workflows/stale.yml` - Stale issues and PRs automation.
+- `.github/workflows/welcome.yml` - Contributor welcome automation.
+- `.github/workflows/auto-assign.yml` - Automatic PR assigner automation.
+- `.github/workflows/label-sync.yml` - Automated governance label synchronization.
+- `.github/labels.yml` - Standard 11 repository labels per GOVERNANCE.md § 4.2.
 - `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
 - `docs/PAUSE_HOTKEY_DAEMON_DECISION.md` - Pause hotkey & daemon architecture decision and trade-offs.
 - `docs/FORMAT_V2.md` - Sidecar, hash, validation, and atomic commit contract.

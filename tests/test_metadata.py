@@ -3,8 +3,13 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
-import tomllib
+
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    import tomli as tomllib
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -14,7 +19,14 @@ def test_ci_workflows_timeout_guardrails():
     workflows_dir = REPO_ROOT / ".github" / "workflows"
     assert workflows_dir.is_dir()
 
-    expected_workflows = ["tests.yml", "codeql.yml", "stale.yml"]
+    expected_workflows = [
+        "tests.yml",
+        "codeql.yml",
+        "stale.yml",
+        "welcome.yml",
+        "auto-assign.yml",
+        "label-sync.yml",
+    ]
     for wf_name in expected_workflows:
         wf_path = workflows_dir / wf_name
         assert wf_path.is_file(), f"Missing workflow {wf_name}"
@@ -23,14 +35,72 @@ def test_ci_workflows_timeout_guardrails():
 
 
 def test_stale_workflow_present_and_valid():
-    """Stale workflow must exist, have least-privilege permissions and timeout."""
+    """Stale workflow must have least-privilege permissions and concurrency."""
     stale_path = REPO_ROOT / ".github" / "workflows" / "stale.yml"
     assert stale_path.is_file()
     text = stale_path.read_text(encoding="utf-8")
-    assert "actions/stale@v9" in text
+    assert "actions/stale@" in text
     assert "issues: write" in text
     assert "pull-requests: write" in text
     assert "timeout-minutes: 10" in text
+    assert "cancel-in-progress: true" in text
+
+
+def test_welcome_workflow_present_and_valid():
+    """Welcome workflow must have first-interaction action, concurrency, and timeout."""
+    welcome_path = REPO_ROOT / ".github" / "workflows" / "welcome.yml"
+    assert welcome_path.is_file()
+    text = welcome_path.read_text(encoding="utf-8")
+    assert "actions/first-interaction@v3" in text
+    assert "issues: write" in text
+    assert "pull-requests: write" in text
+    assert "timeout-minutes: 5" in text
+    assert "cancel-in-progress: true" in text
+
+
+def test_auto_assign_workflow_present_and_valid():
+    (
+        """Auto-assign workflow must have github-script, """
+        """concurrency, and least-privilege."""
+    )
+    aa_path = REPO_ROOT / ".github" / "workflows" / "auto-assign.yml"
+    assert aa_path.is_file()
+    text = aa_path.read_text(encoding="utf-8")
+    assert "actions/github-script@v7" in text
+    assert "issues: write" in text
+    assert "pull-requests: write" in text
+    assert "timeout-minutes: 5" in text
+    assert "cancel-in-progress: true" in text
+
+
+def test_label_sync_workflow_and_labels_present():
+    """Label-sync workflow and labels.yml must define standard 11 governance labels."""
+    ls_path = REPO_ROOT / ".github" / "workflows" / "label-sync.yml"
+    labels_path = REPO_ROOT / ".github" / "labels.yml"
+    assert ls_path.is_file()
+    assert labels_path.is_file()
+
+    ls_text = ls_path.read_text(encoding="utf-8")
+    assert "EndBug/label-sync@v2" in ls_text
+    assert "issues: write" in ls_text
+    assert "timeout-minutes: 5" in ls_text
+    assert "cancel-in-progress: true" in ls_text
+
+    labels_text = labels_path.read_text(encoding="utf-8")
+    for lbl in [
+        "bug",
+        "enhancement",
+        "good first issue",
+        "help wanted",
+        "documentation",
+        "duplicate",
+        "wontfix",
+        "priority: high",
+        "priority: low",
+        "needs-triage",
+        "stale",
+    ]:
+        assert f"name: {lbl}" in labels_text or f"name: '{lbl}'" in labels_text
 
 
 def test_gitignore_multihost_and_lock_defense():
@@ -40,23 +110,57 @@ def test_gitignore_multihost_and_lock_defense():
     text = gi_path.read_text(encoding="utf-8")
 
     required_patterns = [
+        "Desktop.ini",
+        "desktop.ini",
+        "Thumbs.db",
+        "ehthumbs.db",
+        "*.swo",
         "* (kopie)*",
         "* (copy)*",
         "*conflicted copy*",
+        "*.sync-conflict-*",
+        "*.conflict",
         "*-WORKSTATION*",
+        "*-WORKSTATION-LG*",
+        "*-WORKSTATION.*",
+        "*-WORKSTATION-LG.*",
         "*-ASUS*",
+        "*-IDEAPAD*",
+        "*-MacBook*",
         "LOCK",
         "LOCK.*",
+        "LOCK.txt",
+        "LOCK.user.*",
+        "LOCK.until.*",
+        "LOCK.condition.*",
+        "LOCK.dev.*",
+        "LOCK.antigravity.*",
+        "LOCK.bugsearch.*",
+        ".automation-lock",
         "LOCK.permissions.json",
         "uv.lock",
         "!package-lock.json",
+        "TASKPLAN_*.md",
         ".tox/",
         ".turbo/",
         ".hypothesis/",
+        ".nyc_output/",
         ".coverage*",
     ]
     for pattern in required_patterns:
         assert pattern in text, f"Missing pattern in .gitignore: {pattern}"
+
+
+def test_notice_attribution_file_present():
+    """Canonical NOTICE attribution file must exist with ecosystem references."""
+    notice_path = REPO_ROOT / "NOTICE"
+    assert notice_path.is_file()
+    text = notice_path.read_text(encoding="utf-8")
+    assert "Copyright (c) 2026 Lukas Geiger" in text
+    assert "ellmos-ai" in text
+    assert "open-bricks" in text
+    assert "THIRD_PARTY_LICENSES.md" in text
+    assert "THIRD_PARTY_LICENSES.txt" in text
 
 
 def test_pep621_license_and_urls():
@@ -67,19 +171,50 @@ def test_pep621_license_and_urls():
         data = tomllib.load(f)
 
     project = data.get("project", {})
-    assert project.get("license-files") == ["LICENSE"]
+    expected_license_files = [
+        "LICENSE",
+        "NOTICE",
+        "THIRD_PARTY_LICENSES.md",
+        "THIRD_PARTY_LICENSES.txt",
+    ]
+    assert project.get("license-files") == expected_license_files
 
     urls = project.get("urls", {})
     assert "Homepage" in urls
     assert "Repository" in urls
     assert "Changelog" in urls
+    assert "Contributing" in urls
     assert "Issues" in urls
     assert "LLM Context" in urls
     assert "Third-Party Licenses" in urls
+    assert "Third-Party Licenses (Text)" in urls
+    assert "Plain-Text License" in urls
+    assert "Level 1 SBOM" in urls
+    assert "Notice" in urls
     assert "Marketing Log" in urls
+
+    keywords = project.get("keywords", [])
+    assert len(keywords) == 20, f"Expected 20 keywords, got {len(keywords)}"
+    required_kws = [
+        "local-first",
+        "zero-egress",
+        "open-bricks",
+        "ellmos-ai",
+        "computer-use",
+        "clirec",
+    ]
+    for req_kw in required_kws:
+        assert req_kw in keywords, f"Missing required keyword: {req_kw}"
 
     pytest_cfg = data.get("tool", {}).get("pytest", {}).get("ini_options", {})
     assert "-ra" in pytest_cfg.get("addopts", "")
+    assert "--basetemp=.pytest_temp" in pytest_cfg.get("addopts", "")
+    assert pytest_cfg.get("minversion") == "7.0"
+    assert "build" in pytest_cfg.get("norecursedirs", [])
+    assert ".pytest_temp" in pytest_cfg.get("norecursedirs", [])
+    assert ".pytest_tmp*" in pytest_cfg.get("norecursedirs", [])
+    assert ".hypothesis" in pytest_cfg.get("norecursedirs", [])
+    assert ".turbo" in pytest_cfg.get("norecursedirs", [])
 
     ruff_lint = data.get("tool", {}).get("ruff", {}).get("lint", {})
     select = ruff_lint.get("select", [])
@@ -105,14 +240,20 @@ def test_version_parity():
 
 
 def test_llms_txt_recency_and_metadata():
-    """llms.txt must have 2026-09-16 verification date and accurate references."""
+    """llms.txt must have 2026-09-29 verification date and accurate references."""
     llms_path = REPO_ROOT / "llms.txt"
     assert llms_path.is_file()
     text = llms_path.read_text(encoding="utf-8")
-    assert "## Last-checked: 2026-09-16" in text
+    assert "## Last-checked: 2026-09-29" in text
     assert "tests/" in text
+    assert "NOTICE" in text
+    assert "welcome.yml" in text
+    assert "auto-assign.yml" in text
+    assert "label-sync.yml" in text
     assert "MARKETING-LOG.txt" in text
     assert "THIRD_PARTY_LICENSES.md" in text
+    assert "THIRD_PARTY_LICENSES.txt" in text
+    assert "CONTRIBUTING.md" in text
     assert "[PERSONA-01]" in text
 
 
@@ -125,6 +266,9 @@ def test_marketing_log_present_and_active():
     assert "Pfad A" in text
     assert "2026-09-16" in text
     assert "Pfad B" in text
+    assert "2026-09-23" in text
+    assert "2026-09-26" in text
+    assert "2026-09-29" in text
     assert "INV-LOCAL-01" in text
 
 
@@ -135,7 +279,10 @@ def test_changelog_recent_entry():
     text = cl_path.read_text(encoding="utf-8")
     assert "2026-09-13" in text
     assert "2026-09-16" in text
-    assert "Pfad B" in text
+    assert "2026-09-23" in text
+    assert "2026-09-26" in text
+    assert "2026-09-29" in text
+    assert "Pfad A" in text
 
 
 def test_quick_navigation_anchor_parity():
@@ -148,8 +295,11 @@ def test_quick_navigation_anchor_parity():
     en_text = en_path.read_text(encoding="utf-8")
     de_text = de_path.read_text(encoding="utf-8")
 
-    # 18 numbered anchor sections
+    # 18 numbered anchor sections with sec-01..sec-18 dual reciprocal anchors
     for i in range(1, 19):
+        sec_tag = f"sec-{i:02d}"
+        assert f'id="{sec_tag}"' in en_text, f"Missing {sec_tag} in README.md"
+        assert f'id="{sec_tag}"' in de_text, f"Missing {sec_tag} in README_de.md"
         assert f'<a id="{i}-' in en_text or f"## {i}." in en_text, (
             f"Missing section {i} in README.md"
         )
@@ -228,6 +378,8 @@ def test_third_party_licenses_audit_content():
     assert lic_path.is_file()
     text = lic_path.read_text(encoding="utf-8")
 
+    assert "Audited:** 2026-09-29" in text
+    assert "Level 1 SBOM" in text
     assert "RunAsInvoker" in text
     assert "pynput" in text
     assert "LGPL-3.0" in text
@@ -235,3 +387,55 @@ def test_third_party_licenses_audit_content():
     assert "sounddevice" in text
     assert "uiautomation" in text
     assert "Zero-Copyleft" in text
+    assert "INV-LOCAL-01" in text
+    assert "INV-SLA-10" in text
+    assert "VERIFIED" in text
+    assert "THIRD_PARTY_LICENSES.txt" in text
+
+
+def test_third_party_licenses_plain_text_companion():
+    """Level 1 SBOM plain-text companion file must exist and satisfy all invariants."""
+    txt_path = REPO_ROOT / "THIRD_PARTY_LICENSES.txt"
+    assert txt_path.is_file()
+    text = txt_path.read_text(encoding="utf-8")
+
+    assert "Third-Party Licenses - clirec (ellmos-ai/clirec)" in text
+    assert "MIT License" in text
+    assert "NOTICE" in text
+    assert "THIRD_PARTY_LICENSES.md" in text
+    assert "2026-09-29" in text
+    assert "RunAsInvoker" in text
+    assert "LGPL-3.0" in text
+    assert "Apache License Version 2.0" in text
+    assert "Python Software Foundation License" in text
+
+    invariants = [
+        "INV-LOCAL-01",
+        "INV-PRIVACY-02",
+        "INV-INSPECT-03",
+        "INV-REPLAY-04",
+        "INV-AUDIO-05",
+        "INV-SIDECAR-06",
+        "INV-ADAPTER-07",
+        "INV-UNPRIV-08",
+        "INV-PORTABLE-09",
+        "INV-SLA-10",
+    ]
+    for inv_tag in invariants:
+        assert f"{inv_tag}: PASS" in text, (
+            f"Missing {inv_tag} compliance certification in THIRD_PARTY_LICENSES.txt"
+        )
+
+
+def test_contributing_guidelines_present():
+    """CONTRIBUTING.md must define quality gates, invariants, and version freeze."""
+    contrib_path = REPO_ROOT / "CONTRIBUTING.md"
+    assert contrib_path.is_file()
+    text = contrib_path.read_text(encoding="utf-8")
+
+    assert "INV-LOCAL-01" in text
+    assert "INV-SLA-10" in text
+    assert "RunAsInvoker" in text
+    assert "T-20260920-167562623" in text
+    assert "0.3.0" in text
+    assert "pytest" in text

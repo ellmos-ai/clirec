@@ -1,22 +1,26 @@
 # clirec
 
-<img src="assets/banner.png" width="100%" alt="clirec banner">
+<img src="assets/banner.svg" width="100%" alt="clirec banner">
+<!-- alternate banner: assets/banner-b.png (swap on occasion) -->
 
 [English](README.md) | [Deutsch](README_de.md)
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
-[![Pytest Status](https://img.shields.io/badge/pytest-132%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
+[![Pytest Status](https://img.shields.io/badge/pytest-138%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
 [![Privacy](https://img.shields.io/badge/privacy-100%25%20Local--First%20%7C%20Zero--Egress-success.svg)](#5-governance--runtime-invariants)
 [![Security](https://img.shields.io/badge/security-RunAsInvoker%20%7C%20Non--Elevation-informational.svg)](SECURITY.md)
 [![Security SLA](https://img.shields.io/badge/security%20SLA-48h%20%2F%205d-blue.svg)](SECURITY.md)
-[![Third-Party Audited](https://img.shields.io/badge/third--party-audited%20%7C%20MIT%20Core%20%7C%20LGPL--3.0%20Extra-success.svg)](THIRD_PARTY_LICENSES.md)
+[![Level 1 SBOM](https://img.shields.io/badge/Level%201%20SBOM-Plain%20Text%20Audited-success.svg)](THIRD_PARTY_LICENSES.txt)
 [![Marketing Log](https://img.shields.io/badge/marketing%20log-active-blueviolet.svg)](MARKETING-LOG.txt)
 [![LLM Ready](https://img.shields.io/badge/llms.txt-ready-purple.svg)](llms.txt)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Umbrella](https://img.shields.io/badge/umbrella-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Attribution](https://img.shields.io/badge/attribution-NOTICE-blue.svg)](NOTICE)
+[![Verified](https://img.shields.io/badge/verified-2026--09--29-blue.svg)](CHANGELOG.md)
+[![Last-Checked](https://img.shields.io/badge/last--checked-2026--09--29-success.svg)](llms.txt)
 
 > Human-readable GUI demonstration recordings for CLI and autonomous AI agent workflows.
 
@@ -30,29 +34,34 @@
 
 ## Quick Navigation
 
-1. [Overview](#1-overview)
-2. [Key Capabilities](#2-key-capabilities)
-3. [Target Personas & Discoverability](#3-target-personas--discoverability)
-4. [Comparative Matrix vs. Alternatives](#4-comparative-matrix-vs-alternatives)
-5. [Governance & Runtime Invariants](#5-governance--runtime-invariants)
-6. [Architecture & Replay Flow](#6-architecture--replay-flow)
-7. [Format v2 & SHA-256 Media Sidecars](#7-format-v2--sha-256-media-sidecars)
-8. [Audio Privacy & Consent Boundary](#8-audio-privacy--consent-boundary)
-9. [CLI Workflow & Quickstart](#9-cli-workflow--quickstart)
-10. [Python API & Executor Protocol](#10-python-api--executor-protocol)
-11. [Windows Desktop & Agent Environments](#11-windows-desktop--agent-environments)
-12. [Installation & Optional Extras](#12-installation--optional-extras)
-13. [Test Suite & Verification Gates](#13-test-suite--verification-gates)
-14. [Ecosystem & Related Projects](#14-ecosystem--related-projects)
-15. [Third-Party Licenses & Transparency](#15-third-party-licenses--transparency)
-16. [Security & Vulnerability Reporting](#16-security--vulnerability-reporting)
-17. [Directory Listings & AI Discoverability](#17-directory-listings--ai-discoverability)
-18. [License & Maintainers](#18-license--maintainers)
+1. [Overview](#sec-01)
+2. [Key Capabilities](#sec-02)
+3. [Target Personas & Discoverability](#sec-03)
+4. [Comparative Matrix vs. Alternatives](#sec-04)
+5. [Governance & Runtime Invariants](#sec-05)
+6. [Architecture & Replay Flow](#sec-06)
+7. [Format v2 & SHA-256 Media Sidecars](#sec-07)
+8. [Audio Privacy & Consent Boundary](#sec-08)
+9. [CLI Workflow & Quickstart](#sec-09)
+10. [Python API & Executor Protocol](#sec-10)
+11. [Windows Desktop & Agent Environments](#sec-11)
+12. [Installation & Optional Extras](#sec-12)
+13. [Test Suite & Verification Gates](#sec-13)
+14. [Ecosystem & Related Projects](#sec-14)
+15. [Third-Party Licenses & Transparency](#sec-15)
+16. [Security & Vulnerability Reporting](#sec-16)
+17. [Directory Listings & AI Discoverability](#sec-17)
+18. [License & Maintainers](#sec-18)
 
 ---
 
+<a id="sec-01"></a>
 <a id="1-overview"></a>
 <a id="overview"></a>
+<a id="1-uebersicht"></a>
+<a id="1-übersicht"></a>
+<a id="uebersicht"></a>
+<a id="übersicht"></a>
 ## 1. Overview
 
 `clirec` records mouse and keyboard demonstrations as human-readable `.clirec` files and replays them through an injected executor. It is built for autonomous AI agents, computer-use frameworks, and CLI workflows where a short, reproducible demonstration is dramatically more reliable and token-efficient than a long verbal prompt or multi-gigabyte video file.
@@ -61,8 +70,11 @@ The software operates on an uncompromising local-first architectural principle: 
 
 ---
 
+<a id="sec-02"></a>
 <a id="2-key-capabilities"></a>
 <a id="key-capabilities"></a>
+<a id="2-kernfunktionen"></a>
+<a id="kernfunktionen"></a>
 ## 2. Key Capabilities
 
 | Capability | Description |
@@ -79,8 +91,11 @@ The software operates on an uncompromising local-first architectural principle: 
 
 ---
 
+<a id="sec-03"></a>
 <a id="3-target-personas--discoverability"></a>
 <a id="target-personas--discoverability"></a>
+<a id="3-zielgruppen--auffindbarkeit"></a>
+<a id="zielgruppen--auffindbarkeit"></a>
 ## 3. Target Personas & Discoverability
 
 `clirec` is engineered to solve demonstration and automation challenges for four core personas across the AI and developer ecosystems:
@@ -106,8 +121,13 @@ To facilitate discoverability across developer directories, package managers, an
 
 ---
 
+<a id="sec-04"></a>
 <a id="4-comparative-matrix-vs-alternatives"></a>
 <a id="comparative-matrix-vs-alternatives"></a>
+<a id="4-vergleichsmatrix-gegenueber-alternativen"></a>
+<a id="4-vergleichsmatrix-gegenüber-alternativen"></a>
+<a id="vergleichsmatrix-gegenueber-alternativen"></a>
+<a id="vergleichsmatrix-gegenüber-alternativen"></a>
 ## 4. Comparative Matrix vs. Alternatives
 
 The following matrix compares `clirec` against existing recording and automation solutions across 10 technical dimensions directly mapped to our governance invariants:
@@ -127,8 +147,11 @@ The following matrix compares `clirec` against existing recording and automation
 
 ---
 
+<a id="sec-05"></a>
 <a id="5-governance--runtime-invariants"></a>
 <a id="governance--runtime-invariants"></a>
+<a id="5-governance--laufzeit-invarianten"></a>
+<a id="governance--laufzeit-invarianten"></a>
 ## 5. Governance & Runtime Invariants
 
 `clirec` is architected and maintained according to ten foundational governance and runtime invariants:
@@ -146,8 +169,11 @@ The following matrix compares `clirec` against existing recording and automation
 
 ---
 
+<a id="sec-06"></a>
 <a id="6-architecture--replay-flow"></a>
 <a id="architecture--replay-flow"></a>
+<a id="6-architektur--replay-ablauf"></a>
+<a id="architektur--replay-ablauf"></a>
 ## 6. Architecture & Replay Flow
 
 ```mermaid
@@ -164,8 +190,11 @@ The core package has no mandatory runtime dependencies. Windows capture uses a c
 
 ---
 
+<a id="sec-07"></a>
 <a id="7-format-v2--sha-256-media-sidecars"></a>
 <a id="format-v2--sha-256-media-sidecars"></a>
+<a id="7-format-v2--sha-256-medien-sidecars"></a>
+<a id="format-v2--sha-256-medien-sidecars"></a>
 ## 7. Format v2 & SHA-256 Media Sidecars
 
 Format v2 introduces robust atomic media sidecars:
@@ -177,8 +206,11 @@ Format v2 introduces robust atomic media sidecars:
 
 ---
 
+<a id="sec-08"></a>
 <a id="8-audio-privacy--consent-boundary"></a>
 <a id="audio-privacy--consent-boundary"></a>
+<a id="8-audio-datenschutz--einwilligungsgrenze"></a>
+<a id="audio-datenschutz--einwilligungsgrenze"></a>
 ## 8. Audio Privacy & Consent Boundary
 
 Audio is treated as a distinct, sensitive privacy boundary:
@@ -193,8 +225,11 @@ Audio is treated as a distinct, sensitive privacy boundary:
 
 ---
 
+<a id="sec-09"></a>
 <a id="9-cli-workflow--quickstart"></a>
 <a id="cli-workflow--quickstart"></a>
+<a id="9-cli-workflow--schnellstart"></a>
+<a id="cli-workflow--schnellstart"></a>
 ## 9. CLI Workflow & Quickstart
 
 ```bash
@@ -222,8 +257,11 @@ clirec recover recordings
 
 ---
 
+<a id="sec-10"></a>
 <a id="10-python-api--executor-protocol"></a>
 <a id="python-api--executor-protocol"></a>
+<a id="10-python-api--executor-protokoll"></a>
+<a id="python-api--executor-protokoll"></a>
 ## 10. Python API & Executor Protocol
 
 Replay is backend-neutral. Use it directly from Python with any executor adhering to the protocol:
@@ -244,8 +282,11 @@ The `executor` must implement `width`, `height`, and `execute(action)`.
 
 ---
 
+<a id="sec-11"></a>
 <a id="11-windows-desktop--agent-environments"></a>
 <a id="windows-desktop--agent-environments"></a>
+<a id="11-windows-desktop--agent-umgebungen"></a>
+<a id="windows-desktop--agent-umgebungen"></a>
 ## 11. Windows Desktop & Agent Environments
 
 When recording demonstrations on Windows:
@@ -254,8 +295,11 @@ When recording demonstrations on Windows:
 
 ---
 
+<a id="sec-12"></a>
 <a id="12-installation--optional-extras"></a>
 <a id="installation--optional-extras"></a>
+<a id="12-installation--optionale-extras"></a>
+<a id="installation--optionale-extras"></a>
 ## 12. Installation & Optional Extras
 
 Install directly from the Git repository:
@@ -273,8 +317,11 @@ pip install "clirec[all] @ git+https://github.com/ellmos-ai/clirec.git"     # Al
 
 ---
 
+<a id="sec-13"></a>
 <a id="13-test-suite--verification-gates"></a>
 <a id="test-suite--verification-gates"></a>
+<a id="13-testsuite--verifikations-gates"></a>
+<a id="testsuite--verifikations-gates"></a>
 ## 13. Test Suite & Verification Gates
 
 ```bash
@@ -292,8 +339,13 @@ See [RELEASE_GATE.md](RELEASE_GATE.md) for package and platform verification bou
 
 ---
 
+<a id="sec-14"></a>
 <a id="14-ecosystem--related-projects"></a>
 <a id="ecosystem--related-projects"></a>
+<a id="14-oekosystem--verwandte-projekte"></a>
+<a id="14-ökosystem--verwandte-projekte"></a>
+<a id="oekosystem--verwandte-projekte"></a>
+<a id="ökosystem--verwandte-projekte"></a>
 ## 14. Ecosystem & Related Projects
 
 `clirec` focuses exclusively on recording, parameterizing, and describing demonstrations. Replay actuation and ecosystem integrations are provided by sibling projects:
@@ -308,8 +360,11 @@ See [RELEASE_GATE.md](RELEASE_GATE.md) for package and platform verification bou
 
 ---
 
+<a id="sec-15"></a>
 <a id="15-third-party-licenses--transparency"></a>
 <a id="third-party-licenses--transparency"></a>
+<a id="15-drittanbieter-lizenzen--transparenz"></a>
+<a id="drittanbieter-lizenzen--transparenz"></a>
 ## 15. Third-Party Licenses & Transparency
 
 The core `clirec` package is licensed under the permissive [MIT License](LICENSE) with **zero mandatory external runtime dependencies**.
@@ -319,12 +374,15 @@ Optional extras pull in external open-source packages:
 - `sounddevice` and PortAudio are licensed under **MIT**.
 - `uiautomation` is licensed under **Apache-2.0**.
 
-For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) and plain-text Level 1 SBOM [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt).
 
 ---
 
+<a id="sec-16"></a>
 <a id="16-security--vulnerability-reporting"></a>
 <a id="security--vulnerability-reporting"></a>
+<a id="16-sicherheit--schwachstellen-meldung"></a>
+<a id="sicherheit--schwachstellen-meldung"></a>
 ## 16. Security & Vulnerability Reporting
 
 - **Policy:** For sensitive reports, use GitHub Private Vulnerability Reporting or open a private issue without attaching sensitive recording traces.
@@ -334,8 +392,13 @@ For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THI
 
 ---
 
+<a id="sec-17"></a>
 <a id="17-directory-listings--ai-discoverability"></a>
 <a id="directory-listings--ai-discoverability"></a>
+<a id="17-verzeichniseintraege--ki-auffindbarkeit"></a>
+<a id="17-verzeichniseinträge--ki-auffindbarkeit"></a>
+<a id="verzeichniseintraege--ki-auffindbarkeit"></a>
+<a id="verzeichniseinträge--ki-auffindbarkeit"></a>
 ## 17. Directory Listings & AI Discoverability
 
 `clirec` is indexed across developer directories and LLM registries:
@@ -345,10 +408,18 @@ For detailed SPDX audits, runtime matrices, and licensing notices, refer to [THI
 
 ---
 
+<a id="sec-18"></a>
 <a id="18-license--maintainers"></a>
 <a id="license--maintainers"></a>
+<a id="18-lizenz--maintainer"></a>
+<a id="lizenz--maintainer"></a>
 ## 18. License & Maintainers
 
 - **License:** MIT License, see [LICENSE](LICENSE).
+- **Attribution & Notice:** See [NOTICE](NOTICE) for canonical copyright and attribution notices.
+- **Level 1 SBOM:** Plain-text companion [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) and markdown audit [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+- **Contributing Guidelines:** See [CONTRIBUTING.md](CONTRIBUTING.md) for quality gates, invariant certification, and development setup.
 - **Maintainers:** The `ellmos-ai` authors & community contributors.
 - **Umbrella:** Part of the [open-bricks](https://github.com/open-bricks) open-source software family.
+- **Statutory Disclaimer (§ 521 BGB):** This open-source software and documentation are provided free of charge. In accordance with Section 521 of the German Civil Code (BGB), the provider's liability for gratuitous provision is limited to intent and gross negligence.
+

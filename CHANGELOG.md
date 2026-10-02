@@ -6,6 +6,39 @@ on PyPI. Everything below `0.3.0 - unreleased` is therefore still unpublished.
 
 ## Unreleased
 
+- Technical Hygiene, Level 1 SBOM Plain-Text Companion, CI Lifecycle Workflows, Multi-Host Defense & Metadata Contracts (Pfad A, 2026-09-29):
+  - Created canonical Level 1 SBOM plain-text companion file `THIRD_PARTY_LICENSES.txt` with license texts, SPDX mapping, and certification of all 10 governance invariants `INV-LOCAL-01` through `INV-SLA-10`.
+  - Re-audited `THIRD_PARTY_LICENSES.md` to Stand 2026-09-29 and linked `THIRD_PARTY_LICENSES.txt`.
+  - Updated canonical `NOTICE` attribution file to cross-reference `THIRD_PARTY_LICENSES.txt`.
+  - Added new `CONTRIBUTING.md` guidelines detailing quality gates, core invariants, development setup, and strict version freeze rule `T-20260920-167562623`.
+  - Deployed standard CI lifecycle workflows: `.github/workflows/auto-assign.yml` (`actions/github-script@v7`, `timeout-minutes: 5`, `cancel-in-progress: true`) and `.github/workflows/label-sync.yml` (`EndBug/label-sync@v2`, `timeout-minutes: 5`, `cancel-in-progress: true`) with canonical `.github/labels.yml` (11 standard governance labels per GOVERNANCE.md § 4.2).
+  - Hardened `.gitignore` with Windows & OS desktop metadata (`Desktop.ini`, `desktop.ini`, `Thumbs.db`, `ehthumbs.db`), editor swap files (`*.swo`), task plans (`TASKPLAN_*.md`), host patterns (`*-IDEAPAD*`, `*-IDEAPAD-GEI*`, `*-WORKSTATION.*`, `*-WORKSTATION-LG.*`), and explicit lock patterns (`LOCK.dev.*`, `LOCK.antigravity.*`, `LOCK.bugsearch.*`, `LOCK.txt`).
+  - Standardized `pyproject.toml` with `license-files` whitelist including `THIRD_PARTY_LICENSES.txt`, project URLs for `Contributing`, `Third-Party Licenses (Text)`, `Plain-Text License`, and `Level 1 SBOM`, and hardened pytest `norecursedirs` (`.pytest_tmp*`, `.turbo`, `.nyc_output`, `.tox`).
+  - Synchronized documentation, badges (`Verified: 2026-09-29`, `Last-Checked: 2026-09-29`, `Level 1 SBOM: Plain Text Audited`), and `llms.txt` context index.
+  - Documented Pfad A audit in `MARKETING-LOG.txt`.
+  - Extended contract test suite in `tests/test_metadata.py` with new contract tests covering auto-assign, label-sync with labels.yml, plain-text Level 1 SBOM companion invariants, and contributing guidelines (all tests 100% green).
+
+- Discoverability, Visual Architecture, Bilingual Navigation Parity & SBOM Invariants (Pfad B, 2026-09-26):
+  - Standardized 18-point bilateral quick navigation parity with reciprocal dual HTML anchors (`<a id="sec-01"></a>` through `<a id="sec-18"></a>`) and reciprocal cross-language aliases across `README.md` and `README_de.md`.
+  - Saturated GitHub repository topics and PEP 621 keywords to 20/20 topics (`agent-workflow`, `audio-recording`, `automation`, `cli`, `clirec`, `computer-use`, `demonstration`, `developer-tools`, `ellmos-ai`, `gui-automation`, `keyboard`, `local-first`, `mouse`, `open-bricks`, `privacy`, `python`, `recording`, `replay`, `screen-recording`, `zero-egress`).
+  - Added Level 1 SBOM Invariant Cross-Reference Matrix table to `THIRD_PARTY_LICENSES.md` Stand 2026-09-26 mapping all 10 governance invariants `INV-LOCAL-01` through `INV-SLA-10` with verified status.
+  - Hardened `pyproject.toml` with `addopts = "-ra -v --basetemp=.pytest_temp"` and extended `norecursedirs` with `.pytest_temp` and `.hypothesis`.
+  - Harmonized Shields.io badges across `README.md` and `README_de.md` (`Verified: 2026-09-26`, `Last-Checked: 2026-09-26`, pytest green status).
+  - Updated `llms.txt` context index with Stand 2026-09-26 recency, 20/20 topics, and Level 1 SBOM notes.
+  - Documented Pfad B discoverability audit in `MARKETING-LOG.txt`.
+  - Extended automated contract tests in `tests/test_metadata.py` verifying 20 saturated keywords, reciprocal dual HTML anchors `sec-01`..`sec-18`, Level 1 SBOM invariant table, and Stand 2026-09-26 recency.
+
+- Technical Hygiene, Lifecycle CI, NOTICE Attribution & PEP 621 Hardening (Pfad A, 2026-09-23):
+  - Created canonical open-source `NOTICE` attribution file designating copyright to Lukas Geiger under the ellmos-ai / open-bricks umbrella.
+  - Added new contributor welcome automation workflow (`.github/workflows/welcome.yml`) using `actions/first-interaction@v3` with concurrency cancel-in-progress and 5-minute timeout.
+  - Hardened `.github/workflows/stale.yml` with concurrency `cancel-in-progress: true` guard.
+  - Extended `.gitignore` against additional multi-host conflict files (`*-MacBook*`, `*.sync-conflict-*`, `*.conflict`), canonical locks (`LOCK.user.*`, `LOCK.until.*`, `LOCK.condition.*`), `.automation-lock`, and `.nyc_output/`.
+  - Standardized `pyproject.toml` per PEP 621 with `license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]`, added `Notice` URL to `[project.urls]`, and configured `minversion = "7.0"` and `norecursedirs` for pytest.
+  - Updated `THIRD_PARTY_LICENSES.md` to reference `NOTICE` and confirmed Level 1 SBOM recency with unprivileged `RunAsInvoker` Non-Elevation & Zero-Copyleft guarantee.
+  - Synchronized documentation in `README.md`, `README_de.md` (links to `NOTICE`, statutory note § 521 BGB), and `llms.txt` (Last-checked 2026-09-23).
+  - Recorded Pfad A Technical Hygiene Audit in `MARKETING-LOG.txt`.
+  - Extended automated contract tests in `tests/test_metadata.py` with assertions covering NOTICE presence, welcome workflow guardrails, stale concurrency, and extended gitignore patterns.
+
 - Discoverability, Visual Architecture, Target Personas & Comparative Matrix (Pfad B, 2026-09-16):
   - Added 18-point bilingual quick navigation parity with reciprocal anchor support across `README.md` and `README_de.md`.
   - Documented 4 target personas (`[PERSONA-01]` Autonomous AI Agent Engineers, `[PERSONA-02]` CLI Automation Builders, `[PERSONA-03]` QA & E2E Validation Engineers, `[PERSONA-04]` Privacy-Conscious Teams & Compliance Officers) and high-intent SEO queries.

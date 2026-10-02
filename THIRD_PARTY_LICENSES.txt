@@ -1,0 +1,86 @@
+# =============================================================================
+# Third-Party Licenses - clirec (ellmos-ai/clirec)
+# =============================================================================
+# clirec is licensed under the MIT License.
+# Canonical Notice: NOTICE
+# Comprehensive Markdown SBOM: THIRD_PARTY_LICENSES.md
+# Audit Date: 2026-09-29 (Pfad A Level 1 SBOM Audit)
+# Architecture & Governance: 100% Local-First, Zero-Egress, RunAsInvoker
+# This document provides the plain-text Level 1 Software Bill of Materials (SBOM)
+# and third-party transparency inventory across runtime, build, and test tooling.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 1. Core Runtime (Zero Mandatory External Dependencies)
+# -----------------------------------------------------------------------------
+
+Python Standard Library
+License: Python Software Foundation License (PSF-2.0)
+URL: https://docs.python.org/3/license.html
+Description: Core runtime modules (ctypes, json, hashlib, pathlib, dataclasses, typing, sys, os, time, argparse, re). On Windows, user32.dll hooks operate via standard ctypes in unprivileged user space.
+
+# -----------------------------------------------------------------------------
+# 2. Optional Extras Dependencies
+# -----------------------------------------------------------------------------
+
+pynput (Extra: [record])
+License: GNU Lesser General Public License Version 3 (LGPL-3.0)
+URL: https://github.com/moses-palmer/pynput/blob/master/COPYING.LESSER
+Description: Optional cross-platform keyboard and mouse input capture. Utilized exclusively via dynamic linking in full compliance with LGPLv3 Section 4. Unmodified PyPI distribution; core clirec does not require pynput.
+
+sounddevice & PortAudio (Extra: [audio])
+License: MIT License (MIT)
+URL: https://github.com/spatialaudio/python-sounddevice/blob/master/LICENSE
+Description: Optional streaming microphone audio capture with explicit dual opt-in (--audio + --audio-consent) compliant with Section 201 StGB. Binds PortAudio under MIT.
+
+uiautomation (Extra: [uia])
+License: Apache License Version 2.0 (Apache-2.0)
+URL: https://github.com/yinkaisheng/Python-UIAutomation-for-Windows/blob/master/LICENSE
+Description: Optional Windows UI Automation accessibility element probing for rich metadata capture. Operates strictly in user mode without administrative privileges.
+
+# -----------------------------------------------------------------------------
+# 3. Build & Packaging Dependencies
+# -----------------------------------------------------------------------------
+
+setuptools
+License: MIT License (MIT)
+URL: https://github.com/pypa/setuptools/blob/main/LICENSE
+Description: Package build backend and distribution management for PEP 517 / PEP 621 compliance.
+
+build
+License: MIT License (MIT)
+URL: https://github.com/pypa/build/blob/main/LICENSE
+Description: Standards-compliant PEP 517 build frontend.
+
+twine
+License: Apache License Version 2.0 (Apache-2.0)
+URL: https://github.com/pypa/twine/blob/main/LICENSE
+Description: Package distribution checking and artifact verification utility.
+
+# -----------------------------------------------------------------------------
+# 4. Development, Linting & Test Tooling
+# -----------------------------------------------------------------------------
+
+pytest
+License: MIT License (MIT)
+URL: https://github.com/pytest-dev/pytest/blob/main/LICENSE
+Description: Test runner for unit, regression, formatting, and metadata contract test suites.
+
+ruff
+License: MIT License (MIT) OR Apache License Version 2.0 (Apache-2.0)
+URL: https://github.com/astral-sh/ruff/blob/main/LICENSE-MIT
+Description: Fast Python linter and code formatter with pinned rule set.
+
+# =============================================================================
+# Level 1 SBOM Invariant Compliance Status (Stand 2026-09-29):
+# - INV-LOCAL-01: PASS (100% Local-First & Zero-Egress; offline execution, no telemetry)
+# - INV-PRIVACY-02: PASS (Default input sanitization & parameterization into ${input_N})
+# - INV-INSPECT-03: PASS (Human-readable plaintext .clirec specification)
+# - INV-REPLAY-04: PASS (Decoupled injected agent replay protocol)
+# - INV-AUDIO-05: PASS (Strict dual opt-in audio consent boundary compliant with § 201 StGB)
+# - INV-SIDECAR-06: PASS (Format v2 atomic media sidecars with SHA-256 verification)
+# - INV-ADAPTER-07: PASS (Decoupled STT transcription adapter architecture; persist=False)
+# - INV-UNPRIV-08: PASS (Unprivileged user mode execution via RunAsInvoker; zero UAC elevation)
+# - INV-PORTABLE-09: PASS (Zero mandatory runtime dependencies; pure stdlib + ctypes)
+# - INV-SLA-10: PASS (Binding Dual Security Response SLA: 48h Response, 5d Triage)
+# =============================================================================
