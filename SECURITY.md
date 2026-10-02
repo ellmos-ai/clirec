@@ -1,60 +1,62 @@
 # Security Policy
 
-## Supported Versions
+## Supported versions
 
-`clirec` is currently an alpha package. Security-relevant fixes should target the
-current `main` branch until a stable release line exists.
+clirec is an alpha package. Security-relevant fixes should target the current
+main branch until a stable release line exists.
 
 ## Reporting
 
-For private reports, use GitHub private vulnerability reporting if it is enabled
-on the repository. If that is unavailable, open a minimal private issue or
-contact the maintainer without attaching sensitive recordings.
+For sensitive reports, use GitHub Private Vulnerability Reporting if it is
+enabled on the repository. If unavailable, do not post sensitive details
+publicly; use another private channel only if the project owner has provided one.
 
-## Security SLA & Privilege Model
+## Response targets and process permissions
 
-- **Initial Response:** Within 48 hours of report submission (`INV-SLA-10`).
-- **Triage & Fix Delivery:** Within 5 business days for confirmed vulnerabilities.
-- **Execution Privilege:** Strictly unprivileged user-mode (`RunAsInvoker`, `INV-UNPRIV-08`). The software never requires or requests administrative elevation, UAC prompts, or root privileges.
+- Initial response target: within 48 hours of receiving a report, subject to
+  maintainer availability.
+- Triage target: within 5 business days, subject to the report and available
+  information. These are targets, not a guarantee that a fix will be delivered
+  by that date.
+- Process permissions: clirec uses the permissions of the process that starts
+  it and does not itself request elevation.
 
-## Local Recording Risks
+## Local recording risks
 
-`clirec` records local mouse and keyboard demonstrations and, only after a
-separate opt-in, microphone audio. Treat recordings, sidecars, transcripts, and
-frame evidence as sensitive by default:
+clirec records local mouse and keyboard demonstrations and, after explicit
+operator opt-in, microphone audio. Treat recordings, sidecars, transcripts,
+metadata, and frame evidence as sensitive by default:
 
 - Review recordings before sharing or committing them.
 - Do not publish recordings that contain client data, credentials, private
   paths, account names, personal documents, browser sessions, or internal URLs.
-- The safe default parameterizes all typed text as `${input_N}` instead of
-  persisting plaintext. `--allow-unmasked-input` disables that protection for
-  the complete session and must only be used with deliberate review.
-- UI metadata and frame evidence can still identify systems, people, or
+- Typed text is parameterized by default. `--allow-unmasked-input` disables that
+  behavior for the session.
+- UI metadata and optional frame evidence can identify systems, people, or
   workflows even when keyboard text is parameterized.
 - Spoken credentials are not protected by keyboard parameterization. Audio may
   also capture bystanders, health data, private conversations, or background
-  devices. Obtain consent and use a quiet, controlled local environment.
-- Audio is off by default, requires explicit consent, and is never replayed by
-  default. Use retention and the separate audio/transcript purge commands.
-- Keep `recordings/`, `*.clirec.frames/`, `*.clirec.media/`, audio files,
-  `_session/`, local data, and secrets out of release artifacts.
-- Never auto-ingest raw audio into a memory store, knowledge base, sync folder,
-  cloud storage, extractor job, package, CI artifact, or public repository.
+  devices.
+- Audio is off by default. `--audio` and `--audio-consent` record the operator's
+  opt-in; they do not obtain or verify anyone else's permission. Audio is not
+  replayed by default.
+- The recorder writes to the configured filesystem path. A selected path may be
+  backed by sync or network storage. Caller-provided STT modules can read the
+  audio file and may store data or make network requests; review them separately.
+- Keep recordings, frame directories, media sidecars, local data, and secrets
+  out of release artifacts.
 
 ## Recording other people
 
-Recording a person's speech is not only a privacy question. In Germany,
-§ 201 (1) no. 1 StGB makes it a criminal offence, punishable by up to three
-years' imprisonment or a fine, to record the non-publicly spoken word of
-another person without authorisation; the attempt is punishable as well
-(§ 201 (4) StGB). `--audio-consent` records *your* decision to start the
-microphone. It is not, and cannot be, the consent of anyone else in the room.
-Comparable rules exist in other jurisdictions, several of which require the
-agreement of every participant.
+In Germany, § 201 (1) no. 1 StGB addresses the unauthorized recording of another
+person's non-publicly spoken words. Under § 201 (4), the attempt is punishable.
+The `--audio-consent` option records the operator's decision to start the
+microphone. It does not establish permission from another person. See the
+official text: https://www.gesetze-im-internet.de/stgb/__201.html.
 
-Before recording audio in the presence of others, obtain their agreement, and
-prefer a controlled setting in which no uninvolved person is captured. This is
-a first orientation, not legal advice.
+Rules differ between jurisdictions and depend on context. Before recording
+audio where other people may be heard, check the applicable requirements and
+avoid capturing uninvolved people. This is a first orientation, not legal advice.
 
 Replay is backend-neutral and executes through an injected executor. Integrations
 must keep their own permission, confirmation, and safety gates.
