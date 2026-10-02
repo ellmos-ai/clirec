@@ -1,100 +1,75 @@
-## Last-checked: 2026-09-29
-
 # clirec
 
 Canonical repository: https://github.com/ellmos-ai/clirec
 
 ## Summary
 
-`clirec` is a local-first Python package for recording mouse and keyboard
-demonstrations and explicitly opted-in synchronous microphone commentary.
-Human-readable `.clirec` files remain the commit markers; format v2 stores
-media in relative SHA-256-verified sidecars and keeps v1 readable.
+clirec is an alpha Python package for recording mouse and keyboard
+demonstrations as human-readable `.clirec` files. Audio is optional and requires
+explicit operator opt-in. Format v2 stores referenced media in relative
+sidecars and readers validate their SHA-256 hashes.
 
-Source version `0.3.0`. Not released: the repository has no tags and the name
-`clirec` is unclaimed on PyPI, so `pip install clirec` does not resolve --
-install from the repository.
+The source tree is version 0.3.0. The 2026-10-02 GitHub API check found no release or tag; the current PyPI status could not be confirmed in this audit. See RELEASE_GATE.md.
 
-## Audience & Target Personas
+## Audience and target personas
 
-- `[PERSONA-01]` Autonomous AI Agent Engineers & Computer-Use Developers: Deterministic GUI demonstration traces for training, evaluation, and headless replay without vision-token overhead.
-- `[PERSONA-02]` CLI & Workflow Automation Builders (Sysadmins / DevOps): Turn interactive desktop operations into scriptable CLI commands with parameterized inputs.
-- `[PERSONA-03]` QA, Test Automation & E2E Validation Engineers: Versionable, git-friendly test runs with optional UIA metadata probing and SHA-256 media integrity.
-- `[PERSONA-04]` Privacy-Conscious Teams & Enterprise Compliance Officers: Masked input defaults, zero-cloud egress, unprivileged `RunAsInvoker`, and strict audio consent boundaries (§ 201 StGB).
+- [PERSONA-01] AI agent and computer-use developers: readable GUI demonstration traces.
+- [PERSONA-02] CLI and workflow automation builders: turn interactive operations into commands and parameterized inputs.
+- [PERSONA-03] QA and test engineers: versionable event files with optional UI Automation metadata and media hash validation.
+- [PERSONA-04] Privacy-conscious teams: parameterized typed-text defaults with review of other captured content before sharing.
 
-## Comparative Matrix & Governance Invariants
+## Implementation notes
 
-- 10-dimension comparison against Video Recorders (OBS/Loom), Web E2E (Playwright/Cypress), Macro Recorders (AutoHotkey), and Enterprise RPA (UiPath).
-- Core Governance Invariants:
-  - `INV-LOCAL-01` (100% Offline & Local-First Zero-Egress)
-  - `INV-PRIVACY-02` (Default Parameter Sanitization & Text Masking)
-  - `INV-INSPECT-03` (Human-Readable Plaintext Spec)
-  - `INV-REPLAY-04` (Agent & CLI Native Replay via Injected Executor)
-  - `INV-AUDIO-05` (Strict Dual-Opt-In Audio Consent Boundary)
-  - `INV-SIDECAR-06` (Format v2 Atomic Media Sidecars with SHA-256)
-  - `INV-ADAPTER-07` (Decoupled STT Adapter Architecture)
-  - `INV-UNPRIV-08` (Unprivileged User-Mode Operation — RunAsInvoker)
-  - `INV-PORTABLE-09` (Zero Mandatory Runtime Dependencies)
-  - `INV-SLA-10` (Transparent Open-Source Governance & 48h Security SLA)
+- The recorder core writes to its configured filesystem path and has no built-in telemetry; caller-provided modules may use network or additional storage.
+- Typed keyboard text is parameterized by default; UI metadata, optional frames, and audio still require review.
+- `.clirec` event files are plaintext, and replay delegates actions to a caller-provided executor.
+- Audio is off by default; flags record operator opt-in, not another person's permission or legal compliance.
+- The manifest is published last and readers validate media hashes; recovery removes orphan `.clirec.media` sidecars, not `.clirec.frames` directories.
+- The STT adapter passes `persist=False` to the selected module; it cannot enforce module behavior.
+- The application uses the permissions of the process that starts it. The core declares no mandatory runtime dependencies.
+- Security response times are targets subject to maintainer availability, not guaranteed fix deadlines.
 
-## Important Files
+## Important files
 
-- `README.md` - English overview, 18-point quick navigation, personas, comparative matrix, installation and usage.
-- `README_de.md` - German overview with reciprocal navigation parity and real umlauts.
-- `CONTRIBUTING.md` - Contribution guidelines, invariants adherence, and version freeze policy.
-- `SKILL.md` - Skill instructions for using clirec as a demonstration channel.
-  Written in German; `skills/clirec/SKILL.md` is a byte-identical shipped copy.
-- `CHANGELOG.md` - release history and current unreleased state.
-- `SECURITY.md` - reporting, local recording risks, SLA, and recording other people.
-- `NOTICE` - Canonical open-source attribution file for Lukas Geiger, ellmos-ai and open-bricks.
-- `THIRD_PARTY_LICENSES.md` - Level 1 SBOM Invariant Cross-Reference Matrix (INV-LOCAL-01..INV-SLA-10), SPDX audit of core and optional extras (`pynput` is LGPL-3.0), unprivileged RunAsInvoker non-elevation certification.
-- `THIRD_PARTY_LICENSES.txt` - Plain-text companion Level 1 SBOM certification mapping all runtime and tooling dependencies.
-- `MARKETING-LOG.txt` - Audit, hygiene, personas, comparative matrix, and discoverability logbook.
-- `clirec/` - Core package.
-- `tests/` - Regression, smoke, metadata, and repository contract tests.
-- `.github/workflows/tests.yml` - Python test workflow with timeout guardrails.
-- `.github/workflows/stale.yml` - Stale issues and PRs automation.
-- `.github/workflows/welcome.yml` - Contributor welcome automation.
-- `.github/workflows/auto-assign.yml` - Automatic PR assigner automation.
-- `.github/workflows/label-sync.yml` - Automated governance label synchronization.
-- `.github/labels.yml` - Standard 11 repository labels per GOVERNANCE.md § 4.2.
-- `RELEASE_GATE.md` - Current verification evidence and remaining release limits.
-- `docs/PAUSE_HOTKEY_DAEMON_DECISION.md` - Pause hotkey & daemon architecture decision and trade-offs.
-- `docs/FORMAT_V2.md` - Sidecar, hash, validation, and atomic commit contract.
-- `docs/AUDIO_PRIVACY.md` - Consent, retention, purge, backend, and privacy boundary.
-- `docs/EPISODE_EXPORT.md` - Learning episode and extractor review contract.
+- README.md - English overview, installation, usage, and implementation boundaries.
+- README_de.md - German overview and navigation.
+- CONTRIBUTING.md - development setup and pull-request guidelines.
+- SKILL.md - German skill instructions for using clirec as a demonstration channel.
+- CHANGELOG.md - release history and current unreleased state.
+- SECURITY.md - reporting, recording risks, response targets, and recording other people.
+- NOTICE - attribution notice.
+- THIRD_PARTY_LICENSES.md - declared dependency license references and runtime scope notes.
+- THIRD_PARTY_LICENSES.txt - plain-text dependency license index.
+- clirec/ - core package.
+- tests/ - regression, smoke, metadata, and repository checks.
+- .github/workflows/tests.yml - Python test workflow.
+- .github/workflows/stale.yml - stale issues and PRs automation.
+- .github/workflows/welcome.yml - contributor welcome automation.
+- .github/workflows/auto-assign.yml - pull-request assignment workflow.
+- .github/workflows/label-sync.yml - repository label synchronization.
+- .github/labels.yml - repository labels.
+- RELEASE_GATE.md - current verification evidence and release limits.
+- docs/PAUSE_HOTKEY_DAEMON_DECISION.md - pause hotkey and daemon architecture decision.
+- docs/FORMAT_V2.md - sidecar, hash, validation, and commit-marker behavior.
+- docs/AUDIO_PRIVACY.md - consent, retention, purge, backend, and privacy boundaries.
+- docs/EPISODE_EXPORT.md - learning episode and extractor review contract.
 
-## Related Projects
+## Related projects
 
-- open-compute (https://github.com/ellmos-ai/open-compute) - supplies the
-  executor that replays a recording; exposes it as `oc rec replay`.
-- open-compute-mcp (https://github.com/ellmos-ai/open-compute-mcp) - exposes the
-  replay as the MCP tool `rec_replay`.
-- ellmos-voice-io (https://github.com/ellmos-ai/ellmos-voice-io) - local STT/TTS
-  primitives; candidate to wrap as a `--module` backend for `clirec transcribe`.
+- open-compute (https://github.com/ellmos-ai/open-compute) - supplies
+  the executor used for replay; exposes oc rec replay.
+- open-compute-mcp (https://github.com/ellmos-ai/open-compute-mcp) - exposes
+  replay as the MCP tool rec_replay.
+- ellmos-voice-io (https://github.com/ellmos-ai/ellmos-voice-io) - STT/TTS
+  primitives that can be wrapped as a caller-selected `--module` backend.
 - ellmos (https://github.com/ellmos-ai/ellmos) - ecosystem hub.
-
-## Search Phrases
-
-```text
-clirec GUI recording CLI agent workflow
-human readable .clirec demonstration recording
-ellmos clirec local-first computer-use replay
-record mouse keyboard demonstration for agents
-open-compute clirec replay recordings
-opt-in synchronized audio commentary format v2 media sidecar
-learning episode skill-extractor workflow-extract review export
-```
 
 ## Boundaries
 
-`clirec` is not a hosted telemetry service, a video recorder, or a full GUI
-automation platform. Replay stays backend-neutral and needs an executor
-integration. Safe recordings parameterize keyboard text; UI metadata and
-explicitly unmasked sessions still require review before sharing. Audio is off
-by default, is never replayed automatically, and is never auto-ingested into a
-memory store, policy, workflow, cloud, or repository. `--audio-consent` is the
-operator's own consent and never a bystander's -- recording other people's
-speech is restricted by law in many jurisdictions (in Germany, § 201 StGB).
-CLIRec imports optional audio and STT adapters chosen by the caller; it ships
-no speech-to-text engine and no default STT module.
+clirec is not a hosted telemetry service or a full GUI automation platform.
+Replay needs a caller-provided executor. Typed keyboard text is parameterized
+by default; UI metadata, optional frames, and audio still need review. Audio is
+not replayed automatically. The STT adapter imports a caller-selected module
+and passes `persist=False`; that module controls its own storage and network
+behavior. See SECURITY.md and docs/AUDIO_PRIVACY.md before recording or
+sharing sensitive material.

@@ -27,15 +27,19 @@ Absolute paths, `..`, symlinks, missing files, orphan files, duplicate IDs,
 size mismatches, and hash mismatches are validation errors. Replay ignores
 audio by default.
 
-## Atomic publication and recovery
+## Staged publication and recovery
 
-Frames, media, manifest, and the recording are built in one same-filesystem
-staging directory. Sidecar directories are published before `demo.clirec`;
-the `.clirec` hard link is the final no-replace commit marker. A failed commit
-removes newly published sidecars. `clirec recover recordings` removes only
-sidecar directories for which no commit marker exists.
+Frames, media, manifest, and the recording are first written to a same-filesystem
+staging directory. Sidecars are published before the `.clirec` file, which
+serves as the final no-replace marker for that save. A handled commit error
+triggers cleanup of newly published sidecars; abrupt process or system failure
+can leave orphan sidecars. `clirec recover recordings` removes unreferenced
+`.clirec.media` directories. It does not remove optional `.clirec.frames`
+directories.
 
-Purge operations build a replacement media directory, swap it with rollback,
-then publish the updated `.clirec` marker content. A crash therefore fails
-closed through a manifest-hash mismatch instead of presenting partial media as
-valid.
+Purge operations build a replacement media directory and swap with rollback
+before updating the `.clirec` manifest. Readers validate referenced files
+against recorded hashes and reject mismatches. These checks detect changed or
+incomplete referenced media; the marker and hashes do not make all file
+operations crash-atomic or guarantee that a whole recording cannot be
+corrupted.
