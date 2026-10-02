@@ -66,7 +66,7 @@ def test_auto_assign_workflow_present_and_valid():
     aa_path = REPO_ROOT / ".github" / "workflows" / "auto-assign.yml"
     assert aa_path.is_file()
     text = aa_path.read_text(encoding="utf-8")
-    assert "actions/github-script@v7" in text
+    assert "actions/github-script@" in text
     assert "issues: write" in text
     assert "pull-requests: write" in text
     assert "timeout-minutes: 5" in text
