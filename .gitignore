@@ -58,14 +58,10 @@ ehthumbs.db
 *.sync-conflict-*
 *.conflict
 *-ASUS*
-*-ASUS-GEI*
 *-IDEAPAD*
-*-IDEAPAD-GEI*
 *-LAPTOP*
 *-WORKSTATION*
-*-WORKSTATION-LG*
 *-WORKSTATION.*
-*-WORKSTATION-LG.*
 *-Mac Studio*
 *-MacBook*
 
@@ -87,6 +83,7 @@ uv.lock
 !package-lock.json
 
 # Local coordination, task plans and maintenance files -- never part of the repository
+/MARKETING-LOG.txt
 _after-care/
 TASKPLAN_*.md
 

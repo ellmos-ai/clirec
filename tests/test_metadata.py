@@ -39,7 +39,7 @@ def test_stale_workflow_present_and_valid():
     stale_path = REPO_ROOT / ".github" / "workflows" / "stale.yml"
     assert stale_path.is_file()
     text = stale_path.read_text(encoding="utf-8")
-    assert "actions/stale@v9" in text
+    assert "actions/stale@" in text
     assert "issues: write" in text
     assert "pull-requests: write" in text
     assert "timeout-minutes: 10" in text
@@ -59,10 +59,7 @@ def test_welcome_workflow_present_and_valid():
 
 
 def test_auto_assign_workflow_present_and_valid():
-    (
-        """Auto-assign workflow must have github-script, """
-        """concurrency, and least-privilege."""
-    )
+    """Auto-assign workflow uses least-privilege and bounded execution."""
     aa_path = REPO_ROOT / ".github" / "workflows" / "auto-assign.yml"
     assert aa_path.is_file()
     text = aa_path.read_text(encoding="utf-8")
@@ -121,9 +118,7 @@ def test_gitignore_multihost_and_lock_defense():
         "*.sync-conflict-*",
         "*.conflict",
         "*-WORKSTATION*",
-        "*-WORKSTATION-LG*",
         "*-WORKSTATION.*",
-        "*-WORKSTATION-LG.*",
         "*-ASUS*",
         "*-IDEAPAD*",
         "*-MacBook*",
@@ -141,6 +136,7 @@ def test_gitignore_multihost_and_lock_defense():
         "uv.lock",
         "!package-lock.json",
         "TASKPLAN_*.md",
+        "/MARKETING-LOG.txt",
         ".tox/",
         ".turbo/",
         ".hypothesis/",
@@ -189,15 +185,13 @@ def test_pep621_license_and_urls():
     assert "Third-Party Licenses" in urls
     assert "Third-Party Licenses (Text)" in urls
     assert "Plain-Text License" in urls
-    assert "Level 1 SBOM" in urls
+    assert "Dependency License Information" in urls
     assert "Notice" in urls
-    assert "Marketing Log" in urls
 
     keywords = project.get("keywords", [])
-    assert len(keywords) == 20, f"Expected 20 keywords, got {len(keywords)}"
     required_kws = [
         "local-first",
-        "zero-egress",
+        "desktop-capture",
         "open-bricks",
         "ellmos-ai",
         "computer-use",
@@ -239,37 +233,20 @@ def test_version_parity():
         assert mod_data.get("id") == "clirec"
 
 
-def test_llms_txt_recency_and_metadata():
-    """llms.txt must have 2026-09-29 verification date and accurate references."""
+def test_llms_txt_references():
+    """llms.txt must list current project references."""
     llms_path = REPO_ROOT / "llms.txt"
     assert llms_path.is_file()
     text = llms_path.read_text(encoding="utf-8")
-    assert "## Last-checked: 2026-09-29" in text
     assert "tests/" in text
     assert "NOTICE" in text
     assert "welcome.yml" in text
     assert "auto-assign.yml" in text
     assert "label-sync.yml" in text
-    assert "MARKETING-LOG.txt" in text
     assert "THIRD_PARTY_LICENSES.md" in text
     assert "THIRD_PARTY_LICENSES.txt" in text
     assert "CONTRIBUTING.md" in text
     assert "[PERSONA-01]" in text
-
-
-def test_marketing_log_present_and_active():
-    """MARKETING-LOG.txt must exist in repo root with Pfad A and Pfad B entries."""
-    log_path = REPO_ROOT / "MARKETING-LOG.txt"
-    assert log_path.is_file()
-    text = log_path.read_text(encoding="utf-8")
-    assert "2026-09-13" in text
-    assert "Pfad A" in text
-    assert "2026-09-16" in text
-    assert "Pfad B" in text
-    assert "2026-09-23" in text
-    assert "2026-09-26" in text
-    assert "2026-09-29" in text
-    assert "INV-LOCAL-01" in text
 
 
 def test_changelog_recent_entry():
@@ -282,7 +259,6 @@ def test_changelog_recent_entry():
     assert "2026-09-23" in text
     assert "2026-09-26" in text
     assert "2026-09-29" in text
-    assert "Pfad A" in text
 
 
 def test_quick_navigation_anchor_parity():
@@ -332,110 +308,43 @@ def test_target_personas_definitions():
         assert p in llms_text, f"Missing {p} in llms.txt"
 
 
-def test_comparative_matrix_alternatives():
-    """READMEs must compare clirec across alternatives and technical dimensions."""
-    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
-    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
-
-    assert "Video Recorders" in en_text
-    assert "Web E2E" in en_text
-    assert "Macro Recorders" in en_text
-    assert "Enterprise RPA" in en_text
-
-    assert "Video-Recorder" in de_text
-    assert "Web-E2E" in de_text
-    assert "Makro-Recorder" in de_text
-    assert "Enterprise RPA" in de_text
-
-
-def test_governance_invariants_across_docs():
-    """All 10 governance invariants must exist across READMEs and license doc."""
-    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
-    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
-    lic_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-
-    invariants = [
-        "INV-LOCAL-01",
-        "INV-PRIVACY-02",
-        "INV-INSPECT-03",
-        "INV-REPLAY-04",
-        "INV-AUDIO-05",
-        "INV-SIDECAR-06",
-        "INV-ADAPTER-07",
-        "INV-UNPRIV-08",
-        "INV-PORTABLE-09",
-        "INV-SLA-10",
-    ]
-    for inv_tag in invariants:
-        assert inv_tag in en_text, f"Missing {inv_tag} in README.md"
-        assert inv_tag in de_text, f"Missing {inv_tag} in README_de.md"
-        assert inv_tag in lic_text, f"Missing {inv_tag} in THIRD_PARTY_LICENSES.md"
-
-
-def test_third_party_licenses_audit_content():
-    """License doc must confirm RunAsInvoker, SPDX, and LGPLv3 §4 compliance."""
+def test_declared_dependency_license_notes():
+    """Dependency license notes identify declared optional packages."""
     lic_path = REPO_ROOT / "THIRD_PARTY_LICENSES.md"
     assert lic_path.is_file()
     text = lic_path.read_text(encoding="utf-8")
 
-    assert "Audited:** 2026-09-29" in text
-    assert "Level 1 SBOM" in text
-    assert "RunAsInvoker" in text
+    assert "Third-Party License Information" in text
+    assert "MIT License" in text
     assert "pynput" in text
     assert "LGPL-3.0" in text
-    assert "LGPLv3 Section 4" in text
     assert "sounddevice" in text
     assert "uiautomation" in text
-    assert "Zero-Copyleft" in text
-    assert "INV-LOCAL-01" in text
-    assert "INV-SLA-10" in text
-    assert "VERIFIED" in text
-    assert "THIRD_PARTY_LICENSES.txt" in text
+    assert "persist=False" in text
+    assert "permission from other people" in text
 
 
 def test_third_party_licenses_plain_text_companion():
-    """Level 1 SBOM plain-text companion file must exist and satisfy all invariants."""
+    """Plain-text dependency license information lists declared packages."""
     txt_path = REPO_ROOT / "THIRD_PARTY_LICENSES.txt"
     assert txt_path.is_file()
     text = txt_path.read_text(encoding="utf-8")
 
-    assert "Third-Party Licenses - clirec (ellmos-ai/clirec)" in text
-    assert "MIT License" in text
-    assert "NOTICE" in text
-    assert "THIRD_PARTY_LICENSES.md" in text
-    assert "2026-09-29" in text
-    assert "RunAsInvoker" in text
+    assert "Third-Party License Information" in text
+    assert "Project license: MIT License" in text
+    assert "pynput" in text
     assert "LGPL-3.0" in text
-    assert "Apache License Version 2.0" in text
-    assert "Python Software Foundation License" in text
-
-    invariants = [
-        "INV-LOCAL-01",
-        "INV-PRIVACY-02",
-        "INV-INSPECT-03",
-        "INV-REPLAY-04",
-        "INV-AUDIO-05",
-        "INV-SIDECAR-06",
-        "INV-ADAPTER-07",
-        "INV-UNPRIV-08",
-        "INV-PORTABLE-09",
-        "INV-SLA-10",
-    ]
-    for inv_tag in invariants:
-        assert f"{inv_tag}: PASS" in text, (
-            f"Missing {inv_tag} compliance certification in THIRD_PARTY_LICENSES.txt"
-        )
+    assert "sounddevice" in text
+    assert "uiautomation" in text
+    assert "pytest" in text
+    assert "ruff" in text
 
 
 def test_contributing_guidelines_present():
-    """CONTRIBUTING.md must define quality gates, invariants, and version freeze."""
+    """CONTRIBUTING.md must state contributor workflow and version metadata."""
     contrib_path = REPO_ROOT / "CONTRIBUTING.md"
     assert contrib_path.is_file()
     text = contrib_path.read_text(encoding="utf-8")
 
-    assert "INV-LOCAL-01" in text
-    assert "INV-SLA-10" in text
-    assert "RunAsInvoker" in text
-    assert "T-20260920-167562623" in text
     assert "0.3.0" in text
     assert "pytest" in text

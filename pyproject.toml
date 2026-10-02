@@ -33,7 +33,7 @@ keywords = [
     "recording",
     "replay",
     "screen-recording",
-    "zero-egress",
+    "desktop-capture",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -68,9 +68,8 @@ Issues = "https://github.com/ellmos-ai/clirec/issues"
 "Third-Party Licenses" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.md"
 "Third-Party Licenses (Text)" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.txt"
 "Plain-Text License" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.txt"
-"Level 1 SBOM" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.md"
+"Dependency License Information" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.md"
 Notice = "https://github.com/ellmos-ai/clirec/blob/main/NOTICE"
-"Marketing Log" = "https://github.com/ellmos-ai/clirec/blob/main/MARKETING-LOG.txt"
 
 [tool.setuptools.packages.find]
 include = ["clirec*"]

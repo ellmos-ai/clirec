@@ -55,14 +55,14 @@ class TranscriptionBackend(Protocol):
 
 
 class CanonicalTranscriptionAdapter:
-    """Import a canonical STT module without creating its default transcript store.
+    """Import a caller-selected STT module and pass it a persistence request.
 
-    The module must expose ``transcribe_file(path, language=..., persist=False)``.
-    Requiring the explicit ``persist`` switch prevents CLIRec from silently
-    producing a second transcript store beside its reviewed transcript sidecar.
+    The adapter calls transcribe_file(path, language=..., persist=False). This
+    parameter is a request to the external module; CLIRec cannot enforce that
+    module's storage or network behavior.
 
-    ``module_name`` is required; it comes from ``--module`` or from the
-    ``CLIREC_STT_MODULE`` environment variable.
+    module_name is required; it comes from --module or from the
+    CLIREC_STT_MODULE environment variable.
     """
 
     def __init__(self, module_name: str | None = None):

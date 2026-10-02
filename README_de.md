@@ -6,21 +6,13 @@
 [English](README.md) | [Deutsch](README_de.md)
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
-[![Pytest Status](https://img.shields.io/badge/pytest-138%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
-[![Datenschutz](https://img.shields.io/badge/datenschutz-100%25%20Local--First%20%7C%20Zero--Egress-success.svg)](#5-governance--laufzeit-invarianten)
-[![Sicherheit](https://img.shields.io/badge/sicherheit-RunAsInvoker%20%7C%20Non--Elevation-informational.svg)](SECURITY.md)
-[![Sicherheits-SLA](https://img.shields.io/badge/sicherheits--SLA-48h%20%2F%205d-blue.svg)](SECURITY.md)
-[![Level 1 SBOM](https://img.shields.io/badge/Level%201%20SBOM-Klartext%20auditiert-success.svg)](THIRD_PARTY_LICENSES.txt)
-[![Marketing-Log](https://img.shields.io/badge/marketing--log-aktiv-blueviolet.svg)](MARKETING-LOG.txt)
 [![LLM Bereit](https://img.shields.io/badge/llms.txt-bereit-purple.svg)](llms.txt)
 [![Ökosystem](https://img.shields.io/badge/%C3%96kosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Dachverband](https://img.shields.io/badge/dachverband-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-yellow.svg)](LICENSE)
 [![Attribution](https://img.shields.io/badge/attribution-NOTICE-blue.svg)](NOTICE)
-[![Verifiziert](https://img.shields.io/badge/verifiziert-2026--09--29-blue.svg)](CHANGELOG.md)
-[![Zuletzt geprüft](https://img.shields.io/badge/zuletzt%20gepr%C3%BCft-2026--09--29-success.svg)](llms.txt)
 
 > Menschenlesbare GUI-Demonstrationsaufzeichnungen für CLI- und autonome KI-Agenten-Workflows.
 
@@ -28,7 +20,7 @@
 > **KI- / LLM-Integration**: Maschinenlesbarer Kontext, LLM-Suchbegriffe und Architekturhinweise sind in [`llms.txt`](./llms.txt) hinterlegt.
 
 > [!NOTE]
-> **LLM- & Agenten-natives Design**: Das `clirec`-Format ist gezielt für KI-Agenten optimiert. Tastatureingaben werden standardmäßig in parametrisierte Platzhalter (`${input_1}`) umgewandelt, um vertrauliche Daten während Aufzeichnung und Replay zu schützen.
+> **LLM- & Agenten-natives Design**: Getippter Tastaturtext wird standardmäßig durch Parameter-Platzhalter (`${input_1}`) dargestellt. Das betrifft nur getippten Tastaturtext; prüfe UI-Metadaten, optionale Frames, Audio und weitere erfasste Inhalte vor dem Teilen.
 
 ---
 
@@ -37,8 +29,8 @@
 1. [Übersicht](#sec-01)
 2. [Kernfunktionen](#sec-02)
 3. [Zielgruppen & Auffindbarkeit](#sec-03)
-4. [Vergleichsmatrix gegenüber Alternativen](#sec-04)
-5. [Governance- & Laufzeit-Invarianten](#sec-05)
+4. [Fragen für den Toolvergleich](#sec-04)
+5. [Laufzeitverhalten und Grenzen](#sec-05)
 6. [Architektur & Replay-Ablauf](#sec-06)
 7. [Format v2 & SHA-256 Medien-Sidecars](#sec-07)
 8. [Audio-Datenschutz & Einwilligungsgrenze](#sec-08)
@@ -50,7 +42,7 @@
 14. [Ökosystem & verwandte Projekte](#sec-14)
 15. [Drittanbieter-Lizenzen & Transparenz](#sec-15)
 16. [Sicherheit & Schwachstellen-Meldung](#sec-16)
-17. [Verzeichniseinträge & KI-Auffindbarkeit](#sec-17)
+17. [Projektkontext & Auffindbarkeit](#sec-17)
 18. [Lizenz & Maintainer](#sec-18)
 
 ---
@@ -64,9 +56,9 @@
 <a id="übersicht"></a>
 ## 1. Übersicht
 
-`clirec` zeichnet Maus- und Tastaturdemonstrationen als menschenlesbare `.clirec`-Dateien auf und spielt sie über einen injizierten Executor wieder ab. Das Werkzeug wurde speziell für autonome KI-Agenten, Computer-Use-Frameworks und CLI-Workflows entwickelt, bei denen eine kurze, reproduzierbare Demonstration wesentlich verlässlicher und token-effizienter ist als ein langer Prompt oder eine gigabytegroße Videodatei.
+`clirec` zeichnet Maus- und Tastaturdemonstrationen als lesbare `.clirec`-Dateien auf und spielt sie über einen injizierten Executor ab. Es ist für Workflows gedacht, die von kompakten, überprüfbaren Ereignisspuren profitieren, etwa bei CLI-Werkzeugen und Computer-Use-Agenten.
 
-Die Software folgt einem kompromisslosen Local-First-Architekturprinzip: Jeder Aufzeichnungsschritt, jede Parametrisierung, jedes Medien-Sidecar und jedes Transkript verbleibt ausnahmslos auf dem lokalen Dateisystem. Es werden keinerlei Telemetriedaten erhoben, keine externen Server kontaktiert und keine Demonstrationsdaten ohne explizite Benutzeraktion übertragen.
+Der Aufzeichnungskern enthält keine eingebaute Telemetrie und schreibt an den konfigurierten Dateisystempfad. Dieser Pfad kann auf synchronisiertem oder vernetztem Speicher liegen; aufrufende Module und Executor können Netzwerk oder zusätzlichen Speicher nutzen. Prüfe diese Komponenten und Ausgaben, bevor du sensible Inhalte aufzeichnest oder teilst.
 
 ---
 
@@ -80,14 +72,14 @@ Die Software folgt einem kompromisslosen Local-First-Architekturprinzip: Jeder A
 | Funktion | Beschreibung |
 |---|---|
 | **Menschenlesbare Spezifikation** | Demonstrationen werden als transparente, diff-bare und Git-freundliche `.clirec`-Klartextdateien gespeichert. |
-| **Standardmäßige Eingabemaskierung** | Vertrauliche Tastatureingaben werden automatisch in Parameter-Platzhalter (`${input_1}`) umgewandelt. |
+| **Parametrisierung von Tastaturtext** | Getippter Tastaturtext wird standardmäßig durch Parameter-Platzhalter (`${input_1}`) dargestellt; andere erfasste Kanäle werden nicht automatisch bereinigt. |
 | **Injizierter Executor-Replay** | Das Replay ist backend-neutral und von der Erfassungsmechanik entkoppelt (z. B. via `open-compute` `oc rec replay`). |
-| **Format v2 Medien-Sidecars** | Relative, SHA-256-verifizierte Speicherung in `.clirec.media/` mit atomaren Commit-Markern und ohne Dateileichen. |
-| **Strikte Audio-Einwilligungsgrenze** | Synchrone Mikrofonaufnahme erfordert zwingend explizites Dual-Opt-in (`--audio` und `--audio-consent`). |
-| **Entkoppelter STT-Adapter** | Aufrufer-gestützter Transkriptionsadapter (`--module`), der `persist=False` erzwingt, um geheime Zweit-Transkriptspeicher zu verhindern. |
-| **Episoden- & Skill-Export** | Standardisiertes JSON-Exportformat für nachgelagerte Lern-Workflows (`skill-extractor`, `workflow-extract`). |
-| **Keine Pflicht-Abhängigkeiten** | Der Kern läuft rein auf der Python-Standardbibliothek und Windows ctypes; optionale Extras sind sauber isoliert. |
-| **Unprivilegierte Ausführung** | Läuft vollständig im Benutzerkontext (`RunAsInvoker`) ohne Administrator-Rechte oder UAC-Prompts. |
+| **Format v2 Medien-Sidecars** | Leser prüfen referenzierte Medien per SHA-256; die `.clirec`-Datei wird zuletzt als Commit-Marker veröffentlicht. |
+| **Audioaufnahme** | Mikrofonaufnahme ist standardmäßig deaktiviert und erfordert die ausdrückliche Freigabe des Operators (`--audio` und `--audio-consent`). |
+| **STT-Adapter** | Das ausgewählte `--module` erhält `persist=False` als Bitte; clirec kann das Speicher- oder Netzwerkverhalten des Moduls nicht erzwingen. |
+| **Episoden- & Skill-Export** | JSON-Export für nachgelagerte Lern-Workflows (skill-extractor, workflow-extract). |
+| **Laufzeitabhängigkeiten** | Der Kern deklariert keine Pflicht-Laufzeitabhängigkeiten; optionale Extras stehen in `pyproject.toml`. |
+| **Prozessberechtigungen** | clirec nutzt die Berechtigungen des startenden Prozesses und fordert selbst keine Erhöhung an. |
 
 ---
 
@@ -105,19 +97,16 @@ Die Software folgt einem kompromisslosen Local-First-Architekturprinzip: Jeder A
 | `[PERSONA-01]` | **Autonome KI-Agenten-Entwickler & Computer-Use-Architekten** | Deterministische, token-effiziente GUI-Demonstrationsspuren für Training, Evaluation und Headless Replay ohne Vision-Token-Overhead. | Menschenlesbares `.clirec`-Schrittformat, automatische Parameter-Sanitization (`${input_1}`), injiziertes Executor-Protokoll und JSON-Episoden-Export für `skill-extractor`. |
 | `[PERSONA-02]` | **CLI- & Workflow-Automatisierer (Sysadmins / DevOps)** | Wiederkehrende interaktive Desktop-Abläufe als skriptbare CLI-Workflows mit Parameterinjektion automatisieren. | Zero-Dependency-CLI (`clirec start`, `clirec replay --param key=val`), Schema-Validierung (`clirec validate`) und nahtlose `open-compute`-Integration (`oc rec replay`). |
 | `[PERSONA-03]` | **QA-, Testautomations- & E2E-Validierungs-Ingenieure** | Verifizierbare, reproduzierbare E2E-Testläufe, die ohne Binär-Blobs ins Git-Repository eingecheckt werden können und nicht unter fragiler Selektor-Brüchigkeit leiden. | Git-freundliche Text-Spezifikation, optionale UIA-Barrierefreiheits-Metadaten (`[uia]`), kryptografische SHA-256 Sidecar-Integrität und plattformübergreifendes Capture. |
-| `[PERSONA-04]` | **Datenschutzbewusste Teams & Compliance-Beauftragte** | Arbeitsabläufe und Software-Demonstrationen aufzeichnen, ohne Passwörter, PII oder unbeteiligte Sprachdaten zu exponieren. | Strikte Standard-Textmaskierung, Zero-Cloud-Egress, explizite Dual-Opt-in Audio-Einwilligungsgrenze (`--audio` + `--audio-consent`, § 201 StGB), getrennte Audio-/Transkript-Löschung und unprivilegierte `RunAsInvoker`-Ausführung. |
+| [PERSONA-04] | **Datenschutzbewusste Teams** | Arbeitsabläufe aufzeichnen und Aufzeichnungen vor dem Teilen prüfen. | Getippter Tastaturtext wird standardmäßig parametrisiert; UI-Metadaten, optionale Bilder und Audio müssen vor dem Teilen gesondert geprüft werden. |
 
 ### Hoch-relevante Suchbegriffe (High-Intent Search Queries)
 
 Zur optimalen Auffindbarkeit in Paketmanagern, Entwicklerverzeichnissen und Suchmaschinen:
-- `menschenlesbare GUI Demonstrationsaufzeichnung für CLI und Agenten` — Open-Source Demonstrationsaufzeichnung.
-- `lokale Desktop Interaktionsaufnahme ohne Cloud Telemetrie` — Kompakte Aktionsspuren für multimodale und Headless Agenten.
-- `parametrisierte Tastatureingaben für KI-Agenten und Replay` — Sicheres Input-Templating für passwortsichere Replays.
-- `datenschutzkonforme Desktop-Aufnahme mit automatischer Textmaskierung` — Desktop-Recorder mit automatischer Tastenmaskierung.
-- `reproduzierbare Maus und Tastatur Abläufe im .clirec Format` — Kryptografisch verifizierte Demonstrations-Sidecars.
-- `Zero-Egress Demonstration Recorder mit SHA-256 Sidecars` — Atomare Commit-Marker und unabhängige Medien-Bereinigung.
-- `Mikrofonkommentar mit expliziter Einwilligung § 201 StGB` — Dual-Flag-Einwilligung nach deutschem Strafrecht.
-- `reine Python Windows ctypes Hook Erfassung ohne externe Abhängigkeiten` — Unprivilegierte WinAPI-Hooks im Benutzermodus.
+- Desktop-Aufnahme mit Parametrisierung getippter Texte — Getippter Tastaturtext wird standardmäßig parametrisiert.
+- Reproduzierbare Maus- und Tastaturabläufe im `.clirec`-Format — Lesbare Ereignisdateien und optionale Medien-Sidecars.
+- Demonstrationskanal mit SHA-256-Medien-Sidecars — Leser prüfen Medien-Hashes; die `.clirec`-Datei wird zuletzt veröffentlicht.
+- Mikrofonkommentar mit Operator-Opt-in — Die Audio-Flags bestätigen nicht die Einwilligung anderer Personen.
+- Windows-Desktopaufnahme mit Python ctypes — Die Aufnahme nutzt die Berechtigungen des startenden Prozesses.
 
 ---
 
@@ -128,23 +117,18 @@ Zur optimalen Auffindbarkeit in Paketmanagern, Entwicklerverzeichnissen und Such
 <a id="4-vergleichsmatrix-gegenüber-alternativen"></a>
 <a id="vergleichsmatrix-gegenueber-alternativen"></a>
 <a id="vergleichsmatrix-gegenüber-alternativen"></a>
-## 4. Vergleichsmatrix gegenüber Alternativen
+## 4. Fragen für den Toolvergleich
 
-Die folgende Matrix vergleicht `clirec` mit etablierten Aufzeichnungs- und Automationsansätzen anhand von 10 technischen Dimensionen, die direkt auf unsere Governance-Invarianten abgestimmt sind:
+Mit diesen Fragen lässt sich prüfen, ob ein Aufzeichnungstool zu einem konkreten Arbeitsablauf passt. Produktspezifisches Verhalten sollte anhand der aktuellen Dokumentation und Konfiguration des jeweiligen Tools geprüft werden.
 
-| Technische Dimension | Governance-Invariante | clirec | Video-Recorder (OBS / Loom) | Web-E2E (Playwright / Cypress) | Makro-Recorder (AutoHotkey / TinyTask) | Enterprise RPA (UiPath / Automation Anywhere) |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **1. Offline-First & Zero Egress** | `INV-LOCAL-01` | **100% Offline (Lokale Festplatte, keine Telemetrie)** | Hoch (Lokales OBS) / Gering (Cloud Loom) | Hoch (Lokale Test-Runner) | Hoch (Lokale Ausführung) | Gering (Pflicht-Cloud-Telemetrie & Lizenzserver) |
-| **2. Standard-Eingabemaskierung** | `INV-PRIVACY-02` | **Standard-Maskierung (`${input_1}`)** | Keine (Video zeichnet Passwörter voll auf) | Keine (Speichert rohe Selektoren/Inputs) | Keine (Rohe Klartext-Tastendrücke gespeichert) | Teilweise (Konfigurierbare Credential-Vaults) |
-| **3. Menschenlesbares Format** | `INV-INSPECT-03` | **Ja (`.clirec` Klartextspezifikation)** | Keine (Opaque, mehrere GB große Binärvideos) | Hoch (Generierte JS/TS-Skripte) | Teilweise (Komplexe oder proprietäre Skripte) | Gering (Proprietäre Workflows / XML-Blobs) |
-| **4. Injiziertes Agenten-Replay** | `INV-REPLAY-04` | **Natives injiziertes Executor-Protokoll** | Keine (Video kann nicht ausgeführt werden) | Nur Web-DOM (Kein natives Desktop/CLI) | Fragil (Starre Bildschirm-Pixelkoordinaten) | Schwerfällig (Erfordert dedizierte Desktop-Runtime) |
-| **5. Audio-Einwilligungsgrenze** | `INV-AUDIO-05` | **Dual-Opt-in (`--audio` + `--audio-consent`)** | Unkontrolliert (Hintergrundgespräche erfasst) | Keine (Keine Audioaufnahme unterstützt) | Keine (Keine Audiointegration) | Proprietär (Audioaufnahme nur über Enterprise-Addons) |
-| **6. Atomare Medien-Sidecars** | `INV-SIDECAR-06` | **Format v2 SHA-256 + Atomarer Commit** | Einzelne monolithische Mediendatei | Keine (Video-/Audio-Artefakte lose) | Keine (Keine Integritätsprüfung) | Cloud-verwaltete Blob-Speicher |
-| **7. Entkoppelter STT-Adapter** | `INV-ADAPTER-07` | **Plug-and-Play (`persist=False`)** | Cloud-Transkriptionsdienst | Keine | Keine | Cloud-KI-Dienst |
-| **8. Unprivilegierte Ausführung** | `INV-UNPRIV-08` | **Strikter RunAsInvoker (Kein Admin/Root)** | Benutzerebene | Benutzerebene | Benutzerebene (manche Hooks brauchen Admin) | Erfordert häufig Hintergrund-Dienste mit Admin-Rechten |
-| **9. Keine Pflicht-Abhängigkeiten** | `INV-PORTABLE-09` | **Reine Python-Stdlib + OS ctypes** | Große native Binärinstallationen | Große Node.js- & Browser-Downloads | Native Executable | Sehr umfangreiche Softwarepakete |
-| **10. Sicherheits-SLA & CI-Matrix** | `INV-SLA-10` | **48h SLA / Multi-OS CI-Matrix** | Community- / Kommerzielles SLA | Große Konzern-Wartung | Community / Inaktiv | Kommerzielles Enterprise-SLA |
-
+| Frage | Verhalten von clirec |
+|---|---|
+| Was kann erfasst werden? | Maus- und Tastaturereignisse; optionale UI-Automation-Metadaten; optionales Audio; Bilder, die ein Aufrufer bereitstellt. |
+| Wo werden Daten gespeichert? | Der Recorder schreibt in den konfigurierten Dateisystempfad. Aufrufer-Module können weitere Speicher oder Netzwerkdienste nutzen. |
+| Was wird maskiert? | Getippter Tastaturtext wird standardmäßig parametrisiert. UI-Metadaten, optionale Bilder und Audio müssen gesondert geprüft werden. |
+| Wie wird die Medienintegrität geprüft? | Leser prüfen referenzierte Medien anhand ihrer SHA-256-Hashes. Die `.clirec`-Datei wird zuletzt veröffentlicht; Unterbrechungen können Sidecars zurücklassen. |
+| Was bereinigt Recovery? | `clirec recover recordings` entfernt nicht referenzierte `.clirec.media`-Sidecars. Optionale `.clirec.frames`-Verzeichnisse werden dabei nicht entfernt. |
+| Wie funktioniert Replay? | Replay delegiert Aktionen an einen injizierten Executor. Berechtigungen und Sicherheitsschranken des Executors sind separat zu prüfen. |
 ---
 
 <a id="sec-05"></a>
@@ -152,21 +136,18 @@ Die folgende Matrix vergleicht `clirec` mit etablierten Aufzeichnungs- und Autom
 <a id="governance--runtime-invariants"></a>
 <a id="5-governance--laufzeit-invarianten"></a>
 <a id="governance--laufzeit-invarianten"></a>
-## 5. Governance- & Laufzeit-Invarianten
+## 5. Laufzeitverhalten und Grenzen
 
-`clirec` wird nach zehn unverhandelbaren Governance- und Laufzeit-Invarianten entwickelt und gepflegt:
-
-- **`INV-LOCAL-01` (100% Offline & Local-First Zero-Egress):** Sämtliche Aufzeichnungen, Medien-Sidecars, Protokolle und Transkripte liegen ausschließlich auf dem lokalen Dateisystem. Keine Telemetrie, keine Nutzungsstatistiken, keine unautorisierten Netzwerkverbindungen.
-- **`INV-PRIVACY-02` (Standardmäßige Parametrisierung & Textmaskierung):** Getippter Tastaturtext wird standardmäßig als `${input_N}`-Platzhalter parametrisiert, um versehentliches Persistieren von Passwörtern, Tokens oder sensiblen Daten zu verhindern.
-- **`INV-INSPECT-03` (Menschenlesbare Klartext-Spezifikation):** Demonstrationen werden als transparente, versionierbare und Git-diff-bare `.clirec`-Dateien gespeichert, die von Menschen und KI-Agenten ohne proprietäre Binär-Parser gelesen und editiert werden können.
-- **`INV-REPLAY-04` (Agenten- & CLI-Replay über injizierten Executor):** Die Replay-Ausführung ist backend-neutral und setzt auf ein injiziertes Executor-Protokoll (wie `open-compute`), wodurch Demonstrationsabsicht und physische Aktuation sauber getrennt sind.
-- **`INV-AUDIO-05` (Strikte Dual-Opt-in Audio-Einwilligungsgrenze):** Mikrofonaufnahme ist standardmäßig deaktiviert und erfordert zwingend die gleichzeitige Übergabe von `--audio` und `--audio-consent`; keine Aufnahme während Pausen oder im Hintergrund (§ 201 StGB Konformität).
-- **`INV-SIDECAR-06` (Format v2 atomare Medien-Sidecars mit SHA-256):** Mediendateien werden kryptografisch per SHA-256 gehasht in relativen `.clirec.media/`-Ordnern abgelegt; atomare Commit-Marker verhindern unvollständige Aufzeichnungen; Audio und Transkripte lassen sich unabhängig voneinander löschen.
-- **`INV-ADAPTER-07` (Entkoppelte STT-Adapter-Architektur):** Transkription nutzt einen vom Aufrufer bereitgestellten Adapter mit zwingendem `persist=False`, um geheime Zweitablagen zu verhindern; es werden keine proprietären Sprachmodelle mitgeliefert.
-- **`INV-UNPRIV-08` (Unprivilegierter Benutzermodus — `RunAsInvoker`):** Die Anwendung läuft mit regulären Benutzerrechten ohne Anforderung von Administrator-Rechten, UAC-Dialogen oder Root-Zugriff.
-- **`INV-PORTABLE-09` (Keine Pflicht-Laufzeitabhängigkeiten):** Der Kern basiert auf reiner Python-Standardbibliothek und Betriebssystem-ctypes; alle externen Funktionen sind modular in optionale Extras (`record`, `audio`, `uia`) ausgelagert.
-- **`INV-SLA-10` (Transparente Open-Source-Governance & 48h Sicherheits-SLA):** Freie MIT-Lizenz für den Kern, transparente Offenlegung aller Drittanbieter-Lizenzen, automatisierte GitHub-Actions-CI-Matrizen und eine verbindliche 48-Stunden-Reaktionszeit bei gemeldeten Sicherheitsproblemen.
-
+- **Speicher und Netzwerk:** Der Recorder-Kern schreibt in den konfigurierten Dateisystempfad und enthält keine eingebaute Telemetrie. Aufrufer-Module können Netzwerkzugriffe oder zusätzliche Ablagen ausführen.
+- **Getippte Eingaben:** Tastaturtext wird standardmäßig als input_N-Platzhalter parametrisiert. UI-Metadaten, optionale Frames und Audio werden dadurch nicht redigiert.
+- **Lesbares Format:** `.clirec`-Ereignisdateien sind Klartext und mit gewöhnlichen Textwerkzeugen prüfbar.
+- **Replay:** Replay verwendet einen vom Aufrufer bereitgestellten Executor; dessen Berechtigungen und Verhalten liegen außerhalb der Kontrolle des Recorders.
+- **Audio:** Audio ist standardmäßig aus. Die Flags zeichnen das Opt-in des Operators auf; sie holen oder prüfen keine Erlaubnis anderer Personen und bestätigen keine Rechtskonformität.
+- **Medien-Sidecars:** Die `.clirec`-Datei wird zuletzt veröffentlicht, und Leser prüfen referenzierte Medien-Hashes. Recovery entfernt nur verwaiste `.clirec.media`-Sidecars; optionale Frame-Verzeichnisse liegen außerhalb dieser Bereinigung.
+- **Transkription:** Der Adapter übergibt `persist=False` an das ausgewählte Modul. Er kann dessen Speicher- oder Netzwerkverhalten nicht erzwingen.
+- **Prozessberechtigungen:** Die Anwendung nutzt die Berechtigungen des startenden Prozesses.
+- **Abhängigkeiten:** `pyproject.toml` deklariert keine verpflichtenden Laufzeitabhängigkeiten. Optionale Extras sind dort aufgeführt.
+- **Reaktionszeiten:** Die Ziele in SECURITY.md hängen von der Verfügbarkeit der Maintainer ab und garantieren keine Behebung bis zu einem bestimmten Datum.
 ---
 
 <a id="sec-06"></a>
@@ -197,13 +178,13 @@ Das Kernpaket erfordert keine externen Laufzeitabhängigkeiten. Unter Windows wi
 <a id="format-v2--sha-256-medien-sidecars"></a>
 ## 7. Format v2 & SHA-256 Medien-Sidecars
 
-Format v2 führt robuste, atomare Medien-Sidecars ein:
-- Mediendateien (Audio, Transkripte) werden in einem gleichnamigen Geschwisterordner `<aufnahme>.clirec.media/` abgelegt.
-- Jedes Medien-Asset wird kryptografisch gegen die im `.clirec`-Manifest hinterlegten SHA-256-Hashes validiert.
-- Atomare Veröffentlichung: Medien-Sidecars und temporäre Puffer werden zuerst finalisiert; die `.clirec`-Commit-Datei wird zuletzt geschrieben.
-- Bei Abbrüchen oder Systemfehlern bereinigt `clirec recover recordings` automatisch verwaiste Sidecar-Fragmente, ohne gültige Aufzeichnungen anzutasten.
-- Vollständige Rückwärtskompatibilität: Aufzeichnungen im Format v1 bleiben ohne Einschränkung lesbar und abspielbar.
+Format v2 speichert Mediendateien wie Audio und Transkripte in einem
+Geschwisterverzeichnis `<aufnahme>.clirec.media`.
 
+- Leser prüfen referenzierte Medien anhand der SHA-256-Hashes im `.clirec`-Manifest.
+- Der Recorder veröffentlicht das `.clirec`-Manifest zuletzt als Commit-Marker.
+- Eine Unterbrechung kann nicht referenzierte Medien-Sidecars zurücklassen. `clirec recover recordings` entfernt verwaiste `.clirec.media`-Verzeichnisse, aber keine optionalen `.clirec.frames`-Verzeichnisse.
+- Aufzeichnungen im Format v1 bleiben lesbar.
 ---
 
 <a id="sec-08"></a>
@@ -214,14 +195,14 @@ Format v2 führt robuste, atomare Medien-Sidecars ein:
 ## 8. Audio-Datenschutz & Einwilligungsgrenze
 
 Audiodaten unterliegen strengen Schutzvorkehrungen:
-- **Explizites Dual-Opt-in:** Mikrofonaufnahme startet nur, wenn sowohl `--audio` als auch `--audio-consent` gleichzeitig übergeben werden.
+- **Opt-in des Operators:** Für die Mikrofonaufnahme müssen `--audio` und `--audio-consent` übergeben werden. Diese Flags dokumentieren die Entscheidung des Operators; sie holen oder prüfen keine Einwilligung anderer Personen.
 - **Keine Hintergrundaufzeichnung:** Während Pausen, nach Beendigung der Sitzung oder durch Hintergrunddienste wird kein Audio aufgezeichnet.
 - **Unabhängiges Löschen:** Aufnahmen können jederzeit gezielt von Audio- oder Transkriptdaten befreit werden, ohne die Maus-/Tastaturspur zu beschädigen:
   ```bash
   clirec purge-audio recordings/narrated-flow.clirec
   clirec purge-transcript recordings/narrated-flow.clirec
   ```
-- **Rechtliche Konformität:** Nach deutschem Recht (§ 201 Abs. 1 Nr. 1 StGB) ist das unbefugte Aufnehmen des nichtöffentlich gesprochenen Wortes strafbar. `--audio-consent` dokumentiert die persönliche Einwilligung des Operators und ersetzt niemals das Einverständnis weiterer anwesender Personen.
+- **Audio und Einwilligung:** In Deutschland betrifft § 201 Abs. 1 Nr. 1 StGB das unbefugte Aufnehmen des nichtöffentlich gesprochenen Wortes einer anderen Person. `--audio-consent` dokumentiert die Entscheidung des Operators; clirec holt oder prüft keine Erlaubnis anderer Personen. Siehe den [amtlichen Text](https://www.gesetze-im-internet.de/stgb/__201.html).
 
 ---
 
@@ -275,7 +256,9 @@ recording = read("recordings/login-flow.clirec")
 
 # Über injizierten Executor ausführen (z. B. open-compute)
 report = replay(recording, executor, params={"input_1": "test-user"})
-print(f"Replay beendet: {report.successful_steps}/{report.total_steps} Schritte erfolgreich")
+print(
+    f"Replay beendet: {report.successful_steps}/{report.total_steps} Schritte erfolgreich"
+)
 ```
 
 Der `executor` muss `width`, `height` und `execute(action)` implementieren.
@@ -291,7 +274,7 @@ Der `executor` muss `width`, `height` und `execute(action)` implementieren.
 
 Beim Aufzeichnen von Demonstrationen unter Windows:
 - **Interaktives Terminal:** `clirec` klinkt sich direkt über WinAPI-Low-Level-Hooks (`WH_MOUSE_LL`, `WH_KEYBOARD_LL`) in die Benutzersitzung ein.
-- **Agenten- & Daemon-Umgebungen:** Wenn `clirec` aus Hintergrundprozessen, Agenten-Subshells oder Sandbox-Umgebungen (z. B. Antigravity, Claude Code oder Diensten) gestartet wird, verbindet sich der Erfassungsthread automatisch mit der interaktiven Benutzer-Desktop-Station (`WinSta0\Default`), um alle Klicks und Tastenanschläge verlustfrei zu erfassen.
+- **Agenten- & Daemon-Umgebungen:** In Hintergrund- oder Sandbox-Prozessen versucht das Windows-Backend, den Erfassungsthread mit der interaktiven Desktop-Station (`WinSta0\Default`) zu verbinden. Ob die Erfassung funktioniert, hängt von Prozessberechtigungen, Sitzung, Desktopzugriff und Umgebung ab; eine vollständige Erfassung aller Ereignisse ist nicht garantiert.
 
 ---
 
@@ -354,7 +337,7 @@ Details zu Paketierungs- und Plattform-Verifikationsgrenzen finden sich in [RELE
 |---|---|
 | [open-compute](https://github.com/ellmos-ai/open-compute) | Stellt die physische Ausführungs-Engine bereit, die Mausbewegungen und Tastatureingaben steuert (`oc rec replay`). |
 | [open-compute-mcp](https://github.com/ellmos-ai/open-compute-mcp) | Exponiert das Replay als MCP-Tool `rec_replay`, sodass KI-Agenten Demonstrationen ohne direkte Shell ausführen können. |
-| [ellmos-voice-io](https://github.com/ellmos-ai/ellmos-voice-io) | Lokale STT/TTS-Module, ideal als `--module`-Backend für `clirec transcribe`. |
+| [ellmos-voice-io](https://github.com/ellmos-ai/ellmos-voice-io) | STT/TTS-Bausteine, die einen vom Aufrufer bereitgestellten Wrapper benötigen, der die von `clirec transcribe` erwartete Funktion anbietet; das Modul steuert sein eigenes Speicher- und Netzwerkverhalten. |
 | [ellmos](https://github.com/ellmos-ai/ellmos) | Der zentrale Architektur-Hub für KI-Agenten und Desktop-Automatisierungsmodule. |
 | [open-bricks](https://github.com/open-bricks) | Dachorganisation für modulare, lokale Open-Source-Softwarebausteine. |
 
@@ -370,11 +353,11 @@ Details zu Paketierungs- und Plattform-Verifikationsgrenzen finden sich in [RELE
 Das `clirec`-Kernpaket steht unter der freien [MIT-Lizenz](LICENSE) und hat **keine externen Pflicht-Laufzeitabhängigkeiten**.
 
 Optionale Extras binden externe Open-Source-Bibliotheken ein:
-- `pynput` steht unter **LGPL-3.0** und wird dynamisch im vollen Einklang mit **LGPLv3 Section 4** verlinkt.
+- `pynput` steht unter **LGPL-3.0**; maßgeblich ist der Lizenztext.
 - `sounddevice` und PortAudio stehen unter **MIT**.
 - `uiautomation` steht unter **Apache-2.0**.
 
-Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) sowie in der Klartext-Begleitdatei [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) dokumentiert.
+Die Lizenzinventare der deklarierten Abhängigkeiten und die Hinweise dazu stehen in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) und der Klartextdatei [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt).
 
 ---
 
@@ -385,11 +368,10 @@ Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PA
 <a id="sicherheit--schwachstellen-meldung"></a>
 ## 16. Sicherheit & Schwachstellen-Meldung
 
-- **Meldeweg:** Vertrauliche Meldungen bitte über GitHub Private Vulnerability Reporting oder als privates Issue ohne sensible Aufzeichnungsdaten einreichen.
-- **SLA-Zusage:** 48-Stunden-Reaktionszeit und 5-Tage-Triage-Zusage (`INV-SLA-10`).
-- **Sicherheitsmodell:** Strikte Ausführung im Benutzermodus unter `RunAsInvoker` (`INV-UNPRIV-08`).
+- **Meldeweg:** Nutze GitHub Private Vulnerability Reporting, sofern es für dieses Repository aktiviert ist. Falls es nicht verfügbar ist, veröffentliche keine vertraulichen Angaben; verwende einen anderen privaten Kontaktweg nur, wenn der Projektinhaber ihn bereitgestellt hat.
+- **Reaktionsziele:** Die Richtlinie nennt Ziele von 48 Stunden bis zur ersten Antwort und fünf Arbeitstagen bis zur Triage, abhängig von der Verfügbarkeit der Maintainer. Eine Behebung bis zu einem bestimmten Datum wird nicht garantiert.
+- **Prozessberechtigungen:** clirec nutzt die Berechtigungen des startenden Prozesses.
 - Vollständige Hinweise: [SECURITY.md](SECURITY.md).
-
 ---
 
 <a id="sec-17"></a>
@@ -399,13 +381,11 @@ Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PA
 <a id="17-verzeichniseinträge--ki-auffindbarkeit"></a>
 <a id="verzeichniseintraege--ki-auffindbarkeit"></a>
 <a id="verzeichniseinträge--ki-auffindbarkeit"></a>
-## 17. Verzeichniseinträge & KI-Auffindbarkeit
+## 17. Projektkontext & Auffindbarkeit
 
-`clirec` ist in gängigen Entwicklerverzeichnissen und KI-Registern aufgeführt:
-- **LLM-Kontext:** Maschinenlesbare Wissensdatei verfügbar unter [`llms.txt`](llms.txt).
-- **Tool-Register:** Glama, mcp.so, LobeHub, Smithery, awesome-mcp-servers.
-- **Marketing-Audit:** Nachverfolgt in [MARKETING-LOG.txt](MARKETING-LOG.txt).
-
+- **Kanonische Quelle:** [ellmos-ai/clirec](https://github.com/ellmos-ai/clirec).
+- **LLM-Kontext:** Dieses Repository enthält [llms.txt](llms.txt) für Werkzeuge, die Repository-Kontext verwenden.
+- **Externe Verzeichnisse:** Diese README behauptet keine Einträge in Verzeichnissen Dritter. Ein Link wird erst nach Prüfung eines aktuellen Eintrags ergänzt.
 ---
 
 <a id="sec-18"></a>
@@ -417,9 +397,9 @@ Ausführliche SPDX-Audits, Laufzeitmatrizen und Lizenzhinweise sind in [THIRD_PA
 
 - **Lizenz:** MIT-Lizenz, siehe [LICENSE](LICENSE).
 - **Urheberrecht & Attribution:** Siehe [NOTICE](NOTICE) für kanonische Urheberrechts- und Attributionshinweise.
-- **Level 1 SBOM:** Klartext-Begleitdatei [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) und Markdown-Audit [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
-- **Beitragsrichtlinien:** Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Quality Gates, Invarianten-Zertifizierung und Entwicklungsumgebung.
+- **Abhängigkeitslizenzen:** [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) und [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) führen deklarierte Abhängigkeiten und Lizenzangaben auf.
+- **Beitragsrichtlinien:** Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Entwicklungsumgebung und Hinweise zum Projektverhalten.
 - **Maintainer:** Autoren von `ellmos-ai` und Community-Mitwirkende.
 - **Dachorganisation:** Teil der modularen [open-bricks](https://github.com/open-bricks) Softwarefamilie.
-- **Gesetzlicher Hinweis (§ 521 BGB):** Diese Open-Source-Software und Dokumentation werden unentgeltlich bereitgestellt. Gemäß § 521 BGB ist die Haftung des Bereitstellers bei unentgeltlicher Überlassung auf Vorsatz und grobe Fahrlässigkeit beschränkt.
+- **Softwarelizenz:** Die MIT-Lizenz steht in [LICENSE](LICENSE).
 

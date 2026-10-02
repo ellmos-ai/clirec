@@ -11,7 +11,7 @@
 - relative SHA-256-Medien, Traversal-/Symlink-/Orphan-Abweisung;
 - Rollback bei simuliertem Ausfall des finalen Commit-Markers;
 - getrennte Audio-/Transkript-Purges, Retention und Recovery;
-- kanonischer STT-Adapter mit nachgewiesenem `persist=False`;
+- Der Adapter übergibt `persist=False`; dieser Test belegt weder die Speicherung noch Netzwerkzugriffe des ausgewählten Moduls.
 - synthetischer Episoden-, Skill- und Workflow-Reviewexport.
 
 Die Tests enthalten ausschließlich synthetische Bytes und keine echte Stimme,

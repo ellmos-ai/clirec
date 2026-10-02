@@ -2,16 +2,12 @@
 
 ## Stand
 
-- Version: `0.3.0` (Quellstand — **nicht veröffentlicht**)
-- geprüft: 2026-08-20 auf Windows 11 / Python 3.12; Suite und Lint erneut
-  nachgezählt am 2026-09-03
+- Quellversion: `0.3.0`; im GitHub-API-Abruf vom 2026-10-02 wurde kein Release und kein Tag gefunden.
+- Historische Nachweise: Tests und Lint wurden am 2026-08-20 unter Windows 11 / Python 3.12 ausgeführt; Suite und Lint wurden am 2026-09-03 erneut gezählt. Diese Daten bezeichnen historische Läufe.
 - Repository: `https://github.com/ellmos-ai/clirec`
-- Veröffentlichung: Quell- und Wheel-Artefakte sind vorbereitet; ein PyPI-Upload
-  oder Git-Tag ist nicht Teil dieses Gates. **Stand 2026-09-03 existiert im
-  Repository kein einziger Tag, und der Paketname `clirec` ist auf PyPI nicht
-  belegt** (HTTP 404) — er ist also weder reserviert noch vergeben.
+- Distributionsstand (API-Abruf 2026-10-02): Die GitHub-[Releases-API](https://api.github.com/repos/ellmos-ai/clirec/releases) und die [Tag-Refs-API](https://api.github.com/repos/ellmos-ai/clirec/git/matching-refs/tags/) lieferten leere Ergebnisse. Der aktuelle Status auf PyPI konnte in dieser Prüfung nicht bestätigt werden, weil der direkte Zugriff auf den [PyPI-JSON-Endpunkt](https://pypi.org/pypi/clirec/json) nicht verfügbar war. Ein dort am 2026-09-03 dokumentierter HTTP-404 ist nur ein historischer Befund und belegt weder den heutigen Veröffentlichungs- noch Reservierungsstatus. Die README beschreibt die Installation aus dem Git-Repository.
 
-## Verifizierte Gates
+## Historisch verifizierte Gates
 
 | Gate | Ergebnis | Nachweis |
 |---|---|---|
