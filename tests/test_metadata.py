@@ -259,6 +259,7 @@ def test_changelog_recent_entry():
     assert "2026-09-23" in text
     assert "2026-09-26" in text
     assert "2026-09-29" in text
+    assert "2026-10-03" in text
 
 
 def test_quick_navigation_anchor_parity():
@@ -348,3 +349,55 @@ def test_contributing_guidelines_present():
 
     assert "0.3.0" in text
     assert "pytest" in text
+
+
+def test_ascii_four_view_architectural_topology_parity():
+    """Both READMEs must have 4-view ASCII topology parity."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    for v in ["[VIEW 1:", "[VIEW 2:", "[VIEW 3:", "[VIEW 4:"]:
+        assert v in en_text, f"Missing {v} in README.md"
+
+    for s in ["[SICHT 1:", "[SICHT 2:", "[SICHT 3:", "[SICHT 4:"]:
+        assert s in de_text, f"Missing {s} in README_de.md"
+
+    invariants = [
+        "INV-LOCAL-01",
+        "INV-SAN-02",
+        "INV-FMT-03",
+        "INV-SHA-04",
+        "INV-REC-05",
+        "INV-EXEC-06",
+        "INV-AUD-07",
+        "INV-PRIV-08",
+        "INV-SLA-10",
+    ]
+    for inv in invariants:
+        assert inv in en_text, f"Missing {inv} in README.md"
+        assert inv in de_text, f"Missing {inv} in README_de.md"
+
+
+def test_third_party_licenses_audit_currency_20261003():
+    """THIRD_PARTY_LICENSES companions must reflect the 2026-10-03 re-audit."""
+    md_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
+    txt_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
+
+    assert "2026-10-03" in md_text
+    assert "2026-10-03" in txt_text
+    assert "CONTRIBUTING.md" in md_text
+    assert "CONTRIBUTING.md" in txt_text
+
+
+def test_badges_recency_and_test_count():
+    """README badges must reflect current test suite count and verification date."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    assert "tests-138%20passed" in en_text or "tests-135%20passed" in en_text
+    assert "2026--10--03" in en_text
+    assert "2026--10--03" in de_text
+    assert "Level%201%20SBOM-Text%20Companion-blue" in en_text
+    assert "Level%201%20SBOM-Text%20Companion-blue" in de_text
+    assert "Contributing-Guidelines-blue" in en_text
+    assert "Contributing-Guidelines-blue" in de_text

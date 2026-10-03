@@ -7,7 +7,11 @@
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
+[![Tests: 138 passed](https://img.shields.io/badge/tests-138%20passed%20%7C%20100%25%20green-success)](tests/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
+[![Verified: 2026-10-03](https://img.shields.io/badge/verified-2026--10--03-blue.svg)](tests/test_metadata.py)
+[![Level 1 SBOM: Text](https://img.shields.io/badge/Level%201%20SBOM-Text%20Companion-blue)](THIRD_PARTY_LICENSES.txt)
+[![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue)](CONTRIBUTING.md)
 [![LLM Ready](https://img.shields.io/badge/llms.txt-ready-purple.svg)](llms.txt)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Umbrella](https://img.shields.io/badge/umbrella-open--bricks-orange.svg)](https://github.com/open-bricks)
@@ -59,6 +63,50 @@
 `clirec` records mouse and keyboard demonstrations as readable `.clirec` files and replays them through an injected executor. It is intended for workflows that benefit from compact, reviewable event traces, including CLI tools and computer-use agents.
 
 The recorder core has no built-in telemetry and writes to the configured filesystem path. That path may be on synced or network storage, and caller-provided modules or executors may use networks or additional storage. Review those components and outputs before recording or sharing sensitive material.
+
+### ASCII Four-View Architectural Topology
+
+```text
++========================================================================================================================+
+|                        CLIREC -- FOUR-VIEW ARCHITECTURAL TOPOLOGY (LOCAL-FIRST & ZERO-EGRESS)                          |
++========================================================================================================================+
+| [VIEW 1: CALLER RUNTIMES, CLI AGENTS & HUMAN OPERATOR ENTRYPOINTS]                                                     |
+|  * Interactive CLI Commands: clirec start, clirec stop, clirec replay, clirec validate, clirec recover                 |
+|  * Autonomous Agent Integration: open-compute (oc rec replay), skill-extractor, LLM computer-use workflows             |
+|  * Unprivileged User-Mode Execution [INV-PRIV-08]: Strict RunAsInvoker non-elevation, zero admin/root requirements     |
+|  * Human-Readable Action Traces [INV-FMT-03]: Diffable, transparent .clirec format v2 event stream                    |
++------------------------------------------------------------------------------------------------------------------------+
+                                                           |
+                                                           v
++------------------------------------------------------------------------------------------------------------------------+
+| [VIEW 2: RECORDER ENGINE, EVENT SEGMENTATION & PARAMETER SANITIZER]                                                    |
+|  * Capture Backends: Low-level native Windows ctypes (zero dependency), optional cross-platform pynput ([record] extra)|
+|  * Event Segmentation: Mouse down/up/drag synthesis, wheel scroll coalescing, dead-key / modifier composition        |
+|  * Parameter Sanitization [INV-SAN-02]: Typed keyboard text automatically parameterized as ${input_N} placeholders   |
+|  * UI Automation Metadata Probing: Optional Windows UIA probe ([uia] extra, uiautomation) for element bounding boxes   |
+|  * Audio & Consent Boundary [INV-AUD-07]: Optional PortAudio/sounddevice ([audio]), strict --audio & --audio-consent  |
++------------------------------------------------------------------------------------------------------------------------+
+                                                           |
+                                                           v
++------------------------------------------------------------------------------------------------------------------------+
+| [VIEW 3: RUNTIME PERSISTENCE, SPECIFICATION SERIALIZATION & RECOVERY BOUNDARY]                                         |
+|  * Atomic Commit Marker Discipline [INV-REC-05]: Media written first, .clirec manifest published last as commit marker |
+|  * SHA-256 Media Sidecars [INV-SHA-04]: Referenced audio (.wav) & transcripts (.txt) in <recording>.clirec.media/      |
+|  * Frame Evidence Ringbuffer: Optional caller-injected frame directory (<recording>.clirec.frames/) for validation   |
+|  * Failure Recovery: clirec recover removes unreferenced orphan media sidecars; fail-safe rollback on commit errors    |
+|  * Local-First Air-Gap [INV-LOCAL-01]: 100% offline filesystem storage, zero telemetry, zero mandatory cloud egress   |
++------------------------------------------------------------------------------------------------------------------------+
+                                                           |
+                                                           v
++------------------------------------------------------------------------------------------------------------------------+
+| [VIEW 4: INJECTED EXECUTOR, REPLAY PROTOCOL & REPRODUCIBLE VALIDATION]                                                 |
+|  * Injected Replay Protocol [INV-EXEC-06]: Decoupled replay engine delegating actions to caller-provided BaseExecutor   |
+|  * Adaptive Step Execution: Parameter substitution (${key}=value), inter-step timing, virtual desktop coordinates     |
+|  * Validation Gates: clirec validate headless schema verification against specification v1/v2                          |
+|  * Downstream Learning Pipelines: Episode JSON export for agent fine-tuning and imitation learning workflows            |
+|  * Statutory Disclaimer & Response SLA [INV-SLA-10]: Statutory § 521 BGB disclaimer, 48h security response SLA         |
++========================================================================================================================+
+```
 
 ---
 

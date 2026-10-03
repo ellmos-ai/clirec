@@ -5,6 +5,14 @@ tracked in [RELEASE_GATE.md](RELEASE_GATE.md).
 
 ## Unreleased
 
+### 2026-10-03 (Pfad B Discoverability & Visual Architecture)
+
+- Projected Section 1 ASCII Four-View Architectural Topology in `README.md` and `README_de.md` (`[VIEW 1]`..`[VIEW 4]` and `[SICHT 1]`..`[SICHT 4]`).
+- Synchronized Shields.io badges for tests (138 passed | 100% green), verified currency (`Verified: 2026-10-03` / `Verifiziert: 2026-10-03`), Level 1 SBOM text companion, and contributing guidelines.
+- Re-audited Level-1-SBOM companions (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`) Stand 2026-10-03 with cross-links to contributing guidelines and plain-text inventory.
+- Synchronized `llms.txt` with Four-View topology references and 138 tests baseline.
+- Extended automated contract tests in `tests/test_metadata.py` covering ASCII Four-View topology parity across English and German READMEs, Level 1 SBOM currency, and test badge recency.
+
 - Updated public documentation to match implementation boundaries: typed-text
   masking does not cover audio, UI metadata, or optional frame evidence;
   caller-supplied transcription modules may store data or use the network;

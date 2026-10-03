@@ -31,8 +31,8 @@ The source tree is version 0.3.0. The 2026-10-02 GitHub API check found no relea
 
 ## Important files
 
-- README.md - English overview, installation, usage, and implementation boundaries.
-- README_de.md - German overview and navigation.
+- README.md - English overview, ASCII Four-View Architectural Topology, installation, usage, and implementation boundaries.
+- README_de.md - German overview, Vier-Sichten-Architekturtopologie, and navigation.
 - CONTRIBUTING.md - development setup and pull-request guidelines.
 - SKILL.md - German skill instructions for using clirec as a demonstration channel.
 - CHANGELOG.md - release history and current unreleased state.
@@ -41,7 +41,7 @@ The source tree is version 0.3.0. The 2026-10-02 GitHub API check found no relea
 - THIRD_PARTY_LICENSES.md - declared dependency license references and runtime scope notes.
 - THIRD_PARTY_LICENSES.txt - plain-text dependency license index.
 - clirec/ - core package.
-- tests/ - regression, smoke, metadata, and repository checks.
+- tests/ - regression, smoke, metadata, and repository checks (135 automated tests baseline as of 2026-10-03).
 - .github/workflows/tests.yml - Python test workflow.
 - .github/workflows/stale.yml - stale issues and PRs automation.
 - .github/workflows/welcome.yml - contributor welcome automation.

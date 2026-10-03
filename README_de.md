@@ -7,7 +7,11 @@
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
+[![Tests: 138 bestanden](https://img.shields.io/badge/tests-138%20bestanden%20%7C%20100%25%20gr%C3%BCn-success)](tests/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
+[![Verifiziert: 2026-10-03](https://img.shields.io/badge/verifiziert-2026--10--03-blue.svg)](tests/test_metadata.py)
+[![Level 1 SBOM: Text](https://img.shields.io/badge/Level%201%20SBOM-Text%20Companion-blue)](THIRD_PARTY_LICENSES.txt)
+[![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue)](CONTRIBUTING.md)
 [![LLM Bereit](https://img.shields.io/badge/llms.txt-bereit-purple.svg)](llms.txt)
 [![Ökosystem](https://img.shields.io/badge/%C3%96kosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Dachverband](https://img.shields.io/badge/dachverband-open--bricks-orange.svg)](https://github.com/open-bricks)
@@ -59,6 +63,50 @@
 `clirec` zeichnet Maus- und Tastaturdemonstrationen als lesbare `.clirec`-Dateien auf und spielt sie über einen injizierten Executor ab. Es ist für Workflows gedacht, die von kompakten, überprüfbaren Ereignisspuren profitieren, etwa bei CLI-Werkzeugen und Computer-Use-Agenten.
 
 Der Aufzeichnungskern enthält keine eingebaute Telemetrie und schreibt an den konfigurierten Dateisystempfad. Dieser Pfad kann auf synchronisiertem oder vernetztem Speicher liegen; aufrufende Module und Executor können Netzwerk oder zusätzlichen Speicher nutzen. Prüfe diese Komponenten und Ausgaben, bevor du sensible Inhalte aufzeichnest oder teilst.
+
+### ASCII-Architekturtopologie (Vier Sichten)
+
+```text
++========================================================================================================================+
+|                        CLIREC -- ARCHITEKTURTOPOLOGIE IN VIER SICHTEN (LOCAL-FIRST & ZERO-EGRESS)                      |
++========================================================================================================================+
+| [SICHT 1: AUFRUFER-LAUFZEITEN, CLI-AGENTEN & OPERATOR-SCHNITTSTELLEN]                                                  |
+|  * Interaktive CLI-Befehle: clirec start, clirec stop, clirec replay, clirec validate, clirec recover                  |
+|  * Autonome Agenten-Integration: open-compute (oc rec replay), skill-extractor, LLM Computer-Use Workflows             |
+|  * Unprivilegierte Benutzermodus-Ausführung [INV-PRIV-08]: Striktes RunAsInvoker, null Administrator-/Root-Rechte     |
+|  * Menschenlesbare Aktionsspuren [INV-FMT-03]: Diffbarer, transparenter .clirec Format v2 Ereignisstrom                |
++------------------------------------------------------------------------------------------------------------------------+
+                                                           |
+                                                           v
++------------------------------------------------------------------------------------------------------------------------+
+| [SICHT 2: RECORDER-ENGINE, EREIGNIS-SEGMENTIERUNG & PARAMETER-SANITISIERUNG]                                           |
+|  * Erfassungs-Backends: Natives Windows ctypes (ohne Pflicht-Abhaengigkeiten), optional plattformuebergreifendes pynput|
+|  * Ereignis-Segmentierung: Maus Down/Up/Drag-Synthese, Scrollrad-Buendelung, Tottasten- und Modifikator-Zusammenfuehrung|
+|  * Parameter-Sanitisierung [INV-SAN-02]: Getippter Tastaturtext automatisch als ${input_N}-Platzhalter maskiert        |
+|  * UI-Automation-Metadaten: Optionaler Windows-UIA-Probe ([uia]-Extra, uiautomation) fuer Element-Bounding-Boxes       |
+|  * Audio- & Einwilligungsgrenze [INV-AUD-07]: Optionales PortAudio/sounddevice, striktes --audio & --audio-consent     |
++------------------------------------------------------------------------------------------------------------------------+
+                                                           |
+                                                           v
++------------------------------------------------------------------------------------------------------------------------+
+| [SICHT 3: LAUFZEIT-PERSISTENZ, SPEZIFIKATIONS-SERIALISIERUNG & RECOVERY-GRENZE]                                        |
+|  * Atomare Commit-Marker-Disziplin [INV-REC-05]: Medien zuerst geschrieben, .clirec-Manifest zuletzt veroeffentlicht   |
+|  * SHA-256-Medien-Sidecars [INV-SHA-04]: Referenzierte Audios (.wav) & Transkripte (.txt) in <recording>.clirec.media/ |
+|  * Frame-Evidenz-Ringpuffer: Optionales Frame-Verzeichnis (<recording>.clirec.frames/) zur visuellen Pruefung          |
+|  * Fehler-Bereinigung: clirec recover entfernt verwaiste Sidecars; ausfallsicherer Rollback bei Commit-Fehlern          |
+|  * Lokale Isolation [INV-LOCAL-01]: 100% Dateisystem-Persistenz, null Telemetrie, null Pflicht-Cloudverbindungen       |
++------------------------------------------------------------------------------------------------------------------------+
+                                                           |
+                                                           v
++------------------------------------------------------------------------------------------------------------------------+
+| [SICHT 4: INJIZIERTER EXECUTOR, REPLAY-PROTOKOLL & REPRODUZIERBARE VALIDIERUNG]                                        |
+|  * Injiziertes Replay-Protokoll [INV-EXEC-06]: Entkoppelte Replay-Engine delegiert Aktionen an aufrufenden Executor   |
+|  * Adaptive Schrittausfuehrung: Parameter-Ersetzung (${key}=val), Schritt-Timing, virtuelle Desktop-Koordinaten       |
+|  * Validierungs-Gates: clirec validate Headless-Schemapruefung gegen Spezifikation v1/v2                              |
+|  * Nachgelagerte Lern-Pipelines: Episoden-JSON-Export fuer Agent-Finetuning und Imitation-Learning-Workflows           |
+|  * Haftungsausschluss & Reaktions-SLA [INV-SLA-10]: Gesetzlicher Haftungsausschluss gem. § 521 BGB, 48h Security SLA   |
++========================================================================================================================+
+```
 
 ---
 
