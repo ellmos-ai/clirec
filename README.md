@@ -7,9 +7,9 @@
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
-[![Tests: 138 passed](https://img.shields.io/badge/tests-138%20passed%20%7C%20100%25%20green-success)](tests/)
+[![Tests: 141 passed](https://img.shields.io/badge/tests-141%20passed%20%7C%20100%25%20green-success)](tests/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
-[![Verified: 2026-10-03](https://img.shields.io/badge/verified-2026--10--03-blue.svg)](tests/test_metadata.py)
+[![Verified: 2026-10-09](https://img.shields.io/badge/verified-2026--10--09-blue.svg)](tests/test_metadata.py)
 [![Level 1 SBOM: Text](https://img.shields.io/badge/Level%201%20SBOM-Text%20Companion-blue)](THIRD_PARTY_LICENSES.txt)
 [![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue)](CONTRIBUTING.md)
 [![LLM Ready](https://img.shields.io/badge/llms.txt-ready-purple.svg)](llms.txt)
@@ -213,6 +213,37 @@ graph TD
     Spec -->|"clirec validate"| Val["Format Validator"]
     Spec -->|"clirec replay"| Executor["Injected Executor / open-compute"]
     Executor -->|"Automated Actions"| TargetApp["Target GUI / Terminal"]
+```
+
+### Demonstration Recording & Replay Execution Lifecycle
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Human as Operator / Agent
+    participant CLI as clirec CLI
+    participant Engine as Recorder Engine
+    participant Disk as Local Storage (.clirec)
+    participant Exec as Injected Executor (open-compute)
+    participant Target as Target Desktop / App
+
+    Human->>CLI: clirec start <name> [--audio --audio-consent]
+    CLI->>Engine: Attach input hooks (ctypes / pynput)
+    Note over Engine: Mask typed keys (${input_N}), coalesce clicks & scrolls
+    Human->>CLI: clirec stop
+    Engine->>Disk: Write media sidecars (<name>.clirec.media/)
+    Engine->>Disk: Atomic commit: publish <name>.clirec manifest (SHA-256)
+    CLI->>Human: Recording ready & validated
+
+    Human->>CLI: clirec replay <name>.clirec --param input_1="val"
+    CLI->>Disk: Read & verify SHA-256 integrity
+    CLI->>Exec: Inject BaseExecutor protocol (width, height, execute)
+    loop Step Execution
+        Exec->>Target: Dispatch mouse move / click / keystroke
+        Target-->>Exec: UI response
+    end
+    Exec-->>CLI: Return execution report
+    CLI-->>Human: Replay report (successful / total steps)
 ```
 
 The core package has no mandatory runtime dependencies. Windows capture uses a ctypes backend by default; cross-platform capture is available with the optional `record` extra (`pynput`). Windows UI Automation metadata is an optional `uia` extra (`uiautomation`). Microphone capture is off by default and available through the optional `audio` extra (`sounddevice` + PortAudio). It requires both `--audio` and `--audio-consent`.

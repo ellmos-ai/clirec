@@ -47,7 +47,9 @@ _session/
 Desktop.ini
 desktop.ini
 Thumbs.db
+thumbs.db
 ehthumbs.db
+ehthumbs_vista.db
 
 # Multi-Host Cloud-Sync conflict copies (OneDrive / Dropbox / Synology)
 * (kopie)*

@@ -5,6 +5,16 @@ tracked in [RELEASE_GATE.md](RELEASE_GATE.md).
 
 ## Unreleased
 
+### 2026-10-09 (Pfad B Discoverability & Dual Lifecycle Sequence Architecture)
+
+- Integrated dual bilingual Mermaid sequence diagrams (`sequenceDiagram`) for the demonstration recording and replay execution lifecycle in Section 6 of `README.md` and `README_de.md`.
+- Expanded `CONTRIBUTING.md` into comprehensive bilingual guidelines (English & German) documenting the Plan D local development workflow (`C:\_Local_DEV\repos\clirec`), statutory warranty limitation (§ 521 BGB Gefälligkeitsrecht), and 48h security response SLA target.
+- Hardened multi-host OS desktop metadata patterns in `.gitignore` by adding lowercase `thumbs.db` and legacy `ehthumbs_vista.db`.
+- Re-audited Level 1 SBOM text companions (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`) Stand 2026-10-09 with cross-references to CONTRIBUTING.md, NOTICE, and LICENSE.
+- Synchronized Shields.io badges for currency (`Verified: 2026-10-09` / `Verifiziert: 2026-10-09`) and updated test suite counts.
+- Synchronized `llms.txt` with 2026-10-09 currency, sequence diagram references, and test baseline.
+- Extended automated contract tests in `tests/test_metadata.py` covering Mermaid sequence diagram parity, bilingual contributing guidelines, and Level 1 SBOM currency Stand 2026-10-09.
+
 ### 2026-10-03 (Pfad B Discoverability & Visual Architecture)
 
 - Projected Section 1 ASCII Four-View Architectural Topology in `README.md` and `README_de.md` (`[VIEW 1]`..`[VIEW 4]` and `[SICHT 1]`..`[SICHT 4]`).

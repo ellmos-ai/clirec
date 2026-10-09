@@ -260,6 +260,7 @@ def test_changelog_recent_entry():
     assert "2026-09-26" in text
     assert "2026-09-29" in text
     assert "2026-10-03" in text
+    assert "2026-10-09" in text
 
 
 def test_quick_navigation_anchor_parity():
@@ -378,13 +379,13 @@ def test_ascii_four_view_architectural_topology_parity():
         assert inv in de_text, f"Missing {inv} in README_de.md"
 
 
-def test_third_party_licenses_audit_currency_20261003():
-    """THIRD_PARTY_LICENSES companions must reflect the 2026-10-03 re-audit."""
+def test_third_party_licenses_audit_currency_20261009():
+    """THIRD_PARTY_LICENSES companions must reflect the 2026-10-09 re-audit."""
     md_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
     txt_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
 
-    assert "2026-10-03" in md_text
-    assert "2026-10-03" in txt_text
+    assert "2026-10-09" in md_text
+    assert "2026-10-09" in txt_text
     assert "CONTRIBUTING.md" in md_text
     assert "CONTRIBUTING.md" in txt_text
 
@@ -394,10 +395,44 @@ def test_badges_recency_and_test_count():
     en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
-    assert "tests-138%20passed" in en_text or "tests-135%20passed" in en_text
-    assert "2026--10--03" in en_text
-    assert "2026--10--03" in de_text
+    assert "tests-141%20passed" in en_text
+    assert "tests-141%20bestanden" in de_text
+    assert "2026--10--09" in en_text
+    assert "2026--10--09" in de_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in en_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in de_text
     assert "Contributing-Guidelines-blue" in en_text
     assert "Contributing-Guidelines-blue" in de_text
+
+
+def test_mermaid_lifecycle_sequence_diagram_parity():
+    """Both READMEs must include a bilingual sequence diagram for replay lifecycle."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    assert "sequenceDiagram" in en_text
+    assert "sequenceDiagram" in de_text
+    for token in ["clirec start", "clirec stop", "clirec replay"]:
+        assert token in en_text
+        assert token in de_text
+    assert "Injected Executor" in en_text
+    assert "Injizierter Executor" in de_text
+
+
+def test_bilingual_contributing_guidelines():
+    """CONTRIBUTING.md must define EN/DE guidelines, Plan D, and § 521 BGB."""
+    text = (REPO_ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
+    assert "Contributing to clirec" in text
+    assert "Hinweise zur Implementierung (Deutsch)" in text
+    assert "Plan D" in text
+    assert "§ 521 BGB" in text
+    assert "C:\\_Local_DEV\\repos\\clirec" in text
+
+
+def test_gitignore_multihost_thumbs_defense():
+    """Gitignore must include both lower and mixed case Windows thumbnail DBs."""
+    text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
+    assert "thumbs.db" in text
+    assert "Thumbs.db" in text
+    assert "ehthumbs.db" in text
+    assert "ehthumbs_vista.db" in text

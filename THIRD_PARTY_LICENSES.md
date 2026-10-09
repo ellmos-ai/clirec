@@ -3,7 +3,7 @@
 > Project: ellmos-ai/clirec (source version 0.3.0)
 > Project license: MIT License (see LICENSE)
 > Attribution: NOTICE
-> Audit Date: 2026-10-03 (Pfad B Re-Audit; previous audits 2026-09-29, 2026-09-26, 2026-09-23, 2026-09-16)
+> Audit Date: 2026-10-09 (Pfad B Re-Audit; previous audits 2026-10-03, 2026-09-29, 2026-09-26, 2026-09-23, 2026-09-16)
 > Plain-text companion: [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) | Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 This document lists direct optional and development dependencies declared in
