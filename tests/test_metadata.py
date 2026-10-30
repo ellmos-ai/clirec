@@ -181,6 +181,8 @@ def test_pep621_license_and_urls():
     assert "Changelog" in urls
     assert "Contributing" in urls
     assert "Issues" in urls
+    assert "Parent Organization" in urls
+    assert "Umbrella Ecosystem" in urls
     assert "LLM Context" in urls
     assert "Third-Party Licenses" in urls
     assert "Third-Party Licenses (Text)" in urls
@@ -261,6 +263,7 @@ def test_changelog_recent_entry():
     assert "2026-09-29" in text
     assert "2026-10-03" in text
     assert "2026-10-09" in text
+    assert "2026-10-30" in text
 
 
 def test_quick_navigation_anchor_parity():
@@ -386,6 +389,8 @@ def test_third_party_licenses_audit_currency_20261009():
 
     assert "2026-10-09" in md_text
     assert "2026-10-09" in txt_text
+    assert "2026-10-30" in md_text
+    assert "2026-10-30" in txt_text
     assert "CONTRIBUTING.md" in md_text
     assert "CONTRIBUTING.md" in txt_text
 
@@ -395,10 +400,10 @@ def test_badges_recency_and_test_count():
     en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
-    assert "tests-141%20passed" in en_text
-    assert "tests-141%20bestanden" in de_text
-    assert "2026--10--09" in en_text
-    assert "2026--10--09" in de_text
+    assert "tests-145%20passed" in en_text
+    assert "tests-145%20bestanden" in de_text
+    assert "2026--10--30" in en_text
+    assert "2026--10--30" in de_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in en_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in de_text
     assert "Contributing-Guidelines-blue" in en_text
@@ -436,3 +441,47 @@ def test_gitignore_multihost_thumbs_defense():
     assert "Thumbs.db" in text
     assert "ehthumbs.db" in text
     assert "ehthumbs_vista.db" in text
+
+
+def test_codeql_concurrency_guardrail():
+    """CodeQL workflow must define concurrency and cancel-in-progress."""
+    wf_path = REPO_ROOT / ".github" / "workflows" / "codeql.yml"
+    assert wf_path.is_file()
+    text = wf_path.read_text(encoding="utf-8")
+    assert "concurrency:" in text
+    assert "cancel-in-progress: true" in text
+
+
+def test_ci_workflows_least_privilege_permissions():
+    """Every CI workflow must define an explicit permissions block."""
+    workflows_dir = REPO_ROOT / ".github" / "workflows"
+    assert workflows_dir.is_dir()
+    for wf in workflows_dir.glob("*.yml"):
+        text = wf.read_text(encoding="utf-8")
+        assert "permissions:" in text, f"Workflow {wf.name} lacks permissions block"
+
+
+def test_pep621_ecosystem_urls_and_pytest_norecursedirs():
+    """pyproject.toml must declare parent/umbrella urls and wheel exclusions."""
+    toml_path = REPO_ROOT / "pyproject.toml"
+    with open(toml_path, "rb") as f:
+        data = tomllib.load(f)
+    urls = data.get("project", {}).get("urls", {})
+    assert urls.get("Parent Organization") == "https://github.com/ellmos-ai"
+    assert urls.get("Umbrella Ecosystem") == "https://github.com/open-bricks"
+    norecursedirs = (
+        data.get("tool", {})
+        .get("pytest", {})
+        .get("ini_options", {})
+        .get("norecursedirs", [])
+    )
+    assert ".wheel-smoke" in norecursedirs
+    assert "wheelhouse" in norecursedirs
+
+
+def test_ci_matrix_python_versions_coverage():
+    """tests.yml matrix must cover Python 3.10 floor through Python 3.13 modern."""
+    wf_path = REPO_ROOT / ".github" / "workflows" / "tests.yml"
+    text = wf_path.read_text(encoding="utf-8")
+    for ver in ["3.10", "3.11", "3.12", "3.13"]:
+        assert ver in text, f"Python {ver} missing from tests.yml matrix"

@@ -5,6 +5,17 @@ tracked in [RELEASE_GATE.md](RELEASE_GATE.md).
 
 ## Unreleased
 
+### 2026-10-30 (Pfad A Repository Hygiene, CI Matrix Hardening & Contract Test Expansion)
+
+- Hardened CI workflow matrix in `.github/workflows/tests.yml` to explicitly test all supported Python 3 versions (`3.10`, `3.11`, `3.12`, `3.13`) across Ubuntu, Windows, and macOS.
+- Integrated workflow concurrency guardrail (`concurrency: cancel-in-progress: true`) in `.github/workflows/codeql.yml` to prevent duplicate action runner consumption on concurrent pushes.
+- Standardized PEP 621 metadata in `pyproject.toml` by anchoring canonical `Parent Organization` (`https://github.com/ellmos-ai`) and `Umbrella Ecosystem` (`https://github.com/open-bricks`) URLs, and protected pytest test discovery by ignoring `.wheel-smoke` and `wheelhouse` temporary artifacts.
+- Hardened multi-agent taskplan patterns in `.gitignore` by adding `*-TASKPLAN*`.
+- Re-audited Level 1 SBOM text companions (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`) Stand 2026-10-30.
+- Synchronized Shields.io badges for verification date (`2026-10-30`) and test suite count (145 passed | 100% green).
+- Synchronized `llms.txt` with 145 automated tests baseline as of 2026-10-30.
+- Extended automated contract tests in `tests/test_metadata.py` by adding 4 new guardrail checks (`test_codeql_concurrency_guardrail`, `test_ci_workflows_least_privilege_permissions`, `test_pep621_ecosystem_urls_and_pytest_norecursedirs`, `test_ci_matrix_python_versions_coverage`), bringing the full test suite to 145 passed tests.
+
 ### 2026-10-09 (Pfad B Discoverability & Dual Lifecycle Sequence Architecture)
 
 - Integrated dual bilingual Mermaid sequence diagrams (`sequenceDiagram`) for the demonstration recording and replay execution lifecycle in Section 6 of `README.md` and `README_de.md`.

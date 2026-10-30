@@ -64,6 +64,8 @@ Repository = "https://github.com/ellmos-ai/clirec"
 Changelog = "https://github.com/ellmos-ai/clirec/blob/main/CHANGELOG.md"
 Contributing = "https://github.com/ellmos-ai/clirec/blob/main/CONTRIBUTING.md"
 Issues = "https://github.com/ellmos-ai/clirec/issues"
+"Parent Organization" = "https://github.com/ellmos-ai"
+"Umbrella Ecosystem" = "https://github.com/open-bricks"
 "LLM Context" = "https://github.com/ellmos-ai/clirec/blob/main/llms.txt"
 "Third-Party Licenses" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.md"
 "Third-Party Licenses (Text)" = "https://github.com/ellmos-ai/clirec/blob/main/THIRD_PARTY_LICENSES.txt"
@@ -80,7 +82,7 @@ addopts = "-ra -v --basetemp=.pytest_temp"
 pythonpath = "."
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-norecursedirs = [".git", ".pytest_cache", ".pytest_temp", ".pytest_tmp*", ".hypothesis", "__pycache__", "build", "dist", ".venv", ".turbo", ".nyc_output", ".tox"]
+norecursedirs = [".git", ".pytest_cache", ".pytest_temp", ".pytest_tmp*", ".hypothesis", "__pycache__", "build", "dist", ".venv", ".turbo", ".nyc_output", ".tox", ".wheel-smoke", "wheelhouse"]
 
 [tool.ruff]
 target-version = "py310"

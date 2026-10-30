@@ -7,9 +7,9 @@
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
-[![Tests: 141 passed](https://img.shields.io/badge/tests-141%20passed%20%7C%20100%25%20green-success)](tests/)
+[![Tests: 145 passed](https://img.shields.io/badge/tests-145%20passed%20%7C%20100%25%20green-success)](tests/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
-[![Verified: 2026-10-09](https://img.shields.io/badge/verified-2026--10--09-blue.svg)](tests/test_metadata.py)
+[![Verified: 2026-10-30](https://img.shields.io/badge/verified-2026--10--30-blue.svg)](tests/test_metadata.py)
 [![Level 1 SBOM: Text](https://img.shields.io/badge/Level%201%20SBOM-Text%20Companion-blue)](THIRD_PARTY_LICENSES.txt)
 [![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue)](CONTRIBUTING.md)
 [![LLM Ready](https://img.shields.io/badge/llms.txt-ready-purple.svg)](llms.txt)
