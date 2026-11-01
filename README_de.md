@@ -7,9 +7,9 @@
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
-[![Tests: 145 bestanden](https://img.shields.io/badge/tests-145%20bestanden%20%7C%20100%25%20gr%C3%BCn-success)](tests/)
+[![Tests: 146 bestanden](https://img.shields.io/badge/tests-146%20bestanden%20%7C%20100%25%20gr%C3%BCn-success)](tests/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
-[![Verifiziert: 2026-10-30](https://img.shields.io/badge/verifiziert-2026--10--30-blue.svg)](tests/test_metadata.py)
+[![Verifiziert: 2026-11-01](https://img.shields.io/badge/verifiziert-2026--11--01-blue.svg)](tests/test_metadata.py)
 [![Level 1 SBOM: Text](https://img.shields.io/badge/Level%201%20SBOM-Text%20Companion-blue)](THIRD_PARTY_LICENSES.txt)
 [![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue)](CONTRIBUTING.md)
 [![LLM Bereit](https://img.shields.io/badge/llms.txt-bereit-purple.svg)](llms.txt)
@@ -375,6 +375,18 @@ pip install "clirec[record] @ git+https://github.com/ellmos-ai/clirec.git"  # py
 pip install "clirec[uia] @ git+https://github.com/ellmos-ai/clirec.git"     # Windows UI Automation Metadaten
 pip install "clirec[audio] @ git+https://github.com/ellmos-ai/clirec.git"   # sounddevice Mikrofonaufnahme
 pip install "clirec[all] @ git+https://github.com/ellmos-ai/clirec.git"     # Alle Extras kombiniert
+```
+
+### Mit deinem LLM installieren
+
+Kopiere diesen Prompt in deinen Coding-Agenten (Claude Code, Codex, Gemini CLI, Cursor), um `clirec` lokal installieren und prüfen zu lassen:
+
+```text
+Lies https://github.com/ellmos-ai/clirec (README_de.md und llms.txt)
+und installiere clirec auf meinem System.
+1. Prüfe zuerst die Voraussetzungen (Python >= 3.10) und erkläre kurz, was installiert wird.
+2. Führe die empfohlene Installation (`pip install git+https://github.com/ellmos-ai/clirec.git` oder `python -m pip install -e .`) in einer isolierten Umgebung (.venv) aus, ohne fremde Projekte zu modifizieren.
+3. Führe danach einen kurzen Nicht-destruktiven Test (`python -m clirec --help` oder `python -m pytest -q`) aus und zeige mir, dass clirec einsatzbereit ist.
 ```
 
 ---

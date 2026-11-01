@@ -264,6 +264,7 @@ def test_changelog_recent_entry():
     assert "2026-10-03" in text
     assert "2026-10-09" in text
     assert "2026-10-30" in text
+    assert "2026-11-01" in text
 
 
 def test_quick_navigation_anchor_parity():
@@ -391,6 +392,8 @@ def test_third_party_licenses_audit_currency_20261009():
     assert "2026-10-09" in txt_text
     assert "2026-10-30" in md_text
     assert "2026-10-30" in txt_text
+    assert "2026-11-01" in md_text
+    assert "2026-11-01" in txt_text
     assert "CONTRIBUTING.md" in md_text
     assert "CONTRIBUTING.md" in txt_text
 
@@ -400,10 +403,10 @@ def test_badges_recency_and_test_count():
     en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
-    assert "tests-145%20passed" in en_text
-    assert "tests-145%20bestanden" in de_text
-    assert "2026--10--30" in en_text
-    assert "2026--10--30" in de_text
+    assert "tests-146%20passed" in en_text
+    assert "tests-146%20bestanden" in de_text
+    assert "2026--11--01" in en_text
+    assert "2026--11--01" in de_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in en_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in de_text
     assert "Contributing-Guidelines-blue" in en_text
@@ -485,3 +488,17 @@ def test_ci_matrix_python_versions_coverage():
     text = wf_path.read_text(encoding="utf-8")
     for ver in ["3.10", "3.11", "3.12", "3.13"]:
         assert ver in text, f"Python {ver} missing from tests.yml matrix"
+
+
+def test_llm_installation_quickstart_parity():
+    """READMEs and llms.txt must provide copyable LLM installation instructions."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
+
+    assert "### Install with your LLM" in en_text
+    assert "### Mit deinem LLM installieren" in de_text
+    assert "## Installation & Quickstart for LLMs" in llms_text
+    assert "pip install git+https://github.com/ellmos-ai/clirec.git" in en_text
+    assert "pip install git+https://github.com/ellmos-ai/clirec.git" in de_text
+    assert "clirec validate" in llms_text
