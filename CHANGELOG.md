@@ -5,6 +5,14 @@ tracked in [RELEASE_GATE.md](RELEASE_GATE.md).
 
 ## Unreleased
 
+### 2026-11-01 (Pfad B Discoverability, Copyable LLM Prompts & Metadata Currency)
+
+- Integrated copyable LLM installation and verification prompts for AI coding agents (Claude Code, Codex, Gemini CLI, Cursor) in Section 12 of `README.md` and `README_de.md`.
+- Expanded `llms.txt` with dedicated `Installation & Quickstart for LLMs` section detailing prerequisites, installation commands, smoke tests, and minimal workflow examples.
+- Re-audited Level 1 SBOM text companions (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`) Stand 2026-11-01.
+- Synchronized Shields.io verification badges (`2026-11-01`) across English and German documentation and updated `llms.txt` reference currency.
+- Extended automated contract tests in `tests/test_metadata.py` by verifying LLM installation quickstart parity across READMEs and llms.txt (`test_llm_installation_quickstart_parity`), with 100% green test suite (146 passed tests).
+
 ### 2026-10-30 (Pfad A Repository Hygiene, CI Matrix Hardening & Contract Test Expansion)
 
 - Hardened CI workflow matrix in `.github/workflows/tests.yml` to explicitly test all supported Python 3 versions (`3.10`, `3.11`, `3.12`, `3.13`) across Ubuntu, Windows, and macOS.

@@ -41,7 +41,7 @@ The source tree is version 0.3.0. The 2026-10-02 GitHub API check found no relea
 - THIRD_PARTY_LICENSES.md - declared dependency license references and runtime scope notes.
 - THIRD_PARTY_LICENSES.txt - plain-text dependency license index.
 - clirec/ - core package.
-- tests/ - regression, smoke, metadata, and repository checks (145 automated tests baseline as of 2026-10-30).
+- tests/ - regression, smoke, metadata, and repository checks (146 automated tests baseline as of 2026-11-01).
 - .github/workflows/tests.yml - Python test workflow.
 - .github/workflows/stale.yml - stale issues and PRs automation.
 - .github/workflows/welcome.yml - contributor welcome automation.
@@ -73,3 +73,12 @@ not replayed automatically. The STT adapter imports a caller-selected module
 and passes `persist=False`; that module controls its own storage and network
 behavior. See SECURITY.md and docs/AUDIO_PRIVACY.md before recording or
 sharing sensitive material.
+
+## Installation & Quickstart for LLMs
+
+- Prerequisites: Python >= 3.10
+- Install command: `git clone https://github.com/ellmos-ai/clirec.git && cd clirec && python -m pip install -e .` (or `pip install git+https://github.com/ellmos-ai/clirec.git`)
+- Verification command: `python -m clirec --help` or `python -c "import clirec; print(clirec.__version__)"`
+- Minimal example: `clirec start demo && clirec stop && clirec validate demo.clirec`
+
+## Last-checked: 2026-11-01
