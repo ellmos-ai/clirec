@@ -265,6 +265,7 @@ def test_changelog_recent_entry():
     assert "2026-10-09" in text
     assert "2026-10-30" in text
     assert "2026-11-01" in text
+    assert "2026-11-23" in text
 
 
 def test_quick_navigation_anchor_parity():
@@ -394,6 +395,8 @@ def test_third_party_licenses_audit_currency_20261009():
     assert "2026-10-30" in txt_text
     assert "2026-11-01" in md_text
     assert "2026-11-01" in txt_text
+    assert "2026-11-23" in md_text
+    assert "2026-11-23" in txt_text
     assert "CONTRIBUTING.md" in md_text
     assert "CONTRIBUTING.md" in txt_text
 
@@ -403,14 +406,16 @@ def test_badges_recency_and_test_count():
     en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
-    assert "tests-146%20passed" in en_text
-    assert "tests-146%20bestanden" in de_text
-    assert "2026--11--01" in en_text
-    assert "2026--11--01" in de_text
+    assert "tests-151%20passed" in en_text
+    assert "tests-151%20bestanden" in de_text
+    assert "2026--11--23" in en_text
+    assert "2026--11--23" in de_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in en_text
     assert "Level%201%20SBOM-Text%20Companion-blue" in de_text
     assert "Contributing-Guidelines-blue" in en_text
     assert "Contributing-Guidelines-blue" in de_text
+    assert "CODE_OF_CONDUCT.md" in en_text
+    assert "CODE_OF_CONDUCT.md" in de_text
 
 
 def test_mermaid_lifecycle_sequence_diagram_parity():
@@ -502,3 +507,74 @@ def test_llm_installation_quickstart_parity():
     assert "pip install git+https://github.com/ellmos-ai/clirec.git" in en_text
     assert "pip install git+https://github.com/ellmos-ai/clirec.git" in de_text
     assert "clirec validate" in llms_text
+
+
+def test_llm_txt_compatibility_pointer():
+    """llm.txt must exist as compatibility pointer to llms.txt and SKILL.md."""
+    llm_path = REPO_ROOT / "llm.txt"
+    assert llm_path.is_file()
+    text = llm_path.read_text(encoding="utf-8")
+    assert "llms.txt" in text
+    assert "SKILL.md" in text
+
+
+def test_code_of_conduct_bilingual_present():
+    """CODE_OF_CONDUCT.md must provide bilingual DE/EN Contributor Covenant v2.1."""
+    coc_path = REPO_ROOT / "CODE_OF_CONDUCT.md"
+    assert coc_path.is_file()
+    text = coc_path.read_text(encoding="utf-8")
+    assert "## Deutsch" in text
+    assert "## English" in text
+    assert "Contributor Covenant v2.1" in text
+
+
+def test_issue_templates_present_with_real_umlauts():
+    """GitHub issue templates must exist and use real German umlauts."""
+    tpl_dir = REPO_ROOT / ".github" / "ISSUE_TEMPLATE"
+    bug_path = tpl_dir / "bug_report.md"
+    feat_path = tpl_dir / "feature_request.md"
+    assert bug_path.is_file()
+    assert feat_path.is_file()
+
+    combined = (
+        bug_path.read_text(encoding="utf-8")
+        + "\n"
+        + feat_path.read_text(encoding="utf-8")
+    )
+    assert "Tatsächliches" in combined
+    assert "Lösung" in combined
+    for bad in ("haetten", "Tatsaechliches", "gewuenschten", "Loesung"):
+        assert bad not in combined
+
+
+def test_terminal_workflow_svg_asset_and_embedding():
+    """Terminal workflow SVG preview must exist and be embedded in both READMEs."""
+    svg_path = REPO_ROOT / "assets" / "terminal-workflow.svg"
+    banner_svg = REPO_ROOT / "assets" / "banner.svg"
+    assert svg_path.is_file()
+    assert banner_svg.is_file()
+    svg_text = svg_path.read_text(encoding="utf-8")
+    assert "<svg" in svg_text
+    assert "clirec start" in svg_text
+    assert "clirec validate" in svg_text
+
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    assert "assets/terminal-workflow.svg" in en_text
+    assert "assets/terminal-workflow.svg" in de_text
+
+
+def test_ai_disclosure_and_cli_verification_commands():
+    """Docs must use working CLI verification commands and Geiger AI disclosure."""
+    en_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    de_text = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
+
+    for doc in (en_text, de_text, llms_text):
+        assert "python -m clirec --help" not in doc
+        assert "python -m clirec.cli --help" in doc
+
+    assert "SKILL.md" in en_text
+    assert "SKILL.md" in de_text
+    assert "Idee & Abnahme: Geiger" in en_text
+    assert "Idee & Abnahme: Geiger" in de_text

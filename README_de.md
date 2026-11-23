@@ -7,11 +7,12 @@
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
-[![Tests: 146 bestanden](https://img.shields.io/badge/tests-146%20bestanden%20%7C%20100%25%20gr%C3%BCn-success)](tests/)
+[![Tests: 151 bestanden](https://img.shields.io/badge/tests-151%20bestanden%20%7C%20100%25%20gr%C3%BCn-success)](tests/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
-[![Verifiziert: 2026-11-01](https://img.shields.io/badge/verifiziert-2026--11--01-blue.svg)](tests/test_metadata.py)
+[![Verifiziert: 2026-11-23](https://img.shields.io/badge/verifiziert-2026--11--23-blue.svg)](tests/test_metadata.py)
 [![Level 1 SBOM: Text](https://img.shields.io/badge/Level%201%20SBOM-Text%20Companion-blue)](THIRD_PARTY_LICENSES.txt)
 [![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue)](CONTRIBUTING.md)
+[![Verhaltenskodex](https://img.shields.io/badge/Verhaltenskodex-Contributor%20Covenant%202.1-blue.svg)](CODE_OF_CONDUCT.md)
 [![LLM Bereit](https://img.shields.io/badge/llms.txt-bereit-purple.svg)](llms.txt)
 [![Ökosystem](https://img.shields.io/badge/%C3%96kosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Dachverband](https://img.shields.io/badge/dachverband-open--bricks-orange.svg)](https://github.com/open-bricks)
@@ -21,7 +22,7 @@
 > Menschenlesbare GUI-Demonstrationsaufzeichnungen für CLI- und autonome KI-Agenten-Workflows.
 
 > [!NOTE]
-> **KI- / LLM-Integration**: Maschinenlesbarer Kontext, LLM-Suchbegriffe und Architekturhinweise sind in [`llms.txt`](./llms.txt) hinterlegt.
+> **KI- / LLM-Integration**: Maschinenlesbarer Kontext, Produktskill-Hinweise, LLM-Suchbegriffe und Architekturhinweise sind in [`llms.txt`](./llms.txt) ([`llm.txt`](./llm.txt)) und [`SKILL.md`](./SKILL.md) hinterlegt.
 
 > [!NOTE]
 > **LLM- & Agenten-natives Design**: Getippter Tastaturtext wird standardmäßig durch Parameter-Platzhalter (`${input_1}`) dargestellt. Das betrifft nur getippten Tastaturtext; prüfe UI-Metadaten, optionale Frames, Audio und weitere erfasste Inhalte vor dem Teilen.
@@ -145,7 +146,7 @@ Der Aufzeichnungskern enthält keine eingebaute Telemetrie und schreibt an den k
 | `[PERSONA-01]` | **Autonome KI-Agenten-Entwickler & Computer-Use-Architekten** | Deterministische, token-effiziente GUI-Demonstrationsspuren für Training, Evaluation und Headless Replay ohne Vision-Token-Overhead. | Menschenlesbares `.clirec`-Schrittformat, automatische Parameter-Sanitization (`${input_1}`), injiziertes Executor-Protokoll und JSON-Episoden-Export für `skill-extractor`. |
 | `[PERSONA-02]` | **CLI- & Workflow-Automatisierer (Sysadmins / DevOps)** | Wiederkehrende interaktive Desktop-Abläufe als skriptbare CLI-Workflows mit Parameterinjektion automatisieren. | Zero-Dependency-CLI (`clirec start`, `clirec replay --param key=val`), Schema-Validierung (`clirec validate`) und nahtlose `open-compute`-Integration (`oc rec replay`). |
 | `[PERSONA-03]` | **QA-, Testautomations- & E2E-Validierungs-Ingenieure** | Verifizierbare, reproduzierbare E2E-Testläufe, die ohne Binär-Blobs ins Git-Repository eingecheckt werden können und nicht unter fragiler Selektor-Brüchigkeit leiden. | Git-freundliche Text-Spezifikation, optionale UIA-Barrierefreiheits-Metadaten (`[uia]`), kryptografische SHA-256 Sidecar-Integrität und plattformübergreifendes Capture. |
-| [PERSONA-04] | **Datenschutzbewusste Teams** | Arbeitsabläufe aufzeichnen und Aufzeichnungen vor dem Teilen prüfen. | Getippter Tastaturtext wird standardmäßig parametrisiert; UI-Metadaten, optionale Bilder und Audio müssen vor dem Teilen gesondert geprüft werden. |
+| `[PERSONA-04]` | **Datenschutzbewusste Teams** | Arbeitsabläufe aufzeichnen und Aufzeichnungen vor dem Teilen prüfen. | Getippter Tastaturtext wird standardmäßig parametrisiert; UI-Metadaten, optionale Bilder und Audio müssen vor dem Teilen gesondert geprüft werden. |
 
 ### Hoch-relevante Suchbegriffe (High-Intent Search Queries)
 
@@ -292,6 +293,8 @@ Audiodaten unterliegen strengen Schutzvorkehrungen:
 <a id="cli-workflow--schnellstart"></a>
 ## 9. CLI-Workflow & Schnellstart
 
+![clirec CLI-Workflow und .clirec Format-v2-Vorschau](assets/terminal-workflow.svg)
+
 ```bash
 # Interaktive Demonstration aufzeichnen (Text standardmäßig maskiert)
 clirec start login-flow
@@ -382,11 +385,11 @@ pip install "clirec[all] @ git+https://github.com/ellmos-ai/clirec.git"     # Al
 Kopiere diesen Prompt in deinen Coding-Agenten (Claude Code, Codex, Gemini CLI, Cursor), um `clirec` lokal installieren und prüfen zu lassen:
 
 ```text
-Lies https://github.com/ellmos-ai/clirec (README_de.md und llms.txt)
+Lies https://github.com/ellmos-ai/clirec (README_de.md, llms.txt und SKILL.md)
 und installiere clirec auf meinem System.
 1. Prüfe zuerst die Voraussetzungen (Python >= 3.10) und erkläre kurz, was installiert wird.
 2. Führe die empfohlene Installation (`pip install git+https://github.com/ellmos-ai/clirec.git` oder `python -m pip install -e .`) in einer isolierten Umgebung (.venv) aus, ohne fremde Projekte zu modifizieren.
-3. Führe danach einen kurzen Nicht-destruktiven Test (`python -m clirec --help` oder `python -m pytest -q`) aus und zeige mir, dass clirec einsatzbereit ist.
+3. Führe danach einen kurzen nicht-destruktiven Test (`clirec --help`, `python -m clirec.cli --help` oder `python -m pytest -q`) aus und zeige mir, dass clirec einsatzbereit ist.
 ```
 
 ---
@@ -490,7 +493,9 @@ Die Lizenzinventare der deklarierten Abhängigkeiten und die Hinweise dazu stehe
 - **Urheberrecht & Attribution:** Siehe [NOTICE](NOTICE) für kanonische Urheberrechts- und Attributionshinweise.
 - **Abhängigkeitslizenzen:** [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) und [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) führen deklarierte Abhängigkeiten und Lizenzangaben auf.
 - **Beitragsrichtlinien:** Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Entwicklungsumgebung und Hinweise zum Projektverhalten.
+- **Verhaltenskodex:** Siehe [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) für Community-Richtlinien.
 - **Maintainer:** Autoren von `ellmos-ai` und Community-Mitwirkende.
 - **Dachorganisation:** Teil der modularen [open-bricks](https://github.com/open-bricks) Softwarefamilie.
 - **Softwarelizenz:** Die MIT-Lizenz steht in [LICENSE](LICENSE).
+- **Redaktioneller & KI-Hinweis:** Idee & Abnahme: Geiger · Textassistenz: LLM-gestützt · Grafik: SVG-generiert
 

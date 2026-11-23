@@ -5,6 +5,15 @@ tracked in [RELEASE_GATE.md](RELEASE_GATE.md).
 
 ## Unreleased
 
+### 2026-11-23 (Pfad B Discoverability, P-022 Compatibility, Visual Preview & Community Health)
+
+- Added `llm.txt` compatibility pointer referencing `llms.txt` and `SKILL.md` (Policy P-022).
+- Added dark-mode CLI workflow and `.clirec` format v2 visual preview graphic (`assets/terminal-workflow.svg`) and embedded it in `README.md` and `README_de.md` Section 9 (preserving existing header banners).
+- Added bilingual `CODE_OF_CONDUCT.md` (DE/EN, Contributor Covenant v2.1) and `.github/ISSUE_TEMPLATE/{bug_report.md,feature_request.md}` with native German umlauts.
+- Fixed the LLM installation verification command in `README.md`, `README_de.md`, and `llms.txt` (`clirec --help` / `python -m clirec.cli --help` instead of non-executable `python -m clirec --help`) and added `SKILL.md` references plus concise AI-assistance attribution (`Idee & Abnahme: Geiger`).
+- Re-audited Level 1 dependency-license companions (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`) Stand 2026-11-23 and synchronized README badges (`151` verified tests, `2026-11-23`).
+- Extended `tests/test_metadata.py` with 5 new contract tests verifying `llm.txt`, `CODE_OF_CONDUCT.md`, `.github/ISSUE_TEMPLATE/*`, `assets/terminal-workflow.svg`, CLI verification commands, and AI disclosure.
+
 ### 2026-11-01 (Pfad B Discoverability, Copyable LLM Prompts & Metadata Currency)
 
 - Integrated copyable LLM installation and verification prompts for AI coding agents (Claude Code, Codex, Gemini CLI, Cursor) in Section 12 of `README.md` and `README_de.md`.

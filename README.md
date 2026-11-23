@@ -7,11 +7,12 @@
 
 [![clirec tests](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml/badge.svg)](https://github.com/ellmos-ai/clirec/actions/workflows/codeql.yml)
-[![Tests: 146 passed](https://img.shields.io/badge/tests-146%20passed%20%7C%20100%25%20green-success)](tests/)
+[![Tests: 151 passed](https://img.shields.io/badge/tests-151%20passed%20%7C%20100%25%20green-success)](tests/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://github.com/ellmos-ai/clirec)
-[![Verified: 2026-11-01](https://img.shields.io/badge/verified-2026--11--01-blue.svg)](tests/test_metadata.py)
+[![Verified: 2026-11-23](https://img.shields.io/badge/verified-2026--11--23-blue.svg)](tests/test_metadata.py)
 [![Level 1 SBOM: Text](https://img.shields.io/badge/Level%201%20SBOM-Text%20Companion-blue)](THIRD_PARTY_LICENSES.txt)
 [![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue)](CONTRIBUTING.md)
+[![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-Contributor%20Covenant%202.1-blue.svg)](CODE_OF_CONDUCT.md)
 [![LLM Ready](https://img.shields.io/badge/llms.txt-ready-purple.svg)](llms.txt)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Umbrella](https://img.shields.io/badge/umbrella-open--bricks-orange.svg)](https://github.com/open-bricks)
@@ -21,7 +22,7 @@
 > Human-readable GUI demonstration recordings for CLI and autonomous AI agent workflows.
 
 > [!NOTE]
-> **AI / LLM Integration**: For machine-readable context, LLM search queries, and architecture notes, see [`llms.txt`](./llms.txt).
+> **AI / LLM Integration**: For machine-readable context, product skill instructions, LLM search queries, and architecture notes, see [`llms.txt`](./llms.txt) ([`llm.txt`](./llm.txt)) and [`SKILL.md`](./SKILL.md).
 
 > [!NOTE]
 > **LLM & Agent-Native Design**: Typed keyboard text is parameterized by default as placeholders (`${input_1}`). This applies only to typed keyboard text; review UI metadata, optional frames, audio, and other captured content before sharing.
@@ -145,7 +146,7 @@ The recorder core has no built-in telemetry and writes to the configured filesys
 | `[PERSONA-01]` | **Autonomous AI Agent Engineers & Computer-Use Developers** | Deterministic, token-efficient GUI demonstration traces for training, evaluation, and headless replay without vision-token overhead. | Human-readable `.clirec` step format, automatic parameter sanitization (`${input_1}`), injected executor replay protocol, and JSON episode export for `skill-extractor`. |
 | `[PERSONA-02]` | **CLI & Workflow Automation Builders (Sysadmins / DevOps)** | Turn repetitive interactive desktop operations into scriptable CLI commands with parameter injection. | Zero-dependency core CLI (`clirec start`, `clirec replay --param key=val`), headless schema validation (`clirec validate`), and tight `open-compute` integration (`oc rec replay`). |
 | `[PERSONA-03]` | **QA, Test Automation & E2E Validation Engineers** | Verifiable, reproducible test demonstration runs that can be checked into Git without binary blob bloat or fragile UI selector breakage. | Git-friendly text spec, optional Windows UI Automation metadata probing (`[uia]`), cryptographic SHA-256 sidecar verification, and cross-platform capture. |
-| [PERSONA-04] | **Privacy-Conscious Teams** | Record workflow demonstrations that can be reviewed before sharing. | Typed keyboard text is parameterized by default; review UI metadata, optional frames, and audio for sensitive content before sharing. |
+| `[PERSONA-04]` | **Privacy-Conscious Teams** | Record workflow demonstrations that can be reviewed before sharing. | Typed keyboard text is parameterized by default; review UI metadata, optional frames, and audio for sensitive content before sharing. |
 
 ### High-Intent Search Queries
 
@@ -292,6 +293,8 @@ Audio is treated as a distinct, sensitive privacy boundary:
 <a id="cli-workflow--schnellstart"></a>
 ## 9. CLI Workflow & Quickstart
 
+![clirec CLI workflow and .clirec format v2 preview](assets/terminal-workflow.svg)
+
 ```bash
 # Record an interactive demonstration (text masked by default)
 clirec start login-flow
@@ -382,11 +385,11 @@ pip install "clirec[all] @ git+https://github.com/ellmos-ai/clirec.git"     # Al
 Copy the following prompt into your coding agent (Claude Code, Codex, Gemini CLI, Cursor) to install and verify `clirec` locally:
 
 ```text
-Read https://github.com/ellmos-ai/clirec (README.md and llms.txt)
+Read https://github.com/ellmos-ai/clirec (README.md, llms.txt, and SKILL.md)
 and install clirec on my system.
 1. Check prerequisites (Python >= 3.10) and explain what will be installed before running commands.
 2. Install or clone the repository in an isolated environment (`pip install git+https://github.com/ellmos-ai/clirec.git` or `python -m pip install -e .`), without modifying unrelated projects.
-3. Run a non-destructive verification check (`python -m clirec --help` or `python -m pytest -q`) and verify that clirec is accessible.
+3. Run a non-destructive verification check (`clirec --help`, `python -m clirec.cli --help`, or `python -m pytest -q`) and verify that clirec is accessible.
 ```
 
 ---
@@ -490,7 +493,9 @@ For the declared dependency-license inventory and notices, refer to [THIRD_PARTY
 - **Attribution & Notice:** See [NOTICE](NOTICE) for canonical copyright and attribution notices.
 - **Dependency license information:** See [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt) and [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) for declared dependency and license details.
 - **Contributing Guidelines:** See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and project behavior notes.
+- **Code of Conduct:** See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community guidelines.
 - **Maintainers:** The `ellmos-ai` authors & community contributors.
 - **Umbrella:** Part of the [open-bricks](https://github.com/open-bricks) open-source software family.
 - **Software license:** See [LICENSE](LICENSE) for the MIT License.
+- **Editorial & AI Disclosure:** Idee & Abnahme: Geiger · Textassistenz: LLM-gestützt · Grafik: SVG-generiert
 
