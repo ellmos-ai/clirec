@@ -1,0 +1,3 @@
+# clirec
+
+See [llms.txt](llms.txt) for the canonical machine-readable context and [SKILL.md](SKILL.md) for product skill instructions.

@@ -31,22 +31,26 @@ The source tree is version 0.3.0. The 2026-10-02 GitHub API check found no relea
 
 ## Important files
 
-- README.md - English overview, ASCII Four-View Architectural Topology, Mermaid lifecycle sequence diagrams, installation, usage, and implementation boundaries.
-- README_de.md - German overview, Vier-Sichten-Architekturtopologie, Mermaid-Lebenszyklus-Sequenzdiagramme, and navigation.
+- README.md - English overview, ASCII Four-View Architectural Topology, Mermaid lifecycle sequence diagrams, terminal workflow SVG preview, installation, usage, and implementation boundaries.
+- README_de.md - German overview, Vier-Sichten-Architekturtopologie, Mermaid-Lebenszyklus-Sequenzdiagramme, Terminal-Workflow-SVG-Vorschau, and navigation.
 - CONTRIBUTING.md - bilingual development setup, Plan D local workflow, and pull-request guidelines.
-- SKILL.md - German skill instructions for using clirec as a demonstration channel.
+- CODE_OF_CONDUCT.md - bilingual (DE/EN) Contributor Covenant v2.1 code of conduct.
+- SKILL.md - German skill instructions for using clirec as a demonstration channel (identical shipped copy at skills/clirec/SKILL.md).
+- llm.txt - compatibility pointer to llms.txt and SKILL.md.
 - CHANGELOG.md - release history and current unreleased state.
 - SECURITY.md - reporting, recording risks, response targets, and recording other people.
 - NOTICE - attribution notice.
 - THIRD_PARTY_LICENSES.md - declared dependency license references and runtime scope notes.
 - THIRD_PARTY_LICENSES.txt - plain-text dependency license index.
+- assets/terminal-workflow.svg - dark-mode CLI workflow and .clirec format v2 preview graphic.
 - clirec/ - core package.
-- tests/ - regression, smoke, metadata, and repository checks (146 automated tests baseline as of 2026-11-01).
+- tests/ - regression, smoke, metadata, and repository checks (151 automated tests baseline as of 2026-11-23).
 - .github/workflows/tests.yml - Python test workflow.
 - .github/workflows/stale.yml - stale issues and PRs automation.
 - .github/workflows/welcome.yml - contributor welcome automation.
 - .github/workflows/auto-assign.yml - pull-request assignment workflow.
 - .github/workflows/label-sync.yml - repository label synchronization.
+- .github/ISSUE_TEMPLATE/ - bilingual bug report and feature request templates.
 - .github/labels.yml - repository labels.
 - RELEASE_GATE.md - current verification evidence and release limits.
 - docs/PAUSE_HOTKEY_DAEMON_DECISION.md - pause hotkey and daemon architecture decision.
@@ -78,7 +82,7 @@ sharing sensitive material.
 
 - Prerequisites: Python >= 3.10
 - Install command: `git clone https://github.com/ellmos-ai/clirec.git && cd clirec && python -m pip install -e .` (or `pip install git+https://github.com/ellmos-ai/clirec.git`)
-- Verification command: `python -m clirec --help` or `python -c "import clirec; print(clirec.__version__)"`
-- Minimal example: `clirec start demo && clirec stop && clirec validate demo.clirec`
+- Verification command: `clirec --help` or `python -m clirec.cli --help` (and `python -c "import clirec; print(clirec.__version__)"`)
+- Minimal example: `clirec start demo && clirec validate recordings/demo.clirec`
 
-## Last-checked: 2026-11-01
+## Last-checked: 2026-11-23

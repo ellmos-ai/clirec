@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" width="880" height="540" role="img" aria-label="clirec CLI workflow and .clirec format v2 preview">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b101b"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accentBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Window -->
+  <rect x="0" y="0" width="880" height="540" rx="14" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1.5"/>
+  <rect x="1" y="1" width="878" height="4" rx="2" fill="url(#accentBar)"/>
+
+  <!-- Title Bar -->
+  <rect x="0" y="5" width="880" height="38" fill="#161b22"/>
+  <line x1="0" y1="43" x2="880" y2="43" stroke="#30363d" stroke-width="1"/>
+  <circle cx="24" cy="24" r="6" fill="#ff5f56"/>
+  <circle cx="44" cy="24" r="6" fill="#ffbd2e"/>
+  <circle cx="64" cy="24" r="6" fill="#27c93f"/>
+  <text x="440" y="28" text-anchor="middle" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13" font-weight="600">clirec — Human-Readable GUI Demonstration Workflow &amp; Format v2</text>
+
+  <!-- Section 1: Terminal Session -->
+  <rect x="24" y="60" width="832" height="202" rx="10" fill="#0d1117" stroke="#263040" stroke-width="1"/>
+  <text x="40" y="84" fill="#38bdf8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12" font-weight="700">1. RECORD, VALIDATE &amp; PREPARE REPLAY (CLI)</text>
+
+  <text x="40" y="110" fill="#7ee787" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13">$ clirec start login-flow</text>
+  <text x="40" y="130" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">RECORDING events=on audio=off target=recordings/login-flow.clirec - Ctrl+C stops</text>
+  <text x="40" y="148" fill="#a5d6ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">STOPPED saved=recordings/login-flow.clirec steps=3 audio=no</text>
+
+  <text x="40" y="176" fill="#7ee787" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13">$ clirec validate recordings/login-flow.clirec</text>
+  <text x="40" y="196" fill="#3fb950" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">OK</text>
+
+  <text x="40" y="224" fill="#7ee787" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13">$ clirec episode-export recordings/login-flow.clirec --out episode.json ...</text>
+  <text x="40" y="244" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">Replay via injected executor (e.g. open-compute: oc rec replay recordings/login-flow.clirec --param input_1=demo)</text>
+
+  <!-- Section 2: Generated .clirec Format v2 Trace -->
+  <rect x="24" y="278" width="832" height="196" rx="10" fill="#0d1117" stroke="#263040" stroke-width="1"/>
+  <text x="40" y="302" fill="#f59e0b" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12" font-weight="700">2. GENERATED HUMAN-READABLE TRACE (recordings/login-flow.clirec)</text>
+
+  <text x="40" y="328" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12"># clirec-version: 2</text>
+  <text x="40" y="346" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">title: "login-flow"   resolution: "1920x1080"   origin: 0,0</text>
+  <text x="40" y="366" fill="#d2a8ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">--- steps ---</text>
+  <text x="40" y="390" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12.5">[001] t=0.14   click      x=420 y=310  btn=left</text>
+  <text x="40" y="412" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12.5">[002] t=0.82   type       text="${input_1}"</text>
+  <text x="460" y="412" fill="#7ee787" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11.5">&lt;- typed text parameterized by default</text>
+  <text x="40" y="434" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12.5">[003] t=1.35   key        keys="Enter"</text>
+  <text x="40" y="456" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11.5">Optional media sidecars: &lt;name&gt;.clirec.media/ validated via SHA-256 manifest</text>
+
+  <!-- Footer Badges / Pills -->
+  <rect x="24" y="490" width="212" height="32" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="130" y="510" text-anchor="middle" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11.5">Core: 0 Mandatory Deps</text>
+
+  <rect x="248" y="490" width="214" height="32" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="355" y="510" text-anchor="middle" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11.5">Audio: Opt-In Consent Only</text>
+
+  <rect x="474" y="490" width="216" height="32" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="582" y="510" text-anchor="middle" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11.5">SHA-256 Sidecars (v2)</text>
+
+  <rect x="702" y="490" width="154" height="32" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="779" y="510" text-anchor="middle" fill="#38bdf8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11.5">MIT · Local-First</text>
+</svg>
